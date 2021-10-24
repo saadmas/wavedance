@@ -1,17 +1,21 @@
 import { NavigationContainer } from '@react-navigation/native';
-import Welcome from './screens/Welcome/Welcome';
 import * as React from 'react';
-import { Box, NativeBaseProvider } from 'native-base';
+import { Provider as PaperProvider } from 'react-native-paper';
 import theme from './styles/theme';
+import { View } from 'react-native';
+import { styles } from './App.styles';
+import AuthStack from './stacks/AuthStack/AuthStack';
 
-export default function App() {
+const App = () => {
   const isSignedIn = false;
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <Box bgColor="bg" safeArea color="white" height="100%" width="100%">
-        <NavigationContainer>{isSignedIn ? null : <Welcome />}</NavigationContainer>
-      </Box>
-    </NativeBaseProvider>
+    <PaperProvider theme={theme}>
+      <View style={styles.app}>
+        <NavigationContainer theme={theme}>{isSignedIn ? null : <AuthStack />}</NavigationContainer>
+      </View>
+    </PaperProvider>
   );
-}
+};
+
+export default App;

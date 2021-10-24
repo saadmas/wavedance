@@ -1,18 +1,19 @@
-import { extendTheme } from 'native-base';
+import { DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
+import { DefaultTheme as PaperDefaultTheme } from 'react-native-paper';
 
-const theme = extendTheme({
+export const backgroundColor = '#222';
+
+const theme = {
+  ...PaperDefaultTheme,
+  ...NavigationDefaultTheme,
   colors: {
-    bg: '#222',
-    white: '#fff',
-    logoBg: '#111759',
-    logoSymbol: '#fB2588',
+    ...PaperDefaultTheme.colors,
+    ...NavigationDefaultTheme.colors,
+    primary: '#111759',
+    accent: '#fB2588',
+    text: '#fff',
+    background: backgroundColor,
   },
-});
-
-type CustomThemeType = typeof theme;
-
-declare module 'native-base' {
-  interface ICustomTheme extends CustomThemeType {}
-}
+};
 
 export default theme;
