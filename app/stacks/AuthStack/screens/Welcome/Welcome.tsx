@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Path } from '../../routing/paths';
-import { AuthStackParamList } from '../../stacks/AuthStack/AuthStack';
+import { AuthStackParamList } from '../../AuthStack';
+import { Path } from '../../../../routing/paths';
 
 interface WelcomeProps extends NativeStackScreenProps<AuthStackParamList, Path.Welcome> {}
 

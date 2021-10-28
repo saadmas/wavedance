@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Path } from '../../routing/paths';
-import Welcome from '../../screens/Welcome/Welcome';
+import Welcome from './screens/Welcome/Welcome';
 
 const Stack = createNativeStackNavigator();
 
