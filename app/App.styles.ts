@@ -6,5 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor,
     height: '100%',
     width: '100%',
+    padding: 20,
   },
 });
