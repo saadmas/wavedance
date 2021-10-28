@@ -4,7 +4,8 @@ import { Path } from '../../routing/paths';
 import Welcome from './screens/Welcome/Welcome';
 import SignUp from './screens/SignUp/SignUp';
 import { IconButton } from 'react-native-paper';
-import { DefaultNavigatorOptions } from '@react-navigation/native';
+
+import { AntDesign } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,8 @@ const AuthStack = () => {
         animation: 'slide_from_bottom',
         headerTransparent: true,
         headerTitle: '',
-        headerLeft: ({ canGoBack }) => canGoBack && <IconButton icon="close" onPress={() => navigation.goBack()} />,
+        headerLeft: ({ canGoBack }) =>
+          canGoBack && <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />,
       })}
     >
       <Stack.Screen name={Path.Welcome} component={Welcome} />
