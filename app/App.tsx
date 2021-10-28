@@ -11,11 +11,11 @@ const App = () => {
 
   return (
     <PaperProvider theme={theme}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.app}>
+      <View style={styles.app}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <NavigationContainer theme={theme}>{isSignedIn ? null : <AuthStack />}</NavigationContainer>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </View>
     </PaperProvider>
   );
 };
