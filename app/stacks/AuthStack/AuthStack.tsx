@@ -5,8 +5,6 @@ import Welcome from './screens/Welcome/Welcome';
 import SignUp from './screens/SignUp/SignUp';
 import { IconButton } from 'react-native-paper';
 
-import { AntDesign } from '@expo/vector-icons';
-
 const Stack = createNativeStackNavigator();
 
 export type AuthStackParamList = {
