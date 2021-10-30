@@ -16,11 +16,11 @@ export const styles = StyleSheet.create({
     bottom: 60,
   },
   signUpButton: {
-    width: '80%',
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     borderRadius: 20,
-    marginBottom: 40,
+    marginBottom: 20,
     backgroundColor: '#fB2588',
   },
 });

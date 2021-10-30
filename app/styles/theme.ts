@@ -1,5 +1,5 @@
-import { DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
-import { DefaultTheme as PaperDefaultTheme } from 'react-native-paper';
+import { DarkTheme as NavigationDefaultTheme } from '@react-navigation/native';
+import { DarkTheme as PaperDefaultTheme } from 'react-native-paper';
 
 export const backgroundColor = '#222';
 
