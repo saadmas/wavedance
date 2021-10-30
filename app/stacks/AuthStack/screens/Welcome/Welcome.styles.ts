@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { defaultScreenPadding } from '../../../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     bottom: 60,
   },
   signUpButton: {
-    width: '100%',
+    width: '80%',
     display: 'flex',
     justifyContent: 'center',
     borderRadius: 20,

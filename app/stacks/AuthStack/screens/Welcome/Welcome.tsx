@@ -1,6 +1,6 @@
 import { styles } from './Welcome.styles';
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../../AuthStack';
@@ -19,7 +19,9 @@ const Welcome = ({ navigation }: WelcomeProps) => {
         <Button mode="contained" uppercase={false} style={styles.signUpButton} onPress={onSignUpPress}>
           Sign up
         </Button>
-        <Text style={styles.login}>Login</Text>
+        <TouchableOpacity underlayColor="#fff">
+          <Text style={styles.login}>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
