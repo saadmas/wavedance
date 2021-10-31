@@ -1,6 +1,5 @@
 export interface SignUpState {
-  firstName: string;
-  lastName: string;
+  name: string;
   birthday: string;
   currentLocation: string;
   hometown: string;
@@ -12,7 +11,7 @@ export interface SignUpState {
 
 interface NameUpdateAction {
   type: 'NAME_UPDATE';
-  payload: { firstName: string; lastName: string };
+  payload: string;
 }
 
 export type SignUpAction = NameUpdateAction;

@@ -2,8 +2,7 @@ import { SignUpAction, SignUpState } from './types';
 
 export const getInitialSignUpState = (): SignUpState => {
   return {
-    firstName: '',
-    lastName: '',
+    name: '',
     birthday: '',
     currentLocation: '',
     hometown: '',
@@ -16,8 +15,8 @@ export const getInitialSignUpState = (): SignUpState => {
 export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpState => {
   switch (action.type) {
     case 'NAME_UPDATE':
-      const { firstName, lastName } = action.payload;
-      return { ...state, firstName, lastName };
+      const name = action.payload;
+      return { ...state, name };
     default:
       return { ...state };
   }
