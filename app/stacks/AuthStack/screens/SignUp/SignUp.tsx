@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
+import { SignUpStepProps } from '../../../SignUpStack/SignUpStack';
 import { styles } from './SignUp.styles';
 
-const SignUp = () => {
+interface SignUpProps extends SignUpStepProps {}
+
+const SignUp = ({}: SignUpProps) => {
   const onSubmit = (email: string, password: string) => {
     return;
   };
