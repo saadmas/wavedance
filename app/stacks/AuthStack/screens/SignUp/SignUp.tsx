@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import EmailPasswordForm from '../../../../components/EmailPasswordForm';
+import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
 import { styles } from './SignUp.styles';
 
 const SignUp = () => {

@@ -5,6 +5,7 @@ import theme from './styles/theme';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './App.styles';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
+import { navigationRef } from './routing/rootNavigation';
 
 const App = () => {
   const isSignedIn = false;
@@ -13,7 +14,9 @@ const App = () => {
     <PaperProvider theme={theme}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.app}>
-          <NavigationContainer theme={theme}>{isSignedIn ? null : <AuthScreen />}</NavigationContainer>
+          <NavigationContainer ref={navigationRef} theme={theme}>
+            {isSignedIn ? null : <AuthScreen />}
+          </NavigationContainer>
         </View>
       </TouchableWithoutFeedback>
     </PaperProvider>
