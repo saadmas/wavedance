@@ -58,7 +58,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ padding: 20 }}>
       <Controller
         name="email"
         control={control}
