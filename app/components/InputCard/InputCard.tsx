@@ -21,8 +21,10 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
   const {
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormInput>();
+    formState: { errors, isDirty },
+  } = useForm<FormInput>({
+    mode: 'onBlur',
+  });
 
   const onInputComplete = ({ primaryInput }: FormInput) => {
     onSubmit(primaryInput);
@@ -74,7 +76,7 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
           size={60}
           icon="arrow-right-bold-circle"
           theme={{ colors: { text: colors.primary } }}
-          disabled={!!errors.primaryInput}
+          disabled={!!errors.primaryInput || !isDirty}
           // style={{ position: 'absolute', bottom: 60, right: 20 }}
         />
       </View>

@@ -12,17 +12,17 @@ export interface SignUpStepProps {
 
 const StepComponents = [UserNameInput, SignUp];
 
-const stepIcons = ['rename-box'];
+const stepIcons = ['rename-box', 'login-variant'];
 
 const SignUpStack = () => {
   const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0);
 
   const goToNextStep = () => {
-    setCurrentStepIndex(previousIndex => previousIndex++);
+    setCurrentStepIndex(previousIndex => ++previousIndex);
   };
 
   const goToPreviousStep = () => {
-    setCurrentStepIndex(previousIndex => previousIndex++);
+    setCurrentStepIndex(previousIndex => --previousIndex);
   };
 
   const renderStep = () => {
