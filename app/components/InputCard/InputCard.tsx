@@ -41,13 +41,25 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
         placeholder={placeholder}
         multiline={true}
         maxLength={maxLength}
+        autoCapitalize={'words'}
+        theme={{ fonts: { regular: { fontFamily: 'Montserrat_400Regular' } } }}
       />
     );
   };
 
   return (
     <View style={{ padding: defaultScreenPadding, height: '100%' }}>
-      <Title style={{ fontSize: 40, paddingTop: 50, paddingBottom: 20, lineHeight: 40 }}>{title}</Title>
+      <Title
+        style={{
+          fontSize: 40,
+          paddingTop: 50,
+          paddingBottom: 20,
+          lineHeight: 40,
+          fontFamily: 'Lustria_400Regular',
+        }}
+      >
+        {title}
+      </Title>
       <Surface>
         <Controller
           name="primaryInput"

@@ -6,9 +6,20 @@ import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './App.styles';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
 import { navigationRef } from './routing/rootNavigation';
+import { Montserrat_400Regular, Lustria_400Regular, useFonts } from '@expo-google-fonts/dev'; //* delete and change to use reg package when done
+import AppLoading from 'expo-app-loading';
 
 const App = () => {
   const isSignedIn = false;
+
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Lustria_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <PaperProvider theme={theme}>
