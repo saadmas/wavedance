@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
-import { TextStyle, View } from 'react-native';
-import { IconButton, Surface, TextInput, Title } from 'react-native-paper';
+import { View } from 'react-native';
+import { IconButton, Surface, TextInput, Title, useTheme } from 'react-native-paper';
 import { defaultScreenPadding } from '../../styles/theme';
 
 interface InputCardProps {
@@ -16,6 +16,8 @@ interface FormInput {
 }
 
 const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) => {
+  const { colors } = useTheme();
+
   const {
     control,
     handleSubmit,
@@ -27,17 +29,15 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
   };
 
   const renderTextInput = (onChange: (...event: any[]) => void, onBlur: Noop, value: string) => {
-    const inputStyle: TextStyle = {
-      fontSize: 30,
-    };
-
     return (
       <TextInput
         onBlur={onBlur}
         onChangeText={onChange}
         mode="flat"
         value={value}
-        style={inputStyle}
+        style={{
+          fontSize: 25,
+        }}
         placeholder={placeholder}
         multiline={true}
         maxLength={maxLength}
@@ -52,8 +52,8 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
       <Title
         style={{
           fontSize: 40,
-          paddingTop: 50,
-          paddingBottom: 20,
+          paddingTop: 10,
+          paddingBottom: 10,
           lineHeight: 40,
           fontFamily: 'Lustria_400Regular',
         }}
@@ -68,14 +68,16 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
           render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
         />
       </Surface>
-      <IconButton
-        onPress={handleSubmit(onInputComplete)}
-        size={60}
-        icon="arrow-right-bold-circle"
-        theme={{ colors: { text: '#fB2588' } }}
-        disabled={!!errors.primaryInput}
-        style={{ position: 'absolute', bottom: 20, right: 20 }}
-      />
+      <View style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', height: '60%' }}>
+        <IconButton
+          onPress={handleSubmit(onInputComplete)}
+          size={60}
+          icon="arrow-right-bold-circle"
+          theme={{ colors: { text: colors.primary } }}
+          disabled={!!errors.primaryInput}
+          // style={{ position: 'absolute', bottom: 60, right: 20 }}
+        />
+      </View>
     </View>
   );
 };
