@@ -3,6 +3,7 @@ import { Controller, Noop, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { IconButton, Surface, TextInput, Title, useTheme } from 'react-native-paper';
 import { defaultScreenPadding } from '../../styles/theme';
+import * as Animatable from 'react-native-animatable';
 
 interface InputCardProps {
   title: string;
@@ -51,25 +52,27 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
 
   return (
     <View style={{ padding: defaultScreenPadding, height: '100%' }}>
-      <Title
-        style={{
-          fontSize: 40,
-          paddingTop: 10,
-          paddingBottom: 10,
-          lineHeight: 40,
-          fontFamily: 'Lustria_400Regular',
-        }}
-      >
-        {title}
-      </Title>
-      <Surface>
-        <Controller
-          name="primaryInput"
-          control={control}
-          rules={{ required: true, maxLength }}
-          render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
-        />
-      </Surface>
+      <Animatable.View animation="fadeInLeft">
+        <Title
+          style={{
+            fontSize: 40,
+            paddingTop: 10,
+            paddingBottom: 10,
+            lineHeight: 40,
+            fontFamily: 'Lustria_400Regular',
+          }}
+        >
+          {title}
+        </Title>
+        <Surface>
+          <Controller
+            name="primaryInput"
+            control={control}
+            rules={{ required: true, maxLength }}
+            render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
+          />
+        </Surface>
+      </Animatable.View>
       <View style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', height: '60%' }}>
         <IconButton
           onPress={handleSubmit(onInputComplete)}
