@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, TextStyle } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
+import { inputTextColor } from '../../styles/theme';
 
 interface EmailPasswordFormProps {
   type: 'signUp' | 'signIn';
@@ -52,7 +53,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
         style={isPasswordInput ? passwordStyle : inputStyle}
         placeholder={isPasswordInput ? 'Password' : 'Email'}
         placeholderTextColor="grey"
-        theme={{ colors: { text: 'black', background: '#fff' } }}
+        theme={{ colors: { text: inputTextColor, background: '#fff' } }}
       />
     );
   };
