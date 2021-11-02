@@ -22,6 +22,5 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     marginBottom: 20,
-    backgroundColor: '#fB2588',
   },
 });

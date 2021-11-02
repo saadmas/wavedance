@@ -53,7 +53,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
         style={isPasswordInput ? passwordStyle : inputStyle}
         placeholder={isPasswordInput ? 'Password' : 'Email'}
         placeholderTextColor="grey"
-        theme={{ colors: { text: inputTextColor, background: '#fff' } }}
+        theme={{ colors: { text: inputTextColor, background: colors.text } }}
       />
     );
   };
@@ -72,15 +72,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
         rules={{ required: true }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value, 'password')}
       />
-      <Button
-        mode="contained"
-        onPress={handleSubmit(onSubmit)}
-        uppercase={false}
-        style={{
-          backgroundColor: colors.accent,
-          borderRadius: 40,
-        }}
-      >
+      <Button mode="contained" onPress={handleSubmit(onSubmit)} uppercase={false} style={{ borderRadius: 40 }}>
         {type === 'signIn' ? 'Sign in' : 'Sign up'}
       </Button>
     </KeyboardAvoidingView>
