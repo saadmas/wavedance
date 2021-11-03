@@ -4,13 +4,15 @@ import SignUp from '../AuthStack/screens/SignUp/SignUp';
 import { SignUpProvider } from '../../state/signUp/SignUpProvider';
 import { IconButton, ProgressBar, useTheme } from 'react-native-paper';
 import { View } from 'react-native';
+import BirthdayInput from './screens/BirthdayInput/BirthdayInput';
+import { defaultScreenPadding } from '../../styles/theme';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
 }
 
-const StepComponents = [UserNameInput, SignUp];
+const StepComponents = [UserNameInput, BirthdayInput, SignUp];
 
 const stepIcons = ['rename-box', 'login-variant'];
 
@@ -28,7 +30,11 @@ const SignUpStack = () => {
 
   const renderStep = () => {
     const StepComponent = StepComponents[currentStepIndex];
-    return <StepComponent goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />;
+    return (
+      <View style={{ padding: defaultScreenPadding, height: '100%' }}>
+        <StepComponent goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
+      </View>
+    );
   };
 
   const getProgress = (): number => (currentStepIndex + 1) / StepComponents.length;

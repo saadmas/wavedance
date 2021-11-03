@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
-import { View } from 'react-native';
 import { IconButton, TextInput, useTheme } from 'react-native-paper';
-import { defaultScreenPadding } from '../../styles/theme';
 import Title from '../Title/Title';
 
 interface InputCardProps {
@@ -51,7 +49,7 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
   };
 
   return (
-    <View style={{ padding: defaultScreenPadding, height: '100%' }}>
+    <>
       <Title title={title} />
       <Controller
         name="primaryInput"
@@ -59,17 +57,15 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
         rules={{ required: true, maxLength }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
       />
-      <View style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', height: '60%' }}>
-        <IconButton
-          onPress={handleSubmit(onInputComplete)}
-          size={60}
-          icon="arrow-right-bold-circle"
-          theme={{ colors: { text: colors.primary } }}
-          disabled={!!errors.primaryInput || !isDirty}
-          // style={{ position: 'absolute', bottom: 60, right: 20 }}
-        />
-      </View>
-    </View>
+      <IconButton
+        onPress={handleSubmit(onInputComplete)}
+        size={60}
+        icon="arrow-right-bold-circle"
+        theme={{ colors: { text: colors.primary } }}
+        disabled={!!errors.primaryInput || !isDirty}
+        style={{ position: 'absolute', bottom: 60, right: 20 }}
+      />
+    </>
   );
 };
 
