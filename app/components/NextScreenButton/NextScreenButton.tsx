@@ -12,7 +12,7 @@ const NextScreenButton = ({ onPress, isDisabled }: NextScreenButtonProps) => {
     <FAB
       onPress={onPress}
       icon={'check'}
-      theme={{ colors: { accent: colors.accent } }}
+      theme={{ colors: { accent: colors.primary } }}
       disabled={isDisabled}
       style={{ position: 'absolute', bottom: 80, right: 40 }}
     />
