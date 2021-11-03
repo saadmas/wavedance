@@ -14,4 +14,9 @@ interface NameUpdateAction {
   payload: string;
 }
 
-export type SignUpAction = NameUpdateAction;
+interface BirthdayUpdateAction {
+  type: 'BIRTHDAY_UPDATE';
+  payload: string;
+}
+
+export type SignUpAction = NameUpdateAction | BirthdayUpdateAction;

@@ -17,6 +17,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'NAME_UPDATE':
       const name = action.payload;
       return { ...state, name };
+    case 'BIRTHDAY_UPDATE':
+      const birthday = action.payload;
+      return { ...state, birthday };
     default:
       return { ...state };
   }

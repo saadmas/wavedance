@@ -12,8 +12,10 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
   const dispatch = useSignUpDispatch();
 
   const onBirthdayEnter = () => {
-    // dispatch({ type: 'NAME_UPDATE', payload: name }); ///
-    goToNextStep();
+    if (birthday) {
+      dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
+      goToNextStep();
+    }
   };
 
   const onDateChange = (_: Event, date?: Date) => {
