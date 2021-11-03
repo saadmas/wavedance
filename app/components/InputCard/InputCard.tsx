@@ -7,6 +7,7 @@ import Title from '../Title/Title';
 interface SecondaryButtonProps {
   onPress: () => void;
   text: string;
+  width?: number;
 }
 
 interface InputCardProps {
@@ -67,12 +68,12 @@ const InputCard = ({
       return;
     }
 
-    const { onPress, text } = secondaryButtonProps;
+    const { onPress, text, width } = secondaryButtonProps;
 
     return (
       <Button
         mode="outlined"
-        style={{ width: 150, borderRadius: 40, marginTop: 20, borderColor: colors.text }}
+        style={{ width: width ?? 150, borderRadius: 40, marginTop: 20, borderColor: colors.text }}
         labelStyle={{ fontSize: 10 }}
         compact={true}
         uppercase={false}

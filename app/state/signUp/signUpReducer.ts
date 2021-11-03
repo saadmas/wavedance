@@ -26,6 +26,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'CURRENT_LOCATION_UPDATE':
       const currentLocation = action.payload;
       return { ...state, currentLocation };
+    case 'OCCUPATION_UPDATE':
+      const occupation = action.payload;
+      return { ...state, occupation };
     case 'CURRENT_LOCATION_AS_HOMETOWN':
       return { ...state, currentLocation: state.hometown };
     default:

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Button, useTheme } from 'react-native-paper';
 import InputCard from '../../../../components/InputCard/InputCard';
 import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';

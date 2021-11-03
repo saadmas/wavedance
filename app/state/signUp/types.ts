@@ -5,8 +5,9 @@ export interface SignUpState {
   hometown: string;
   passions: string[];
   profilePhoto: string;
-  instagramHandle?: string;
   prompts: string[];
+  occupation?: string;
+  instagramHandle?: string;
 }
 
 interface NameUpdateAction {
@@ -29,6 +30,11 @@ interface CurrentLocationUpdateAction {
   payload: string;
 }
 
+interface OccupationUpdateAction {
+  type: 'OCCUPATION_UPDATE';
+  payload: string;
+}
+
 interface CurrentLocationAsHometownAction {
   type: 'CURRENT_LOCATION_AS_HOMETOWN';
 }
@@ -38,4 +44,5 @@ export type SignUpAction =
   | BirthdayUpdateAction
   | HometownUpdateAction
   | CurrentLocationUpdateAction
-  | CurrentLocationAsHometownAction;
+  | CurrentLocationAsHometownAction
+  | OccupationUpdateAction;

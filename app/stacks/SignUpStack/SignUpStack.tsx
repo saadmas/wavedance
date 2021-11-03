@@ -8,14 +8,15 @@ import BirthdayInput from './screens/BirthdayInput/BirthdayInput';
 import { defaultScreenPadding } from '../../styles/theme';
 import HometownInput from './screens/HometownInput/HometownInput';
 import CurrentLocationInput from './screens/CurrentLocationInput/CurrentLocationInput';
+import OccupationInput from './screens/OccupationInput/OccupationInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
 }
 
-const StepComponents = [UserNameInput, BirthdayInput, HometownInput, CurrentLocationInput, SignUp];
-const stepIcons = ['rename-box', 'cake-variant', 'home-circle', 'map-marker', 'lock-outline'];
+const StepComponents = [UserNameInput, BirthdayInput, HometownInput, CurrentLocationInput, OccupationInput, SignUp];
+const stepIcons = ['rename-box', 'cake-variant', 'home-circle', 'map-marker', 'briefcase-outline', 'lock-outline'];
 
 const SignUpStack = () => {
   const { colors } = useTheme();
