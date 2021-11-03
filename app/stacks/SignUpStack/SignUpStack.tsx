@@ -14,7 +14,7 @@ export interface SignUpStepProps {
 
 const StepComponents = [UserNameInput, BirthdayInput, SignUp];
 
-const stepIcons = ['rename-box', 'login-variant'];
+const stepIcons = ['rename-box', 'cake-variant', 'login-variant'];
 
 const SignUpStack = () => {
   const { colors } = useTheme();
