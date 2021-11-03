@@ -3,14 +3,13 @@ import Title from '../../../../components/Title/Title';
 import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
-import { IconButton, useTheme } from 'react-native-paper';
+import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
 
 interface BirthdayInputProps extends SignUpStepProps {}
 
 const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
   const [birthday, setBirthday] = React.useState<Date | undefined>(undefined);
   const dispatch = useSignUpDispatch();
-  const { colors } = useTheme();
 
   const onBirthdayEnter = () => {
     // dispatch({ type: 'NAME_UPDATE', payload: name }); ///
@@ -33,28 +32,24 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
     return minDate;
   };
 
-  const maxDate = getMaxDate();
+  const getDefaultDate = () => {
+    const defaultDate = new Date(2000, 0, 1);
+    return defaultDate;
+  };
 
   return (
     <>
       <Title title="When's your birthday?" />
       <DateTimePicker
-        value={birthday ?? maxDate}
-        maximumDate={maxDate}
+        value={birthday ?? getDefaultDate()}
+        maximumDate={getMaxDate()}
         minimumDate={getMinDate()}
         mode={'date'}
         display="spinner"
         themeVariant="dark"
         onChange={onDateChange}
       />
-      <IconButton
-        onPress={onBirthdayEnter}
-        size={60}
-        icon="arrow-right-bold-circle"
-        theme={{ colors: { text: colors.primary } }}
-        disabled={!birthday}
-        style={{ position: 'absolute', bottom: 60, right: 20 }}
-      />
+      <NextScreenButton onPress={onBirthdayEnter} isDisabled={!birthday} />
     </>
   );
 };

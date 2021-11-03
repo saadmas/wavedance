@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
-import { IconButton, TextInput, useTheme } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
+import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 
 interface InputCardProps {
@@ -15,8 +16,6 @@ interface FormInput {
 }
 
 const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) => {
-  const { colors } = useTheme();
-
   const {
     control,
     handleSubmit,
@@ -57,14 +56,7 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
         rules={{ required: true, maxLength }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
       />
-      <IconButton
-        onPress={handleSubmit(onInputComplete)}
-        size={60}
-        icon="arrow-right-bold-circle"
-        theme={{ colors: { text: colors.primary } }}
-        disabled={!!errors.primaryInput || !isDirty}
-        style={{ position: 'absolute', bottom: 60, right: 20 }}
-      />
+      <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={!!errors.primaryInput || !isDirty} />
     </>
   );
 };
