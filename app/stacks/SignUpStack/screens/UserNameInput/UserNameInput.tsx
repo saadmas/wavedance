@@ -13,7 +13,7 @@ const UserNameInput = ({ goToNextStep }: UserNameInputProps) => {
     goToNextStep();
   };
 
-  return <InputCard title="What's your name?" onSubmit={onNameEnter} maxLength={50} />;
+  return <InputCard title="What's your name?" onSubmit={onNameEnter} maxLength={50} shouldAutoCapitalize={true} />;
 };
 
 export default UserNameInput;

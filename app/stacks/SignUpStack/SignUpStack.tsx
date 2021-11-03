@@ -6,15 +6,16 @@ import { IconButton, ProgressBar, useTheme } from 'react-native-paper';
 import { View } from 'react-native';
 import BirthdayInput from './screens/BirthdayInput/BirthdayInput';
 import { defaultScreenPadding } from '../../styles/theme';
+import HometownInput from './screens/HometownInput/HometownInput';
+import CurrentLocationInput from './screens/CurrentLocationInput/CurrentLocationInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
 }
 
-const StepComponents = [UserNameInput, BirthdayInput, SignUp];
-
-const stepIcons = ['rename-box', 'cake-variant', 'login-variant'];
+const StepComponents = [UserNameInput, BirthdayInput, HometownInput, CurrentLocationInput, SignUp];
+const stepIcons = ['rename-box', 'cake-variant', 'home-circle', 'map-marker', 'login-variant'];
 
 const SignUpStack = () => {
   const { colors } = useTheme();

@@ -7,6 +7,7 @@ import Title from '../Title/Title';
 interface InputCardProps {
   title: string;
   onSubmit: (input: string) => void;
+  shouldAutoCapitalize?: boolean;
   placeholder?: string;
   maxLength?: number;
 }
@@ -15,7 +16,7 @@ interface FormInput {
   primaryInput: string;
 }
 
-const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) => {
+const InputCard = ({ title, placeholder, maxLength, onSubmit, shouldAutoCapitalize }: InputCardProps) => {
   const {
     control,
     handleSubmit,
@@ -41,7 +42,7 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit }: InputCardProps) 
         placeholder={placeholder}
         multiline={true}
         maxLength={maxLength}
-        autoCapitalize={'words'}
+        autoCapitalize={shouldAutoCapitalize ? 'words' : undefined}
         theme={{ fonts: { regular: { fontFamily: 'Montserrat_400Regular' } } }}
       />
     );

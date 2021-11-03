@@ -11,7 +11,7 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
   const [birthday, setBirthday] = React.useState<Date | undefined>(undefined);
   const dispatch = useSignUpDispatch();
 
-  const onBirthdayEnter = () => {
+  const onBirthdaySubmit = () => {
     if (birthday) {
       dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
       goToNextStep();
@@ -51,7 +51,7 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
         themeVariant="dark"
         onChange={onDateChange}
       />
-      <NextScreenButton onPress={onBirthdayEnter} isDisabled={!birthday} />
+      <NextScreenButton onPress={onBirthdaySubmit} isDisabled={!birthday} />
     </>
   );
 };

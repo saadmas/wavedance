@@ -20,6 +20,14 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'BIRTHDAY_UPDATE':
       const birthday = action.payload;
       return { ...state, birthday };
+    case 'HOMETOWN_UPDATE':
+      const hometown = action.payload;
+      return { ...state, hometown };
+    case 'CURRENT_LOCATION_UPDATE':
+      const currentLocation = action.payload;
+      return { ...state, currentLocation };
+    case 'CURRENT_LOCATION_AS_HOMETOWN':
+      return { ...state, currentLocation: state.hometown };
     default:
       return { ...state };
   }

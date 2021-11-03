@@ -19,4 +19,23 @@ interface BirthdayUpdateAction {
   payload: string;
 }
 
-export type SignUpAction = NameUpdateAction | BirthdayUpdateAction;
+interface HometownUpdateAction {
+  type: 'HOMETOWN_UPDATE';
+  payload: string;
+}
+
+interface CurrentLocationUpdateAction {
+  type: 'CURRENT_LOCATION_UPDATE';
+  payload: string;
+}
+
+interface CurrentLocationAsHometownAction {
+  type: 'CURRENT_LOCATION_AS_HOMETOWN';
+}
+
+export type SignUpAction =
+  | NameUpdateAction
+  | BirthdayUpdateAction
+  | HometownUpdateAction
+  | CurrentLocationUpdateAction
+  | CurrentLocationAsHometownAction;
