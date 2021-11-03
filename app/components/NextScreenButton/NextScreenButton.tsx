@@ -1,22 +1,20 @@
 import * as React from 'react';
-import { GestureResponderEvent } from 'react-native';
-import { IconButton, useTheme } from 'react-native-paper';
+import { FAB, useTheme } from 'react-native-paper';
 
 interface NextScreenButtonProps {
-  onPress: (e: GestureResponderEvent) => void;
+  onPress: () => void;
   isDisabled: boolean;
 }
 
 const NextScreenButton = ({ onPress, isDisabled }: NextScreenButtonProps) => {
   const { colors } = useTheme();
   return (
-    <IconButton
+    <FAB
       onPress={onPress}
-      size={60}
-      icon="arrow-right-bold-circle"
-      theme={{ colors: { text: colors.primary } }}
+      icon={'check'}
+      theme={{ colors: { accent: colors.accent } }}
       disabled={isDisabled}
-      style={{ position: 'absolute', bottom: 60, right: 20 }}
+      style={{ position: 'absolute', bottom: 80, right: 40 }}
     />
   );
 };
