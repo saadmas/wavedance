@@ -7,7 +7,6 @@ import { SignUpStepProps } from '../../SignUpStack';
 interface CurrentLocationInputProps extends SignUpStepProps {}
 
 const CurrentLocationInput = ({ goToNextStep }: CurrentLocationInputProps) => {
-  const { colors } = useTheme();
   const dispatch = useSignUpDispatch();
 
   const onCurrentLocationEnter = (currentLocation: string) => {
@@ -27,18 +26,11 @@ const CurrentLocationInput = ({ goToNextStep }: CurrentLocationInputProps) => {
         onSubmit={onCurrentLocationEnter}
         maxLength={50}
         placeholder="e.g. Karachi, Pakistan"
+        secondaryButtonProps={{
+          onPress: onCurrentLocationSameAsHometown,
+          text: 'Live in hometown',
+        }}
       />
-      <Button
-        mode="outlined"
-        style={{ width: 150, borderRadius: 40, marginTop: 20, borderColor: colors.text }}
-        labelStyle={{ fontSize: 10 }}
-        compact={true}
-        uppercase={false}
-        onPress={onCurrentLocationSameAsHometown}
-        theme={{ colors: { primary: colors.text } }}
-      >
-        Live in hometown
-      </Button>
     </>
   );
 };

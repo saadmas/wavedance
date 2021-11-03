@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
+
+interface SecondaryButtonProps {
+  onPress: () => void;
+  text: string;
+}
 
 interface InputCardProps {
   title: string;
@@ -10,13 +15,23 @@ interface InputCardProps {
   shouldAutoCapitalize?: boolean;
   placeholder?: string;
   maxLength?: number;
+  secondaryButtonProps?: SecondaryButtonProps;
 }
 
 interface FormInput {
   primaryInput: string;
 }
 
-const InputCard = ({ title, placeholder, maxLength, onSubmit, shouldAutoCapitalize }: InputCardProps) => {
+const InputCard = ({
+  title,
+  placeholder,
+  maxLength,
+  onSubmit,
+  shouldAutoCapitalize,
+  secondaryButtonProps,
+}: InputCardProps) => {
+  const { colors } = useTheme();
+
   const {
     control,
     handleSubmit,
@@ -47,6 +62,28 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit, shouldAutoCapitali
     );
   };
 
+  const renderSecondaryButton = () => {
+    if (!secondaryButtonProps) {
+      return;
+    }
+
+    const { onPress, text } = secondaryButtonProps;
+
+    return (
+      <Button
+        mode="outlined"
+        style={{ width: 150, borderRadius: 40, marginTop: 20, borderColor: colors.text }}
+        labelStyle={{ fontSize: 10 }}
+        compact={true}
+        uppercase={false}
+        onPress={onPress}
+        theme={{ colors: { primary: colors.text } }}
+      >
+        {text}
+      </Button>
+    );
+  };
+
   return (
     <>
       <Title title={title} />
@@ -56,6 +93,7 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit, shouldAutoCapitali
         rules={{ required: true, maxLength }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
       />
+      {renderSecondaryButton()}
       <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={!!errors.primaryInput || !isDirty} />
     </>
   );
