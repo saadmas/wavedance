@@ -1,5 +1,6 @@
 import { DarkTheme as NavigationDefaultTheme } from '@react-navigation/native';
-import { DarkTheme as PaperDefaultTheme } from 'react-native-paper';
+import { configureFonts, DarkTheme as PaperDefaultTheme } from 'react-native-paper';
+import { fontConfig } from './fonts';
 
 export const backgroundColor = '#000';
 export const inputTextColor = '#444';
@@ -16,6 +17,7 @@ const theme = {
     text: '#ffffdf',
     background: backgroundColor,
   },
+  fonts: configureFonts(fontConfig),
 };
 
 export default theme;

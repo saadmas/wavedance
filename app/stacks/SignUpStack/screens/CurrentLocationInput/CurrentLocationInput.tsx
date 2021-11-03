@@ -35,7 +35,7 @@ const CurrentLocationInput = ({ goToNextStep }: CurrentLocationInputProps) => {
         compact={true}
         uppercase={false}
         onPress={onCurrentLocationSameAsHometown}
-        theme={{ colors: { primary: colors.text }, fonts: { regular: { fontFamily: 'Montserrat_400Regular' } } }}
+        theme={{ colors: { primary: colors.text } }}
       >
         Live in hometown
       </Button>

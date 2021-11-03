@@ -43,7 +43,6 @@ const InputCard = ({ title, placeholder, maxLength, onSubmit, shouldAutoCapitali
         multiline={true}
         maxLength={maxLength}
         autoCapitalize={shouldAutoCapitalize ? 'words' : undefined}
-        theme={{ fonts: { regular: { fontFamily: 'Montserrat_400Regular' } } }}
       />
     );
   };
