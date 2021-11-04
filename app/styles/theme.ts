@@ -12,9 +12,9 @@ const theme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
-    primary: '#1d8dbc',
+    primary: '#B79CED',
     accent: '#239874',
-    text: '#ffffdf',
+    text: '#efd9ce',
     background: backgroundColor,
   },
   fonts: configureFonts(fontConfig),

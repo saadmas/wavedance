@@ -4,12 +4,10 @@ import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
 import { Button, Chip, Text, useTheme } from 'react-native-paper';
-import { FlatList, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Passion } from '../../../../state/enums/passion';
 
 interface PassionsInputProps extends SignUpStepProps {}
-
-const passions = Object.keys(Passion);
 
 const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
   const { colors } = useTheme();
@@ -39,31 +37,29 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
     return !doPassionsMeetRequirements;
   };
 
-  const renderPassionPill = React.useCallback(
-    ({ item }: any) => {
-      const passionPill = (
-        <Button
-          mode="outlined"
-          key={item}
-          style={{
-            borderRadius: 40,
-            margin: 10,
-            marginLeft: 0,
-            borderColor: selectedPassions.has(item) ? colors.primary : colors.text,
-          }}
-          labelStyle={{ fontSize: 12 }}
-          compact={true}
-          uppercase={false}
-          onPress={() => onPassionToggle(item)}
-          theme={{ colors: { primary: selectedPassions.has(item) ? colors.primary : colors.text } }}
-        >
-          {item}
-        </Button>
-      );
-      return passionPill;
-    },
-    [selectedPassions]
-  );
+  const renderPassionChips = () => {
+    const passionChips = Object.values(Passion).map(passion => (
+      <Button
+        mode="outlined"
+        key={passion}
+        style={{
+          maxWidth: 150,
+          borderRadius: 40,
+          margin: 10,
+          marginLeft: 0,
+          borderColor: selectedPassions.has(passion) ? colors.primary : colors.text,
+        }}
+        labelStyle={{ fontSize: 12 }}
+        compact={true}
+        uppercase={false}
+        onPress={() => onPassionToggle(passion)}
+        theme={{ colors: { primary: selectedPassions.has(passion) ? colors.primary : colors.text } }}
+      >
+        {passion}
+      </Button>
+    ));
+    return passionChips;
+  };
 
   return (
     <>
@@ -82,14 +78,16 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
           {selectedPassions.size}/{maxPassions}
         </Text>
       </View>
-      <FlatList
-        data={passions}
-        renderItem={renderPassionPill}
-        keyExtractor={item => item}
-        numColumns={3}
-        initialNumToRender={20}
-        style={{ flex: 1, flexGrow: 1 }}
-      />
+      <ScrollView
+        contentContainerStyle={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+        }}
+        contentInset={{ bottom: 50 }}
+      >
+        {renderPassionChips()}
+      </ScrollView>
       <NextScreenButton onPress={onPassionsSubmit} isDisabled={isNextButtonDisabled()} />
     </>
   );
