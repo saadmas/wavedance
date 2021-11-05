@@ -10,6 +10,7 @@ import HometownInput from './screens/HometownInput/HometownInput';
 import CurrentLocationInput from './screens/CurrentLocationInput/CurrentLocationInput';
 import OccupationInput from './screens/OccupationInput/OccupationInput';
 import PassionsInput from './screens/PassionsInput/PassionsInput';
+import PhotoInput from './screens/PhotoInput/PhotoInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
@@ -23,6 +24,7 @@ const StepComponents = [
   CurrentLocationInput,
   OccupationInput,
   PassionsInput,
+  PhotoInput,
   SignUp,
 ];
 
@@ -33,12 +35,13 @@ const stepIcons = [
   'map-marker',
   'briefcase-outline',
   'heart-outline',
+  'camera',
   'lock-outline',
 ];
 
 const SignUpStack = () => {
   const { colors } = useTheme();
-  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(5); ///
+  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0); ///
 
   const goToNextStep = () => {
     setCurrentStepIndex(previousIndex => ++previousIndex);
