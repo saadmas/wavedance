@@ -3,7 +3,8 @@ export interface SignUpState {
   birthday: string;
   currentLocation: string;
   hometown: string;
-  passions: string[];
+  passions: Set<string>;
+  genres: Set<string>;
   profilePhoto: string;
   prompts: string[];
   occupation?: string;
@@ -39,10 +40,22 @@ interface CurrentLocationAsHometownAction {
   type: 'CURRENT_LOCATION_AS_HOMETOWN';
 }
 
+interface GenresUpdateAction {
+  type: 'GENRES_UPDATE';
+  payload: Set<string>;
+}
+
+interface PassionsUpdateAction {
+  type: 'PASSIONS_UPDATE';
+  payload: Set<string>;
+}
+
 export type SignUpAction =
   | NameUpdateAction
   | BirthdayUpdateAction
   | HometownUpdateAction
   | CurrentLocationUpdateAction
   | CurrentLocationAsHometownAction
-  | OccupationUpdateAction;
+  | OccupationUpdateAction
+  | GenresUpdateAction
+  | PassionsUpdateAction;

@@ -13,7 +13,7 @@ const GenresInput = ({ goToNextStep }: GenresInputProps) => {
   const minGenres = 1;
 
   const onGenresSubmit = () => {
-    // dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
+    dispatch({ type: 'GENRES_UPDATE', payload: selectedGenres });
     goToNextStep();
   };
 

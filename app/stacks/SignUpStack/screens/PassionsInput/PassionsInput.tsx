@@ -13,7 +13,7 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
   const minPassions = 3;
 
   const onPassionsSubmit = () => {
-    // dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
+    dispatch({ type: 'PASSIONS_UPDATE', payload: selectedPassions });
     goToNextStep();
   };
 
