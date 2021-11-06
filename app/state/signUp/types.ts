@@ -6,7 +6,7 @@ export interface SignUpState {
   passions: Set<string>;
   genres: Set<string>;
   profilePhotoUri: string;
-  prompts: string[];
+  prompts: Map<Prompt, string>;
   occupation?: string;
   instagramHandle?: string;
 }
@@ -55,6 +55,16 @@ interface ProfilePhotoUpdateAction {
   payload: string;
 }
 
+interface AddPromptAction {
+  type: 'ADD_PROMPT';
+  payload: { prompt: Prompt; value: string };
+}
+
+interface RemovePromptAction {
+  type: 'REMOVE_PROMPT';
+  payload: Prompt;
+}
+
 export type SignUpAction =
   | NameUpdateAction
   | BirthdayUpdateAction
@@ -64,4 +74,6 @@ export type SignUpAction =
   | OccupationUpdateAction
   | GenresUpdateAction
   | PassionsUpdateAction
-  | ProfilePhotoUpdateAction;
+  | ProfilePhotoUpdateAction
+  | AddPromptAction
+  | RemovePromptAction;

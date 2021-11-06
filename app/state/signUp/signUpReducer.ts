@@ -7,7 +7,7 @@ export const getInitialSignUpState = (): SignUpState => {
     currentLocation: '',
     hometown: '',
     profilePhotoUri: '',
-    prompts: [],
+    prompts: new Map(),
     passions: new Set(),
     genres: new Set(),
   };
@@ -41,6 +41,13 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'PROFILE_PHOTO_UPDATE':
       const profilePhotoUri = action.payload;
       return { ...state, profilePhotoUri };
+    case 'ADD_PROMPT':
+      const { prompt, value } = action.payload;
+      state.prompts.set(prompt, value);
+      return { ...state, prompts: new Set(state.prompts) };
+    case 'REMOVE_PROMPT':
+      state.prompts.delete(action.payload);
+      return { ...state, prompts: new Set(state.prompts) };
     default:
       return { ...state };
   }
