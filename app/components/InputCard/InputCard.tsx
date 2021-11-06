@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
 import { Button, TextInput, useTheme } from 'react-native-paper';
+import { backgroundColor } from '../../styles/theme';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 
@@ -54,6 +55,7 @@ const InputCard = ({
         value={value}
         style={{
           fontSize: 20,
+          backgroundColor,
         }}
         placeholder={placeholder}
         multiline={true}

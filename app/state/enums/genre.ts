@@ -24,7 +24,7 @@ export enum Genre {
   PsyTrance = 'Psy Trance',
   Riddim = 'Riddim',
   Techno = 'Techno',
-  TechHouse = 'TechHouse',
+  TechHouse = 'Tech House',
   Trap = 'Trap',
   Trance = 'Trance',
   UKGarage = 'UK Garage',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { Button, Searchbar, Text, useTheme } from 'react-native-paper';
 import { ScrollView, View } from 'react-native';
 import Title from '../Title/Title';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
@@ -25,10 +25,20 @@ const MultiPillSelector = ({
   onPillToggle,
   onSubmit,
 }: MultiPillSelectorProps) => {
+  const [filteredPillTexts, setFilteredPillTexts] = React.useState<string[]>(pillTexts);
+  const [searchText, setSearchText] = React.useState<string>('');
   const { colors } = useTheme();
 
+  React.useEffect(() => {
+    if (searchText) {
+      setFilteredPillTexts(prevTexts => prevTexts.filter(t => t.toLowerCase().includes(searchText.toLowerCase())));
+      return;
+    }
+    setFilteredPillTexts(pillTexts);
+  }, [searchText]);
+
   const renderPills = () => {
-    const pills = pillTexts.map(pillText => (
+    const pills = filteredPillTexts.map(pillText => (
       <Button
         mode="outlined"
         key={pillText}
@@ -68,6 +78,13 @@ const MultiPillSelector = ({
           {selectedPillTexts.size}/{maxPillCount}
         </Text>
       </View>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={setSearchText}
+        value={searchText}
+        style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: 10, height: 40 }}
+        inputStyle={{ fontSize: 12 }}
+      />
       <ScrollView
         contentContainerStyle={{
           display: 'flex',
