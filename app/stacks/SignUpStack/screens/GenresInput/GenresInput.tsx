@@ -36,7 +36,7 @@ const GenresInput = ({ goToNextStep }: GenresInputProps) => {
 
   return (
     <MultiPillSelector
-      titleText={'What are your favorite electronic music genres?'}
+      titleText={'What are your favorite genres?'}
       minPillCount={minGenres}
       maxPillCount={maxGenres}
       pillTexts={Object.values(Genre)}
