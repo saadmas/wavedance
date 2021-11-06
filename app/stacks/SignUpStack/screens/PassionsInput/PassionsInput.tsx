@@ -10,6 +10,7 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
   const [selectedPassions, setSelectedPassions] = React.useState<Set<string>>(new Set());
   const dispatch = useSignUpDispatch();
   const maxPassions = 5;
+  const minPassions = 3;
 
   const onPassionsSubmit = () => {
     // dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
@@ -29,15 +30,15 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
   };
 
   const isNextButtonDisabled = () => {
-    const doPassionsMeetRequirements = selectedPassions.size >= 3;
+    const doPassionsMeetRequirements = selectedPassions.size >= minPassions;
     return !doPassionsMeetRequirements;
   };
 
   return (
     <MultiPillSelector
       titleText={'What are your passions?'}
-      minPillCount={3}
-      maxPillCount={5}
+      minPillCount={minPassions}
+      maxPillCount={maxPassions}
       pillTexts={Object.values(Passion)}
       selectedPillTexts={selectedPassions}
       isSubmitButtonDisabled={isNextButtonDisabled()}
