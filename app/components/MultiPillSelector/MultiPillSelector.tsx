@@ -31,7 +31,7 @@ const MultiPillSelector = ({
 
   React.useEffect(() => {
     if (searchText) {
-      setFilteredPillTexts(prevTexts => prevTexts.filter(t => t.toLowerCase().includes(searchText.toLowerCase())));
+      setFilteredPillTexts(pillTexts.filter(t => t.toLowerCase().includes(searchText.toLowerCase())));
       return;
     }
     setFilteredPillTexts(pillTexts);
