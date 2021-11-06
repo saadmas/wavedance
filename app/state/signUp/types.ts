@@ -5,7 +5,7 @@ export interface SignUpState {
   hometown: string;
   passions: Set<string>;
   genres: Set<string>;
-  profilePhoto: string;
+  profilePhotoUri: string;
   prompts: string[];
   occupation?: string;
   instagramHandle?: string;
@@ -50,6 +50,11 @@ interface PassionsUpdateAction {
   payload: Set<string>;
 }
 
+interface ProfilePhotoUpdateAction {
+  type: 'PROFILE_PHOTO_UPDATE';
+  payload: string;
+}
+
 export type SignUpAction =
   | NameUpdateAction
   | BirthdayUpdateAction
@@ -58,4 +63,5 @@ export type SignUpAction =
   | CurrentLocationAsHometownAction
   | OccupationUpdateAction
   | GenresUpdateAction
-  | PassionsUpdateAction;
+  | PassionsUpdateAction
+  | ProfilePhotoUpdateAction;

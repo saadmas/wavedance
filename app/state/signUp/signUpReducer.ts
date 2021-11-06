@@ -6,7 +6,7 @@ export const getInitialSignUpState = (): SignUpState => {
     birthday: '',
     currentLocation: '',
     hometown: '',
-    profilePhoto: '',
+    profilePhotoUri: '',
     prompts: [],
     passions: new Set(),
     genres: new Set(),
@@ -38,6 +38,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'GENRES_UPDATE':
       const genres = action.payload;
       return { ...state, genres };
+    case 'PROFILE_PHOTO_UPDATE':
+      const profilePhotoUri = action.payload;
+      return { ...state, profilePhotoUri };
     default:
       return { ...state };
   }

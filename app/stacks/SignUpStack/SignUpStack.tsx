@@ -12,6 +12,7 @@ import OccupationInput from './screens/OccupationInput/OccupationInput';
 import PassionsInput from './screens/PassionsInput/PassionsInput';
 import PhotoInput from './screens/PhotoInput/PhotoInput';
 import GenresInput from './screens/GenresInput/GenresInput';
+import InstagramHandleInputInput from './screens/InstagramHandleInput/InstagramHandleInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
@@ -26,6 +27,7 @@ const StepComponents = [
   OccupationInput,
   GenresInput,
   PassionsInput,
+  InstagramHandleInputInput,
   PhotoInput,
   SignUp,
 ];
@@ -38,13 +40,14 @@ const stepIcons = [
   'briefcase-outline',
   'music-circle',
   'heart-outline',
+  'instagram',
   'camera',
   'lock-outline',
 ];
 
 const SignUpStack = () => {
   const { colors } = useTheme();
-  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(5); ///
+  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(8); ///
 
   const goToNextStep = () => {
     setCurrentStepIndex(previousIndex => ++previousIndex);
