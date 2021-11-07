@@ -17,6 +17,7 @@ interface InputCardProps {
   shouldAutoCapitalize?: boolean;
   placeholder?: string;
   maxLength?: number;
+  defaultValue?: string;
   secondaryButtonProps?: SecondaryButtonProps;
 }
 
@@ -31,6 +32,7 @@ const InputCard = ({
   onSubmit,
   shouldAutoCapitalize,
   secondaryButtonProps,
+  defaultValue,
 }: InputCardProps) => {
   const { colors } = useTheme();
 
@@ -53,6 +55,7 @@ const InputCard = ({
         onChangeText={onChange}
         mode="flat"
         value={value}
+        defaultValue={defaultValue}
         style={{
           fontSize: 20,
           backgroundColor,

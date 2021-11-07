@@ -1,23 +1,24 @@
+import { DrawerNavigationProp, DrawerScreenProps } from '@react-navigation/drawer';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
+import { Path } from '../../routing/paths';
+import { PromptDrawerParamList } from '../../stacks/SignUpStack/screens/PromptsManager/PromptsManager';
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 
 interface PromptsSelectorProps {
   filledPrompts: Map<Prompt, string>;
-  selectedPrompt: Prompt;
+  navigation: DrawerNavigationProp<PromptDrawerParamList, Path.SignUpPromptSelector>;
   onPromptsSubmit: () => void;
-  openPromptDrawer: () => void;
 }
 
-const PromptsSelector = ({
-  filledPrompts,
-  onPromptsSubmit,
-  openPromptDrawer,
-  selectedPrompt,
-}: PromptsSelectorProps) => {
+const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation }: PromptsSelectorProps) => {
+  const openPromptDrawer = () => {
+    navigation.openDrawer();
+  };
+
   return (
     <>
       <Title title="Let's get to know you" />
