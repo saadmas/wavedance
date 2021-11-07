@@ -7,6 +7,7 @@ import PromptsSelector from '../../../../components/PromptsSelector/PromptsSelec
 import PromptList from '../../../../components/PromptList/PromptList';
 import { Path } from '../../../../routing/paths';
 import { Text } from 'react-native-paper';
+import PromptInput from '../../../../components/PromptInput/PromptInput';
 
 interface PromptsManagerProps extends SignUpStepProps {}
 
@@ -35,6 +36,13 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
     return <PromptList filledPrompts={filledPrompts} navigate={props.navigation.navigate} />;
   };
 
+  const addPrompt = (selectedPrompt: SelectedPrompt) => {
+    setFilledPrompts(prevPrompts => {
+      prevPrompts.set(selectedPrompt.prompt, selectedPrompt.value);
+      return new Map(prevPrompts);
+    });
+  };
+
   return (
     <DrawerNavigator.Navigator
       initialRouteName={Path.SignUpPromptSelector}
@@ -49,7 +57,9 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
           <PromptsSelector filledPrompts={filledPrompts} onPromptsSubmit={onPromptsSubmit} navigation={navigation} />
         )}
       </DrawerNavigator.Screen>
-      <DrawerNavigator.Screen name={Path.SignUpPromptInput}>{props => <Text>FOO</Text>}</DrawerNavigator.Screen>
+      <DrawerNavigator.Screen name={Path.SignUpPromptInput}>
+        {props => <PromptInput addPrompt={addPrompt} {...props} />}
+      </DrawerNavigator.Screen>
     </DrawerNavigator.Navigator>
   );
 };
