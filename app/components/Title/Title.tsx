@@ -13,10 +13,9 @@ const Title = ({ title }: TitleProps) => {
     <Animatable.View animation="fadeInLeft">
       <RnpTitle
         style={{
-          fontSize: 35,
+          fontSize: 25,
           paddingTop: 10,
           paddingBottom: 10,
-          lineHeight: 40,
           fontFamily: fonts.thin.fontFamily,
         }}
       >
