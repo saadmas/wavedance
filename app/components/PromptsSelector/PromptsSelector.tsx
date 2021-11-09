@@ -41,7 +41,11 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       return (
         <Animatable.View key={prompt} animation="fadeInLeft">
           <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
-            <Card.Title title={prompt} titleStyle={{ fontFamily: fonts.thin.fontFamily }} />
+            <Card.Title
+              title={prompt}
+              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5 }}
+              titleNumberOfLines={10}
+            />
             <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
             <Card.Content>
               <Paragraph>{value}</Paragraph>

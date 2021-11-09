@@ -27,7 +27,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
           onSubmit={onSubmit}
           maxLength={100} ///
           blurOnSubmit={false}
-          // defaultValue={selectedPrompt.value}
+          defaultValue={selectedPrompt.value}
           // placeholder="e.g.Lane 8" ///
         />
       </View>

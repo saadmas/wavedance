@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { backgroundColor } from '../../styles/theme';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
