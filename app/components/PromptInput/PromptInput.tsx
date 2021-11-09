@@ -1,5 +1,6 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import * as React from 'react';
+import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { Path } from '../../routing/paths';
 import { PromptDrawerParamList, SelectedPrompt } from '../../stacks/SignUpStack/screens/PromptsManager/PromptsManager';
 import InputCard from '../InputCard/InputCard';
@@ -19,14 +20,18 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   console.log(selectedPrompt.value); ///
 
   return (
-    <InputCard
-      title={selectedPrompt.prompt}
-      onSubmit={onSubmit}
-      maxLength={100} ///
-      blurOnSubmit={false}
-      // defaultValue={selectedPrompt.value}
-      // placeholder="e.g.Lane 8" ///
-    />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ height: '100%' }}>
+        <InputCard
+          title={selectedPrompt.prompt}
+          onSubmit={onSubmit}
+          maxLength={100} ///
+          blurOnSubmit={false}
+          // defaultValue={selectedPrompt.value}
+          // placeholder="e.g.Lane 8" ///
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

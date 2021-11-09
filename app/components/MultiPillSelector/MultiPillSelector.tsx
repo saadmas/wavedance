@@ -92,6 +92,7 @@ const MultiPillSelector = ({
           flexWrap: 'wrap',
         }}
         contentInset={{ bottom: 50 }}
+        showsVerticalScrollIndicator={false}
       >
         {renderPills()}
       </ScrollView>

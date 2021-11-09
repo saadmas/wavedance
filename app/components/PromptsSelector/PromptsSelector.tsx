@@ -7,6 +7,7 @@ import { PromptDrawerParamList } from '../../stacks/SignUpStack/screens/PromptsM
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
+import * as Animatable from 'react-native-animatable';
 
 interface PromptsSelectorProps {
   filledPrompts: Map<Prompt, string>;
@@ -38,17 +39,19 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       };
 
       return (
-        <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }} key={prompt}>
-          <Card.Title title={prompt} titleStyle={{ fontFamily: fonts.thin.fontFamily }} />
-          <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
-          <Card.Content>
-            <Paragraph>{value}</Paragraph>
-          </Card.Content>
-          <Card.Actions>
-            <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
-            <IconButton icon="trash-can-outline" size={cardActionIconSize} onPress={onDelete} />
-          </Card.Actions>
-        </Card>
+        <Animatable.View key={prompt} animation="fadeInLeft">
+          <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
+            <Card.Title title={prompt} titleStyle={{ fontFamily: fonts.thin.fontFamily }} />
+            <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
+            <Card.Content>
+              <Paragraph>{value}</Paragraph>
+            </Card.Content>
+            <Card.Actions>
+              <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
+              <IconButton icon="trash-can-outline" size={cardActionIconSize} onPress={onDelete} />
+            </Card.Actions>
+          </Card>
+        </Animatable.View>
       );
     });
     return promptCards;
@@ -69,7 +72,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
         <Text>Answer 3 prompts</Text>
         <Text>{filledPrompts.size}/3</Text>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={{ display: 'flex', alignItems: 'center' }}>
         {filledPrompts.size < 3 && (
           <Button
             icon="plus"
@@ -82,6 +85,8 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
             Add prompt
           </Button>
         )}
+      </View>
+      <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
       </ScrollView>
       <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < 3} />

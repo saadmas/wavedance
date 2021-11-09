@@ -7,6 +7,7 @@ import PromptsSelector from '../../../../components/PromptsSelector/PromptsSelec
 import PromptList from '../../../../components/PromptList/PromptList';
 import { Path } from '../../../../routing/paths';
 import PromptInput from '../../../../components/PromptInput/PromptInput';
+import { useTheme } from 'react-native-paper';
 
 interface PromptsManagerProps extends SignUpStepProps {}
 
@@ -25,6 +26,7 @@ const DrawerNavigator = createDrawerNavigator<PromptDrawerParamList>();
 const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
   const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt, string>>(new Map());
   const dispatch = useSignUpDispatch();
+  const { colors } = useTheme();
 
   const onPromptsSubmit = () => {
     // dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
@@ -55,7 +57,7 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
       backBehavior="initialRoute"
       drawerType="front"
       overlayColor="transparent"
-      drawerStyle={{ width: '100%' }}
+      drawerStyle={{ width: '100%', backgroundColor: colors.background }}
       drawerContent={renderDrawerContent}
     >
       <DrawerNavigator.Screen name={Path.SignUpPromptSelector}>

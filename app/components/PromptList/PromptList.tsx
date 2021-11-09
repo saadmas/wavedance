@@ -4,6 +4,7 @@ import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Divider, Text } from 'react-native-paper';
 import { Prompt } from '../../state/enums/prompt';
 import { Path } from '../../routing/paths';
+import { View } from 'react-native';
 
 interface PromptListProps {
   filledPrompts: Map<Prompt, string>;
