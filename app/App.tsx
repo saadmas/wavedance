@@ -23,13 +23,11 @@ const App = () => {
 
   return (
     <PaperProvider theme={theme}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.app}>
-          <NavigationContainer ref={navigationRef} theme={theme}>
-            {isSignedIn ? null : <AuthScreen />}
-          </NavigationContainer>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={styles.app}>
+        <NavigationContainer ref={navigationRef} theme={theme}>
+          {isSignedIn ? null : <AuthScreen />}
+        </NavigationContainer>
+      </View>
     </PaperProvider>
   );
 };

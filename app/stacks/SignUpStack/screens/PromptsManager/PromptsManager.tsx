@@ -6,7 +6,6 @@ import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navig
 import PromptsSelector from '../../../../components/PromptsSelector/PromptsSelector';
 import PromptList from '../../../../components/PromptList/PromptList';
 import { Path } from '../../../../routing/paths';
-import { Text } from 'react-native-paper';
 import PromptInput from '../../../../components/PromptInput/PromptInput';
 
 interface PromptsManagerProps extends SignUpStepProps {}
@@ -21,7 +20,7 @@ export type PromptDrawerParamList = {
   [Path.SignUpPromptSelector]: undefined;
 };
 
-const DrawerNavigator = createDrawerNavigator();
+const DrawerNavigator = createDrawerNavigator<PromptDrawerParamList>();
 
 const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
   const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt, string>>(new Map());
@@ -43,6 +42,13 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
     });
   };
 
+  const deletePrompt = (prompt: Prompt) => {
+    setFilledPrompts(prevPrompts => {
+      prevPrompts.delete(prompt);
+      return new Map(prevPrompts);
+    });
+  };
+
   return (
     <DrawerNavigator.Navigator
       initialRouteName={Path.SignUpPromptSelector}
@@ -54,7 +60,12 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
     >
       <DrawerNavigator.Screen name={Path.SignUpPromptSelector}>
         {({ navigation }) => (
-          <PromptsSelector filledPrompts={filledPrompts} onPromptsSubmit={onPromptsSubmit} navigation={navigation} />
+          <PromptsSelector
+            filledPrompts={filledPrompts}
+            onPromptsSubmit={onPromptsSubmit}
+            navigation={navigation}
+            deletePrompt={deletePrompt}
+          />
         )}
       </DrawerNavigator.Screen>
       <DrawerNavigator.Screen name={Path.SignUpPromptInput}>

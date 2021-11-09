@@ -16,13 +16,16 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
     navigation.navigate(Path.SignUpPromptSelector);
   };
 
+  console.log(selectedPrompt.value); ///
+
   return (
     <InputCard
       title={selectedPrompt.prompt}
       onSubmit={onSubmit}
       maxLength={100} ///
-      defaultValue={selectedPrompt.value}
-      // placeholder="e.g. Karachi, Pakistan" ///
+      blurOnSubmit={false}
+      // defaultValue={selectedPrompt.value}
+      // placeholder="e.g.Lane 8" ///
     />
   );
 };

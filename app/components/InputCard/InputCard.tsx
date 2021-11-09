@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { backgroundColor } from '../../styles/theme';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
@@ -18,6 +19,7 @@ interface InputCardProps {
   placeholder?: string;
   maxLength?: number;
   defaultValue?: string;
+  blurOnSubmit?: boolean;
   secondaryButtonProps?: SecondaryButtonProps;
 }
 
@@ -33,6 +35,7 @@ const InputCard = ({
   shouldAutoCapitalize,
   secondaryButtonProps,
   defaultValue,
+  blurOnSubmit = true,
 }: InputCardProps) => {
   const { colors } = useTheme();
 
@@ -63,6 +66,8 @@ const InputCard = ({
         placeholder={placeholder}
         multiline={true}
         maxLength={maxLength}
+        blurOnSubmit={blurOnSubmit}
+        returnKeyType={blurOnSubmit ? 'done' : undefined}
         autoCapitalize={shouldAutoCapitalize ? 'words' : undefined}
       />
     );
