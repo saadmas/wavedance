@@ -34,7 +34,6 @@ const InputCard = ({
   shouldAutoCapitalize,
   secondaryButtonProps,
   defaultValue,
-  numberOfLines,
   blurOnSubmit = true,
 }: InputCardProps) => {
   const { colors } = useTheme();
