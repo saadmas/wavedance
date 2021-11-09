@@ -41,12 +41,19 @@ const InputCard = ({
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors, isDirty },
   } = useForm<FormInput>({
     mode: 'onBlur',
+    defaultValues: { primaryInput: defaultValue },
   });
 
+  React.useEffect(() => {
+    setValue('primaryInput', defaultValue ?? '');
+  }, [defaultValue]);
+
   const onInputComplete = ({ primaryInput }: FormInput) => {
+    setValue('primaryInput', '');
     onSubmit(primaryInput);
   };
 
@@ -57,7 +64,6 @@ const InputCard = ({
         onChangeText={onChange}
         mode="flat"
         value={value}
-        defaultValue={defaultValue}
         style={{
           fontSize: 16,
           backgroundColor,
