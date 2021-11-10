@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { Path } from '../../routing/paths';
 import { PromptDrawerParamList, SelectedPrompt } from '../../stacks/SignUpStack/screens/PromptsManager/PromptsManager';
+import { promptPlaceholders } from '../../state/prompts/promptPlaceholders';
 import InputCard from '../InputCard/InputCard';
 
 interface PromptInputProps extends DrawerScreenProps<PromptDrawerParamList, Path.SignUpPromptInput> {
@@ -17,8 +18,6 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
     navigation.navigate(Path.SignUpPromptSelector);
   };
 
-  console.log(selectedPrompt.value); ///
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ height: '100%' }}>
@@ -28,7 +27,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
           maxLength={100} ///
           blurOnSubmit={false}
           defaultValue={selectedPrompt.value}
-          // placeholder="e.g.Lane 8" ///
+          placeholder={promptPlaceholders.get(selectedPrompt.prompt)}
         />
       </View>
     </TouchableWithoutFeedback>

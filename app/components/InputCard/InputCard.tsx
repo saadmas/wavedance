@@ -50,7 +50,7 @@ const InputCard = ({
 
   React.useEffect(() => {
     setValue('primaryInput', defaultValue ?? '');
-  }, [defaultValue]);
+  }, [defaultValue, setValue]);
 
   const onInputComplete = ({ primaryInput }: FormInput) => {
     setValue('primaryInput', '');
