@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import Constants from 'expo-constants';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAtpBOcrFSu6eaYZyJSW8Kgdj7bA_dCzec',
@@ -12,3 +13,12 @@ const firebaseConfig = {
 };
 
 export const fb = firebase.initializeApp(firebaseConfig);
+
+if (__DEV__) {
+  console.log('Switching to local Firebase instance...');
+  const origin = Constants.manifest?.debuggerHost?.split(':').shift() || 'localhost';
+
+  firebase.auth().useEmulator(`http://${origin}:9099/`);
+  firebase.firestore().useEmulator(origin, 8080);
+  firebase.functions().useEmulator(origin, 5001);
+}
