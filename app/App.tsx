@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import theme from './styles/theme';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from './App.styles';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
 import { navigationRef } from './routing/rootNavigation';
@@ -17,7 +17,8 @@ const App = () => {
   const userToken = useAuthState();
   const setUserToken = useAuthUpdater();
 
-  const [haveAttempedToGetUserToken, setHaveAttempedToGetUserToken] = React.useState<boolean>(false);
+  const [isLoadingUser, setIsLoadingUser] = React.useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -25,24 +26,31 @@ const App = () => {
   });
 
   React.useEffect(() => {
-    const tryGetUserToken = async () => {
-      try {
-        const secureStoreToken = await SecureStore.getItemAsync(secureStorageUserTokenKey);
-        if (secureStoreToken) {
-          const refreshedToken = await fb.auth().currentUser?.getIdToken(true);
-          if (refreshedToken) {
-            setUserToken(refreshedToken);
-            await SecureStore.setItemAsync(secureStorageUserTokenKey, refreshedToken);
-          }
-        }
-      } catch {}
-      setHaveAttempedToGetUserToken(true);
-    };
+    // const tryGetUserToken = async () => {
+    //   try {
+    //     const secureStoreToken = await SecureStore.getItemAsync(secureStorageUserTokenKey);
+    //     console.log('secureStoreToken', secureStoreToken);
+    //     if (secureStoreToken) {
+    //       const refreshedToken = await fb.auth().currentUser?.reauthenticateWithCredential;
+    //       console.log('refreshedToken', refreshedToken);
+    //       if (refreshedToken) {
+    //         setUserToken(refreshedToken);
+    //         await SecureStore.setItemAsync(secureStorageUserTokenKey, refreshedToken);
+    //       }
+    //     }
+    //   } catch {}
+    //   setHaveAttempedToGetUserToken(true);
+    // };
 
-    tryGetUserToken();
+    fb.auth().onAuthStateChanged(user => {
+      if (user) {
+        setIsLoggedIn(true);
+      }
+      setIsLoadingUser(false);
+    });
   }, []);
 
-  if (!fontsLoaded || !haveAttempedToGetUserToken) {
+  if (!fontsLoaded || isLoadingUser) {
     return <AppLoading />;
   }
 
@@ -50,7 +58,7 @@ const App = () => {
     <PaperProvider theme={theme}>
       <View style={styles.app}>
         <NavigationContainer ref={navigationRef} theme={theme}>
-          {userToken ? null : <AuthScreen />}
+          {isLoggedIn ? <Text>SIGNED IN!</Text> : <AuthScreen />}
         </NavigationContainer>
       </View>
     </PaperProvider>

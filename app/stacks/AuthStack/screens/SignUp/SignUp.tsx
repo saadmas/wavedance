@@ -25,7 +25,8 @@ const SignUp = ({}: SignUpProps) => {
 
   const storeToken = async (token?: string) => {
     if (token) {
-      await SecureStore.setItemAsync(secureStorageUserTokenKey, token);
+      const stored = await SecureStore.setItemAsync(secureStorageUserTokenKey, token);
+      console.log(stored);
       setUserToken(token);
     }
   };

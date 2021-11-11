@@ -50,7 +50,7 @@ const stepIcons = [
 
 const SignUpStack = () => {
   const { colors } = useTheme();
-  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0);
+  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(10); ///
 
   const goToNextStep = () => {
     setCurrentStepIndex(previousIndex => ++previousIndex);
