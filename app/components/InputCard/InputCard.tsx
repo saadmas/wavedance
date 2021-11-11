@@ -43,7 +43,7 @@ const InputCard = ({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isValid },
   } = useForm<FormInput>({
     mode: 'onBlur',
     defaultValues: { primaryInput: defaultValue },

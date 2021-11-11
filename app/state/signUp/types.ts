@@ -1,3 +1,5 @@
+import { Prompt } from '../enums/prompt';
+
 export interface SignUpState {
   name: string;
   birthday: string;

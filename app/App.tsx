@@ -10,6 +10,8 @@ import { Montserrat_400Regular, Lustria_400Regular, useFonts } from '@expo-googl
 import AppLoading from 'expo-app-loading';
 import * as SecureStore from 'expo-secure-store';
 import { useAuthState, useAuthUpdater } from './state/auth/AuthProvider';
+import { fb } from './firebase/config';
+import { secureStorageUserTokenKey } from './state/auth/keys';
 
 const App = () => {
   const userToken = useAuthState();
@@ -25,9 +27,13 @@ const App = () => {
   React.useEffect(() => {
     const tryGetUserToken = async () => {
       try {
-        const secureStoreToken = await SecureStore.getItemAsync('userToken');
+        const secureStoreToken = await SecureStore.getItemAsync(secureStorageUserTokenKey);
         if (secureStoreToken) {
-          setUserToken(secureStoreToken);
+          const refreshedToken = await fb.auth().currentUser?.getIdToken(true);
+          if (refreshedToken) {
+            setUserToken(refreshedToken);
+            await SecureStore.setItemAsync(secureStorageUserTokenKey, refreshedToken);
+          }
         }
       } catch {}
       setHaveAttempedToGetUserToken(true);
