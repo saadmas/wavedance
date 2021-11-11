@@ -42,22 +42,22 @@ const InputCard = ({
     control,
     handleSubmit,
     setValue,
-    reset,
+    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<FormInput>({
     mode: 'onBlur',
     defaultValues: { primaryInput: defaultValue },
   });
 
+  const watchAllFields = watch();
+
   React.useEffect(() => {
     setValue('primaryInput', defaultValue ?? '');
-    reset();
   }, [defaultValue, setValue]);
 
   const onInputComplete = ({ primaryInput }: FormInput) => {
-    onSubmit(primaryInput);
     setValue('primaryInput', '');
-    reset();
+    onSubmit(primaryInput);
   };
 
   const renderTextInput = (onChange: (...event: any[]) => void, onBlur: Noop, value: string) => {
@@ -103,6 +103,11 @@ const InputCard = ({
     );
   };
 
+  const isSubmitButtonDisabled = () => {
+    const isDisabled = !!errors.primaryInput || !isValid || !watchAllFields.primaryInput.length;
+    return isDisabled;
+  };
+
   return (
     <>
       <Title title={title} />
@@ -113,7 +118,7 @@ const InputCard = ({
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
       />
       {renderSecondaryButton()}
-      <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={!!errors.primaryInput || !isDirty} />
+      <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={isSubmitButtonDisabled()} />
     </>
   );
 };
