@@ -1,11 +1,19 @@
-export enum UserKey {
+export enum Node {
+  UserBasicInfo = 'userBasicInfo',
+  UserAdditionalInfo = 'UserAdditionalInfo',
+  UserPrompts = 'UserPrompts',
+}
+
+export enum UserBasicInfo {
   Birthday = 'birthday',
-  FirstName = 'firstName',
-  LastName = 'lastName',
+  Name = 'name',
+  ProfilePhoto = 'profilePhoto',
+}
+
+export enum UserAdditionalInfo {
   CurrentLocation = 'currentLocation',
   Hometown = 'hometown',
   Passions = 'passions',
-  ProfilePhoto = 'profilePhoto',
-  Instagram = 'instagram',
-  Prompts = 'prompts',
+  Genres = 'passions',
+  InstagramHandle = 'instagramHandle',
 }
