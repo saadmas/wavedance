@@ -1,25 +1,26 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 import 'firebase/functions';
+import 'firebase/storage';
 import Constants from 'expo-constants';
+import * as FirebaseCore from 'expo-firebase-core';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyAtpBOcrFSu6eaYZyJSW8Kgdj7bA_dCzec',
-  authDomain: 'wavedance-220ab.firebaseapp.com',
-  databaseURL: 'https://wavedance-220ab-default-rtdb.firebaseio.com',
-  projectId: 'wavedance-220ab',
-  storageBucket: 'wavedance-220ab.appspot.com',
-  messagingSenderId: '44744827788',
-  appId: '1:44744827788:web:9b5b8be651deb086e0aca9',
-  measurementId: 'G-BHE483SC59',
-};
+const firebaseConfig = {};
 
-export const fb = firebase.initializeApp(firebaseConfig);
+export function initializeFirebase() {
+  const config = FirebaseCore.DEFAULT_WEB_APP_OPTIONS;
 
-if (__DEV__) {
-  console.log('Switching to local Firebase instance...');
-  const origin = Constants.manifest?.debuggerHost?.split(':').shift() || 'localhost';
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config as FirebaseCore.IFirebaseOptions);
 
-  fb.auth().useEmulator(`http://${origin}:9099/`);
-  fb.firestore().useEmulator(origin, 8080);
-  fb.functions().useEmulator(origin, 5001);
+    if (__DEV__) {
+      console.log('Switching to local Firebase instance...');
+      const origin = Constants.manifest?.debuggerHost?.split(':').shift() || 'localhost';
+
+      firebase.auth().useEmulator(`http://${origin}:9099/`);
+      firebase.database().useEmulator(origin, 9000);
+      firebase.functions().useEmulator(origin, 5001);
+    }
+  }
 }

@@ -8,7 +8,7 @@ import AuthScreen from './screens/AuthScreen/AuthScreen';
 import { navigationRef } from './routing/rootNavigation';
 import { Montserrat_400Regular, Lustria_400Regular, useFonts } from '@expo-google-fonts/dev'; //* delete and change to use reg package when done
 import AppLoading from 'expo-app-loading';
-import { fb } from './firebase/config';
+import firebase from 'firebase';
 
 const App = () => {
   const [isLoadingUser, setIsLoadingUser] = React.useState<boolean>(true);
@@ -20,7 +20,7 @@ const App = () => {
   });
 
   React.useEffect(() => {
-    fb.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         setIsLoggedIn(true);
       }

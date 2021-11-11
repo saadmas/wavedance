@@ -1,7 +1,8 @@
-export enum Node {
+export enum FirebaseNode {
+  Users = 'users',
   UserBasicInfo = 'userBasicInfo',
-  UserAdditionalInfo = 'UserAdditionalInfo',
-  UserPrompts = 'UserPrompts',
+  UserAdditionalInfo = 'userAdditionalInfo',
+  UserPrompts = 'userPrompts',
 }
 
 export enum UserBasicInfo {
