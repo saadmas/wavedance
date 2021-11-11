@@ -8,15 +8,9 @@ import AuthScreen from './screens/AuthScreen/AuthScreen';
 import { navigationRef } from './routing/rootNavigation';
 import { Montserrat_400Regular, Lustria_400Regular, useFonts } from '@expo-google-fonts/dev'; //* delete and change to use reg package when done
 import AppLoading from 'expo-app-loading';
-import * as SecureStore from 'expo-secure-store';
-import { useAuthState, useAuthUpdater } from './state/auth/AuthProvider';
 import { fb } from './firebase/config';
-import { secureStorageUserTokenKey } from './state/auth/keys';
 
 const App = () => {
-  const userToken = useAuthState();
-  const setUserToken = useAuthUpdater();
-
   const [isLoadingUser, setIsLoadingUser] = React.useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
 
@@ -26,22 +20,6 @@ const App = () => {
   });
 
   React.useEffect(() => {
-    // const tryGetUserToken = async () => {
-    //   try {
-    //     const secureStoreToken = await SecureStore.getItemAsync(secureStorageUserTokenKey);
-    //     console.log('secureStoreToken', secureStoreToken);
-    //     if (secureStoreToken) {
-    //       const refreshedToken = await fb.auth().currentUser?.reauthenticateWithCredential;
-    //       console.log('refreshedToken', refreshedToken);
-    //       if (refreshedToken) {
-    //         setUserToken(refreshedToken);
-    //         await SecureStore.setItemAsync(secureStorageUserTokenKey, refreshedToken);
-    //       }
-    //     }
-    //   } catch {}
-    //   setHaveAttempedToGetUserToken(true);
-    // };
-
     fb.auth().onAuthStateChanged(user => {
       if (user) {
         setIsLoggedIn(true);

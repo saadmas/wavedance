@@ -5,15 +5,11 @@ import { fb } from '../../../../firebase/config';
 import { useSignUpState } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../../SignUpStack/SignUpStack';
 import { styles } from './SignUp.styles';
-import * as SecureStore from 'expo-secure-store';
-import { secureStorageUserTokenKey } from '../../../../state/auth/keys';
-import { useAuthUpdater } from '../../../../state/auth/AuthProvider';
 
 interface SignUpProps extends SignUpStepProps {}
 
 const SignUp = ({}: SignUpProps) => {
   const signUpState = useSignUpState();
-  const setUserToken = useAuthUpdater();
 
   const uploadUserDetails = () => {};
 
@@ -23,18 +19,9 @@ const SignUp = ({}: SignUpProps) => {
     return idToken;
   };
 
-  const storeToken = async (token?: string) => {
-    if (token) {
-      const stored = await SecureStore.setItemAsync(secureStorageUserTokenKey, token);
-      console.log(stored);
-      setUserToken(token);
-    }
-  };
-
   const onSubmit = async (email: string, password: string) => {
     try {
       const idToken = await createUserInFirebase(email, password);
-      await storeToken(idToken);
       await uploadUserDetails();
     } catch {
       /// handle error
