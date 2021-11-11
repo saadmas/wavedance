@@ -63,7 +63,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
 
   return (
     <>
-      <Title title="Let's get to know you" />
+      <Title title="Add some flair to your profile" />
       <View
         style={{
           display: 'flex',
