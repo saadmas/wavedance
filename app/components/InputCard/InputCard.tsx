@@ -42,7 +42,8 @@ const InputCard = ({
     control,
     handleSubmit,
     setValue,
-    formState: { errors, isDirty },
+    reset,
+    formState: { errors, isDirty, isValid },
   } = useForm<FormInput>({
     mode: 'onBlur',
     defaultValues: { primaryInput: defaultValue },
@@ -50,11 +51,13 @@ const InputCard = ({
 
   React.useEffect(() => {
     setValue('primaryInput', defaultValue ?? '');
+    reset();
   }, [defaultValue, setValue]);
 
   const onInputComplete = ({ primaryInput }: FormInput) => {
-    setValue('primaryInput', '');
     onSubmit(primaryInput);
+    setValue('primaryInput', '');
+    reset();
   };
 
   const renderTextInput = (onChange: (...event: any[]) => void, onBlur: Noop, value: string) => {
