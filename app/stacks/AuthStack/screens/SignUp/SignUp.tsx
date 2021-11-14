@@ -13,30 +13,20 @@ interface SignUpProps extends SignUpStepProps {}
 
 const SignUp = ({}: SignUpProps) => {
   const signUpState = useSignUpState();
-  console.log(signUpState); ///
 
   const uploadUserPrompts = async (uid: string) => {
     const { prompts } = signUpState;
     const promptsToStore = getPromptsToStore(prompts);
     const path = getFirebasePath(FirebaseNode.UserPrompts, uid);
 
-    console.log(prompts, promptsToStore);
-
     try {
-      await firebase
-        .database()
-        .ref(path)
-        .set({ ...promptsToStore });
-    } catch (e) {
-      console.log(e);
-    }
+      await firebase.database().ref(path).set(promptsToStore);
+    } catch {}
   };
 
   const uploadUserAdditionalInfo = async (uid: string) => {
     const { currentLocation, hometown, passions, genres, instagramHandle, occupation } = signUpState;
     const path = getFirebasePath(FirebaseNode.UserAdditionalInfo, uid);
-
-    console.log(currentLocation, hometown, passions, genres, occupation);
 
     try {
       await firebase
@@ -47,20 +37,15 @@ const SignUp = ({}: SignUpProps) => {
           [UserAdditionalInfo.Hometown]: hometown,
           [UserAdditionalInfo.Passions]: [...passions],
           [UserAdditionalInfo.Genres]: [...genres],
-          [UserAdditionalInfo.InstagramHandle]: instagramHandle,
-          [UserAdditionalInfo.InstagramHandle]: instagramHandle,
-          [UserAdditionalInfo.Occupation]: occupation,
+          [UserAdditionalInfo.InstagramHandle]: instagramHandle ?? null,
+          [UserAdditionalInfo.Occupation]: occupation ?? null,
         });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch {}
   };
 
   const uploadUserBasicInfo = async (uid: string) => {
     const { birthday, name } = signUpState;
     const path = getFirebasePath(FirebaseNode.UserBasicInfo, uid);
-
-    console.log(birthday, name);
 
     try {
       await firebase

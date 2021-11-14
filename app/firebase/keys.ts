@@ -14,7 +14,7 @@ export enum UserAdditionalInfo {
   CurrentLocation = 'currentLocation',
   Hometown = 'hometown',
   Passions = 'passions',
-  Genres = 'passions',
+  Genres = 'genres',
   InstagramHandle = 'instagramHandle',
   Occupation = 'occupation',
 }

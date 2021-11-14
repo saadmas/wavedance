@@ -2,8 +2,8 @@ import { SignUpAction, SignUpState } from './types';
 
 export const getInitialSignUpState = (): SignUpState => {
   return {
-    name: 'Saad',
-    birthday: '1-11-2000', ///
+    name: '',
+    birthday: '',
     currentLocation: '',
     hometown: '',
     profilePhotoUri: '',
@@ -45,7 +45,6 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
       const profilePhotoUri = action.payload;
       return { ...state, profilePhotoUri };
     case 'PROMPT_UPDATE':
-      console.log(action.payload);
       return { ...state, prompts: new Map(action.payload) };
     default:
       return { ...state };

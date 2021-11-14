@@ -1,17 +1,17 @@
 import { Prompt } from '../../state/enums/prompt';
 
 // Returns a map where k = full text of prompt, v = key of prompt
-const getPromptInverseMap = (): Map<string, Prompt> => {
-  const promptInverseMap: Map<string, Prompt> = new Map();
+const getPromptInverseMap = (): Map<Prompt, string> => {
+  const promptInverseMap: Map<Prompt, string> = new Map();
 
   Object.entries(Prompt).forEach(([fullText, promptKey]) => {
-    promptInverseMap.set(fullText, promptKey);
+    promptInverseMap.set(promptKey, fullText);
   });
 
   return promptInverseMap;
 };
 
-export const getPromptsToStore = (displayPrompts: Map<Prompt, string>): Map<string, string> => {
+export const getPromptsToStore = (displayPrompts: Map<Prompt, string>): { [promptKey: string]: string } => {
   const promptInverseMap = getPromptInverseMap();
   const promptsToStore: Map<string, string> = new Map();
 
@@ -20,5 +20,5 @@ export const getPromptsToStore = (displayPrompts: Map<Prompt, string>): Map<stri
     promptsToStore.set(promptKey, answer);
   });
 
-  return promptsToStore;
+  return Object.fromEntries(promptsToStore);
 };
