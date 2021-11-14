@@ -2,6 +2,7 @@ export enum FirebaseNode {
   UserBasicInfo = 'userBasicInfo',
   UserAdditionalInfo = 'userAdditionalInfo',
   UserPrompts = 'userPrompts',
+  UserPhotos = 'userPhoto',
 }
 
 export enum UserBasicInfo {
@@ -17,4 +18,8 @@ export enum UserAdditionalInfo {
   Genres = 'genres',
   InstagramHandle = 'instagramHandle',
   Occupation = 'occupation',
+}
+
+export enum UserPhotos {
+  ProfilePhoto = 'profilePhoto',
 }

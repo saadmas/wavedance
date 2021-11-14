@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
 import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
-import { FirebaseNode, UserAdditionalInfo, UserBasicInfo } from '../../../../firebase/keys';
+import { FirebaseNode, UserAdditionalInfo, UserBasicInfo, UserPhotos } from '../../../../firebase/keys';
 import { getFirebasePath } from '../../../../firebase/utils';
 import { useSignUpState } from '../../../../state/signUp/SignUpProvider';
 import { getPromptsToStore } from '../../../../utils/prompts/prompt.util';
@@ -13,6 +13,31 @@ interface SignUpProps extends SignUpStepProps {}
 
 const SignUp = ({}: SignUpProps) => {
   const signUpState = useSignUpState();
+
+  React.useEffect(() => {
+    const foo = async () => {
+      await uploadUserPhoto('indasind');
+    };
+
+    foo();
+  }, []);
+
+  const uploadUserPhoto = async (uid: string) => {
+    const { profilePhotoUri } = signUpState;
+    const path = getFirebasePath(FirebaseNode.UserPhotos, uid, UserPhotos.ProfilePhoto);
+
+    try {
+      const response = await fetch(profilePhotoUri);
+      const blob = await response.blob();
+
+      firebase.storage().ref(path).put(blob);
+      // var ref = firebase.storage().ref(path).put('my-image');
+      // return ref.put(blob);
+    } catch (e) {
+      //*
+      console.log(e);
+    }
+  };
 
   const uploadUserPrompts = async (uid: string) => {
     const { prompts } = signUpState;
@@ -68,6 +93,7 @@ const SignUp = ({}: SignUpProps) => {
     await uploadUserBasicInfo(uid);
     await uploadUserAdditionalInfo(uid);
     await uploadUserPrompts(uid);
+    await uploadUserPhoto(uid);
   };
 
   const createUserInFirebase = async (email: string, password: string): Promise<string | undefined> => {
@@ -81,7 +107,7 @@ const SignUp = ({}: SignUpProps) => {
       await createUserInFirebase(email, password);
       await uploadUserData();
     } catch (e) {
-      /// handle error
+      //* handle error
     }
   };
 

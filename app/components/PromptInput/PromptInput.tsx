@@ -24,7 +24,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
         <InputCard
           title={selectedPrompt.prompt}
           onSubmit={onSubmit}
-          maxLength={100} ///
+          maxLength={100} //*
           blurOnSubmit={false}
           defaultValue={selectedPrompt.value}
           placeholder={promptPlaceholders.get(selectedPrompt.prompt)}
