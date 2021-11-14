@@ -14,7 +14,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   const { selectedPrompt } = route.params;
 
   const onSubmit = (value: string) => {
-    addPrompt({ prompt: selectedPrompt.prompt, value });
+    addPrompt({ prompt: selectedPrompt.prompt, value: value.trim() });
     navigation.navigate(Path.SignUpPromptSelector);
   };
 
