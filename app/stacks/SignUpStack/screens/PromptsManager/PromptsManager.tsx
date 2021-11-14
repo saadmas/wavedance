@@ -29,7 +29,7 @@ const PromptsManager = ({ goToNextStep }: PromptsManagerProps) => {
   const { colors } = useTheme();
 
   const onPromptsSubmit = () => {
-    // dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
+    dispatch({ type: 'PROMPT_UPDATE', payload: filledPrompts });
     goToNextStep();
   };
 

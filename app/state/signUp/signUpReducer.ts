@@ -44,13 +44,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'PROFILE_PHOTO_UPDATE':
       const profilePhotoUri = action.payload;
       return { ...state, profilePhotoUri };
-    case 'ADD_PROMPT':
-      const { prompt, value } = action.payload;
-      state.prompts.set(prompt, value);
-      return { ...state, prompts: new Map(state.prompts) };
-    case 'REMOVE_PROMPT':
-      state.prompts.delete(action.payload);
-      return { ...state, prompts: new Map(state.prompts) };
+    case 'PROMPT_UPDATE':
+      console.log(action.payload);
+      return { ...state, prompts: new Map(action.payload) };
     default:
       return { ...state };
   }

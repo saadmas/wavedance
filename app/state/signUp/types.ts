@@ -62,14 +62,9 @@ interface ProfilePhotoUpdateAction {
   payload: string;
 }
 
-interface AddPromptAction {
-  type: 'ADD_PROMPT';
-  payload: { prompt: Prompt; value: string };
-}
-
-interface RemovePromptAction {
-  type: 'REMOVE_PROMPT';
-  payload: Prompt;
+interface PromptUpdateAction {
+  type: 'PROMPT_UPDATE';
+  payload: Map<Prompt, string>;
 }
 
 export type SignUpAction =
@@ -82,6 +77,5 @@ export type SignUpAction =
   | GenresUpdateAction
   | PassionsUpdateAction
   | ProfilePhotoUpdateAction
-  | AddPromptAction
-  | RemovePromptAction
+  | PromptUpdateAction
   | InstagramHandleUpdateAction;
