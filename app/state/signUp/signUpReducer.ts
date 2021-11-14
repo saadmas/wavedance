@@ -44,10 +44,10 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'ADD_PROMPT':
       const { prompt, value } = action.payload;
       state.prompts.set(prompt, value);
-      return { ...state, prompts: new Set(state.prompts) };
+      return { ...state, prompts: new Map(state.prompts) };
     case 'REMOVE_PROMPT':
       state.prompts.delete(action.payload);
-      return { ...state, prompts: new Set(state.prompts) };
+      return { ...state, prompts: new Map(state.prompts) };
     default:
       return { ...state };
   }

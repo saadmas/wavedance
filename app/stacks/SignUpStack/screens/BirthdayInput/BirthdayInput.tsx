@@ -4,6 +4,7 @@ import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
+import { getFormattedDate } from '../../../../utils/prompts/date.util';
 
 interface BirthdayInputProps extends SignUpStepProps {}
 
@@ -13,7 +14,7 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
 
   const onBirthdaySubmit = () => {
     if (birthday) {
-      dispatch({ type: 'BIRTHDAY_UPDATE', payload: birthday.toISOString() });
+      dispatch({ type: 'BIRTHDAY_UPDATE', payload: getFormattedDate(birthday) });
       goToNextStep();
     }
   };

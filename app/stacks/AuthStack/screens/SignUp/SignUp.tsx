@@ -19,6 +19,8 @@ const SignUp = ({}: SignUpProps) => {
     const promptsToStore = getPromptsToStore(prompts);
     const path = getFirebasePath(FirebaseNode.UserPrompts, uid);
 
+    console.log(prompts, promptsToStore);
+
     try {
       await firebase
         .database()
@@ -30,6 +32,8 @@ const SignUp = ({}: SignUpProps) => {
   const uploadUserAdditionalInfo = async (uid: string) => {
     const { currentLocation, hometown, passions, genres, instagramHandle } = signUpState;
     const path = getFirebasePath(FirebaseNode.UserAdditionalInfo, uid);
+
+    console.log(currentLocation, hometown, passions, genres);
 
     try {
       await firebase
@@ -49,9 +53,10 @@ const SignUp = ({}: SignUpProps) => {
     const { birthday, name } = signUpState;
     const path = getFirebasePath(FirebaseNode.UserBasicInfo, uid);
 
+    console.log(birthday, name);
+
     try {
       await firebase
-        .app()
         .database()
         .ref(path)
         .set({
