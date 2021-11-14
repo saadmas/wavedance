@@ -9,7 +9,7 @@ const InstagramHandleInputInput = ({ goToNextStep }: InstagramHandleInputInputPr
   const dispatch = useSignUpDispatch();
 
   const onInstagramHandleSubmit = (instagramHandle: string) => {
-    dispatch({ type: 'INT', payload: instagramHandle });
+    dispatch({ type: 'INSTAGRAM_HANDLE_UPDATE', payload: instagramHandle });
     goToNextStep();
   };
 

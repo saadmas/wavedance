@@ -93,6 +93,3 @@ const SignUp = ({}: SignUpProps) => {
 };
 
 export default SignUp;
-function getPromptInverseMap() {
-  throw new Error('Function not implemented.');
-}
