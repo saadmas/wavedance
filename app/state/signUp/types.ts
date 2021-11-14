@@ -38,6 +38,11 @@ interface OccupationUpdateAction {
   payload: string;
 }
 
+interface InstagramHandleUpdateAction {
+  type: 'INSTAGRAM_HANDLE_UPDATE';
+  payload: string;
+}
+
 interface CurrentLocationAsHometownAction {
   type: 'CURRENT_LOCATION_AS_HOMETOWN';
 }
@@ -78,4 +83,5 @@ export type SignUpAction =
   | PassionsUpdateAction
   | ProfilePhotoUpdateAction
   | AddPromptAction
-  | RemovePromptAction;
+  | RemovePromptAction
+  | InstagramHandleUpdateAction;

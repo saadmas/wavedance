@@ -13,6 +13,7 @@ interface SignUpProps extends SignUpStepProps {}
 
 const SignUp = ({}: SignUpProps) => {
   const signUpState = useSignUpState();
+  console.log(signUpState); ///
 
   const uploadUserPrompts = async (uid: string) => {
     const { prompts } = signUpState;
@@ -26,14 +27,16 @@ const SignUp = ({}: SignUpProps) => {
         .database()
         .ref(path)
         .set({ ...promptsToStore });
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const uploadUserAdditionalInfo = async (uid: string) => {
-    const { currentLocation, hometown, passions, genres, instagramHandle } = signUpState;
+    const { currentLocation, hometown, passions, genres, instagramHandle, occupation } = signUpState;
     const path = getFirebasePath(FirebaseNode.UserAdditionalInfo, uid);
 
-    console.log(currentLocation, hometown, passions, genres);
+    console.log(currentLocation, hometown, passions, genres, occupation);
 
     try {
       await firebase
@@ -42,11 +45,15 @@ const SignUp = ({}: SignUpProps) => {
         .set({
           [UserAdditionalInfo.CurrentLocation]: currentLocation,
           [UserAdditionalInfo.Hometown]: hometown,
-          [UserAdditionalInfo.Passions]: passions,
-          [UserAdditionalInfo.Genres]: genres,
+          [UserAdditionalInfo.Passions]: [...passions],
+          [UserAdditionalInfo.Genres]: [...genres],
           [UserAdditionalInfo.InstagramHandle]: instagramHandle,
+          [UserAdditionalInfo.InstagramHandle]: instagramHandle,
+          [UserAdditionalInfo.Occupation]: occupation,
         });
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const uploadUserBasicInfo = async (uid: string) => {

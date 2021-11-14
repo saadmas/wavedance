@@ -2,8 +2,8 @@ import { SignUpAction, SignUpState } from './types';
 
 export const getInitialSignUpState = (): SignUpState => {
   return {
-    name: '',
-    birthday: '',
+    name: 'Saad',
+    birthday: '1-11-2000', ///
     currentLocation: '',
     hometown: '',
     profilePhotoUri: '',
@@ -30,6 +30,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'OCCUPATION_UPDATE':
       const occupation = action.payload;
       return { ...state, occupation };
+    case 'INSTAGRAM_HANDLE_UPDATE':
+      const instagramHandle = action.payload;
+      return { ...state, instagramHandle };
     case 'CURRENT_LOCATION_AS_HOMETOWN':
       return { ...state, currentLocation: state.hometown };
     case 'PASSIONS_UPDATE':

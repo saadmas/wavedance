@@ -16,4 +16,5 @@ export enum UserAdditionalInfo {
   Passions = 'passions',
   Genres = 'passions',
   InstagramHandle = 'instagramHandle',
+  Occupation = 'occupation',
 }
