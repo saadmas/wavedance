@@ -3,14 +3,17 @@ import Title from '../../../../components/Title/Title';
 import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
-import { Button, FAB, IconButton, Surface } from 'react-native-paper';
+import { ActivityIndicator, Button, FAB, IconButton, Surface } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'react-native';
+import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
 
 interface PhotoInputProps extends SignUpStepProps {}
 
 const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
   const [photoUri, setPhotoUri] = React.useState<string | undefined>(undefined);
+  const [isLoadingPhoto, setIsLoadingPhoto] = React.useState<boolean>(false);
+
   const dispatch = useSignUpDispatch();
   const borderRadius = 10;
 
@@ -22,9 +25,11 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
   };
 
   const onUploadPhoto = async () => {
+    setIsLoadingPhoto(true);
     const imagePickResponse = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
     });
+    setIsLoadingPhoto(false);
 
     if (!imagePickResponse.cancelled) {
       setPhotoUri(imagePickResponse.uri);
@@ -32,14 +37,29 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
   };
 
   const renderImageContent = () => {
-    return photoUri ? (
-      <Image
-        source={{ uri: photoUri }}
-        style={{ height: '100%', width: '100%' }}
-        borderRadius={borderRadius}
-        resizeMode="cover"
-      />
-    ) : (
+    if (isLoadingPhoto) {
+      return (
+        <LottieAnimation
+          source={require(`../../../../../assets/animations/loading-photo.json`)}
+          finalFramePosition={1}
+          style={{ height: 50, width: 50 }}
+          shouldLoop={true}
+        />
+      );
+    }
+
+    if (photoUri) {
+      return (
+        <Image
+          source={{ uri: photoUri }}
+          style={{ height: '100%', width: '100%' }}
+          borderRadius={borderRadius}
+          resizeMode="cover"
+        />
+      );
+    }
+
+    return (
       <Button
         icon="upload"
         onPress={onUploadPhoto}

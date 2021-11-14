@@ -3,11 +3,12 @@ import LottieView from 'lottie-react-native';
 import { StyleProp, ViewStyle } from 'react-native';
 
 interface LottieAnimationProps {
+  shouldLoop: boolean;
   source: string;
   finalFramePosition: number;
   style?: StyleProp<ViewStyle>;
 }
-const LottieAnimation = ({ source, finalFramePosition, style }: LottieAnimationProps) => {
+const LottieAnimation = ({ source, finalFramePosition, style, shouldLoop }: LottieAnimationProps) => {
   const [framePosition, setFramePosition] = React.useState<number | undefined>(undefined);
 
   const onAnimationFinish = () => {
@@ -16,11 +17,11 @@ const LottieAnimation = ({ source, finalFramePosition, style }: LottieAnimationP
 
   return (
     <LottieView
-      source={require('../../../assets/animations/user-animation.json')}
+      source={source}
       autoPlay={true}
       progress={framePosition}
       onAnimationFinish={onAnimationFinish}
-      loop={false}
+      loop={shouldLoop}
       style={style}
     />
   );
