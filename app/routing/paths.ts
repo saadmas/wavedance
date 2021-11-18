@@ -1,4 +1,4 @@
 export enum Path {
-  Welcome = 'Welcome',
-  SignUp = 'SignUp',
+  SignUpPromptSelector = 'SignUpPromptSelector',
+  SignUpPromptInput = 'SignUpPromptInput',
 }

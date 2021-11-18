@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, TextStyle } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
+import { inputTextColor } from '../../styles/theme';
 
 interface EmailPasswordFormProps {
   type: 'signUp' | 'signIn';
@@ -52,13 +53,13 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
         style={isPasswordInput ? passwordStyle : inputStyle}
         placeholder={isPasswordInput ? 'Password' : 'Email'}
         placeholderTextColor="grey"
-        theme={{ colors: { text: 'black', background: '#fff' } }}
+        theme={{ colors: { text: inputTextColor, background: colors.text } }}
       />
     );
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ padding: 20 }}>
       <Controller
         name="email"
         control={control}
@@ -71,15 +72,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
         rules={{ required: true }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value, 'password')}
       />
-      <Button
-        mode="contained"
-        onPress={handleSubmit(onSubmit)}
-        uppercase={false}
-        style={{
-          backgroundColor: colors.accent,
-          borderRadius: 40,
-        }}
-      >
+      <Button mode="contained" onPress={handleSubmit(onSubmit)} uppercase={false} style={{ borderRadius: 40 }}>
         {type === 'signIn' ? 'Sign in' : 'Sign up'}
       </Button>
     </KeyboardAvoidingView>

@@ -1,7 +1,7 @@
 import { styles } from './Welcome.styles';
 import * as React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { TouchableOpacity, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 
 interface WelcomeProps {
   onSignUp: () => void;
@@ -16,7 +16,7 @@ const Welcome = ({ onSignUp, onLogin }: WelcomeProps) => {
           Sign up
         </Button>
         <TouchableOpacity onPress={onLogin}>
-          <Text style={styles.login}>Login</Text>
+          <Text>Login</Text>
         </TouchableOpacity>
       </View>
     </View>

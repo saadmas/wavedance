@@ -13,3 +13,12 @@ docs/
 
 # macOS
 .DS_Store
+
+# fb
+database-debug.log
+database.rules.json
+firebase-debug.log
+storage.rules
+ui-debug.log
+functions/
+

@@ -1,13 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { defaultScreenPadding } from '../../../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-  },
-  login: {
-    color: 'white',
   },
   authButtonGroup: {
     width: '100%',
@@ -22,6 +18,5 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     marginBottom: 20,
-    backgroundColor: '#fB2588',
   },
 });
