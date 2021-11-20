@@ -19,6 +19,8 @@ interface PromptsSelectorProps {
 const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePrompt }: PromptsSelectorProps) => {
   const { fonts } = useTheme();
   const cardActionIconSize = 20;
+  const minPromptCount = 1;
+  const maxPromptCount = 3;
 
   const openPromptDrawer = () => {
     navigation.openDrawer();
@@ -73,11 +75,13 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
           marginBottom: 10,
         }}
       >
-        <Text>Answer 3 prompts</Text>
-        <Text>{filledPrompts.size}/3</Text>
+        <Text>{`Answer at least ${minPromptCount} prompt`}</Text>
+        <Text>
+          {filledPrompts.size}/{maxPromptCount}
+        </Text>
       </View>
       <View style={{ display: 'flex', alignItems: 'center' }}>
-        {filledPrompts.size < 3 && (
+        {filledPrompts.size < minPromptCount && (
           <Button
             icon="plus"
             mode="outlined"
@@ -93,7 +97,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
       </ScrollView>
-      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < 3} />
+      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < maxPromptCount} />
     </>
   );
 };

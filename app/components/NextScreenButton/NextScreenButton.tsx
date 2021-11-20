@@ -14,7 +14,7 @@ const NextScreenButton = ({ onPress, isDisabled }: NextScreenButtonProps) => {
       icon={'check'}
       theme={{ colors: { accent: colors.primary } }}
       disabled={isDisabled}
-      style={{ position: 'absolute', bottom: 80, right: 40 }}
+      style={{ position: 'absolute', bottom: 100, right: 40 }}
     />
   );
 };

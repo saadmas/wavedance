@@ -43,6 +43,7 @@ const EmailPasswordForm = ({ type, onFormSubmit }: EmailPasswordFormProps) => {
 
     const isPasswordInput = inputType === 'password';
 
+    //* return --> done
     return (
       <TextInput
         onBlur={onBlur}

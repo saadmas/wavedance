@@ -10,7 +10,7 @@ const PassionsInput = ({ goToNextStep }: PassionsInputProps) => {
   const [selectedPassions, setSelectedPassions] = React.useState<Set<string>>(new Set());
   const dispatch = useSignUpDispatch();
   const maxPassions = 5;
-  const minPassions = 3;
+  const minPassions = 1;
 
   const onPassionsSubmit = () => {
     dispatch({ type: 'PASSIONS_UPDATE', payload: selectedPassions });
