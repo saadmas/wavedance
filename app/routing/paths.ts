@@ -5,5 +5,5 @@ export enum Path {
   EventList = 'EventList',
   Matches = 'Matches',
   Profile = 'Profile',
-  CurrentLocationSelect = 'CurrentLocationSelect',
+  LocationSelect = 'LocationSelect',
 }

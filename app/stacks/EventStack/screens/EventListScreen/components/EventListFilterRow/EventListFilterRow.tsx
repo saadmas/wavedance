@@ -1,15 +1,46 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Button, useTheme } from 'react-native-paper';
+import { EdmTrainLocation } from '../../../../../../edmTrain/types';
+import { getLocationDisplayText } from '../../../../../../edmTrain/utils';
 
 interface EventListFilterRowProps {
+  location?: EdmTrainLocation;
   isFavoriteList: boolean;
   onFavoriteSwitch: () => void;
   onLocationClick: () => void;
 }
 
-const EventListFilterRow = ({ onFavoriteSwitch, isFavoriteList, onLocationClick }: EventListFilterRowProps) => {
+const EventListFilterRow = ({
+  onFavoriteSwitch,
+  isFavoriteList,
+  onLocationClick,
+  location,
+}: EventListFilterRowProps) => {
   const { colors } = useTheme();
+
+  const renderLocationButton = (): React.ReactNode => {
+    // if (!location) {
+    //   return;
+    // } ///
+
+    const locationText = location ? getLocationDisplayText(location) : 'Foo';
+
+    return (
+      <Button
+        mode="outlined"
+        style={{ flex: 1, marginLeft: 10, borderRadius: 40, borderColor: colors.text }}
+        labelStyle={{ fontSize: 10 }}
+        compact={true}
+        uppercase={false}
+        onPress={onLocationClick}
+        theme={{ colors: { primary: colors.text } }}
+        icon="map-marker-outline"
+      >
+        {locationText}
+      </Button>
+    );
+  };
 
   return (
     <View
@@ -34,18 +65,7 @@ const EventListFilterRow = ({ onFavoriteSwitch, isFavoriteList, onLocationClick 
       >
         Favorites
       </Button>
-      <Button
-        mode="outlined"
-        style={{ flex: 1, marginLeft: 10, borderRadius: 40, borderColor: colors.text }}
-        labelStyle={{ fontSize: 10 }}
-        compact={true}
-        uppercase={false}
-        onPress={onLocationClick}
-        theme={{ colors: { primary: colors.text } }}
-        icon="map-marker-outline"
-      >
-        Grand Rapids, MI
-      </Button>
+      {renderLocationButton()}
     </View>
   );
 };

@@ -7,10 +7,11 @@ import EventList from '../EventList/EventList';
 
 interface EventListQueryProps {
   searchText: string;
+  locationId?: number;
 }
 
-const EventListQuery = ({ searchText }: EventListQueryProps) => {
-  const { isLoading, isError, data } = useEventQuery(70); ///
+const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
+  const { isLoading, isError, data } = useEventQuery(locationId ?? 70); ///
   const { fonts } = useTheme();
   const isFailure = data ? !data.success : false;
 

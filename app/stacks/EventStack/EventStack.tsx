@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
+import { EdmTrainLocation } from '../../edmTrain/types';
 import { Path } from '../../routing/paths';
 import EventListScreen from './screens/EventListScreen/EventListScreen';
 import LocationSelectScreen from './screens/LocationSelectScreen/LocationSelectScreen';
@@ -8,8 +9,8 @@ import LocationSelectScreen from './screens/LocationSelectScreen/LocationSelectS
 const Stack = createNativeStackNavigator();
 
 export type EventStackParamList = {
-  [Path.EventList]: undefined;
-  [Path.CurrentLocationSelect]: undefined;
+  [Path.EventList]: { location: EdmTrainLocation | undefined };
+  [Path.LocationSelect]: undefined;
 };
 
 const EventStack = () => {
@@ -26,11 +27,7 @@ const EventStack = () => {
       })}
     >
       <Stack.Screen name={Path.EventList} component={EventListScreen} />
-      <Stack.Screen
-        name={Path.CurrentLocationSelect}
-        component={LocationSelectScreen}
-        options={{ headerShown: true }}
-      />
+      <Stack.Screen name={Path.LocationSelect} component={LocationSelectScreen} options={{ headerShown: true }} />
     </Stack.Navigator>
   );
 };
