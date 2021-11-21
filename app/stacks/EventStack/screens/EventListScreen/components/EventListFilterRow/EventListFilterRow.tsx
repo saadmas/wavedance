@@ -5,9 +5,10 @@ import { Button, useTheme } from 'react-native-paper';
 interface EventListFilterRowProps {
   isFavoriteList: boolean;
   onFavoriteSwitch: () => void;
+  onLocationClick: () => void;
 }
 
-const EventListFilterRow = ({ onFavoriteSwitch, isFavoriteList }: EventListFilterRowProps) => {
+const EventListFilterRow = ({ onFavoriteSwitch, isFavoriteList, onLocationClick }: EventListFilterRowProps) => {
   const { colors } = useTheme();
 
   return (
@@ -39,7 +40,7 @@ const EventListFilterRow = ({ onFavoriteSwitch, isFavoriteList }: EventListFilte
         labelStyle={{ fontSize: 10 }}
         compact={true}
         uppercase={false}
-        // onPress={onFavoriteSwitch}
+        onPress={onLocationClick}
         theme={{ colors: { primary: colors.text } }}
         icon="map-marker-outline"
       >

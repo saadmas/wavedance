@@ -2,11 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
 import { Path } from '../../routing/paths';
-import EventsScreen from '../../screens/EventsScreen/EventsScreen';
+import EventListScreen from './screens/EventListScreen/EventListScreen';
+import LocationSelectScreen from './screens/LocationSelectScreen/LocationSelectScreen';
 
 const Stack = createNativeStackNavigator();
 
-export type EventtackParamList = {
+export type EventStackParamList = {
   [Path.EventList]: undefined;
   [Path.CurrentLocationSelect]: undefined;
 };
@@ -16,7 +17,7 @@ const EventStack = () => {
     <Stack.Navigator
       initialRouteName={Path.EventList}
       screenOptions={({ navigation }) => ({
-        animation: 'slide_from_bottom',
+        animation: 'simple_push',
         headerTransparent: true,
         headerTitle: '',
         headerShown: false,
@@ -24,8 +25,12 @@ const EventStack = () => {
           canGoBack && <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />,
       })}
     >
-      <Stack.Screen name={Path.EventList} component={EventsScreen} />
-      <Stack.Screen name={Path.CurrentLocationSelect} component={() => null} options={{ headerShown: true }} />
+      <Stack.Screen name={Path.EventList} component={EventListScreen} />
+      <Stack.Screen
+        name={Path.CurrentLocationSelect}
+        component={LocationSelectScreen}
+        options={{ headerShown: true }}
+      />
     </Stack.Navigator>
   );
 };

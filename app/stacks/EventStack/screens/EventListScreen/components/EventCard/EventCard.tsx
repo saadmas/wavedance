@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Image, View } from 'react-native';
 import { IconButton, List, Surface, Text, useTheme } from 'react-native-paper';
-import { getEventDateDisplay } from '../../../../utils/prompts/date.util';
+import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
 import { DisplayEvent } from '../EventList/EventList';
 
 interface EventCardProps {

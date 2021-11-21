@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
-import { useEventQuery } from '../../../../edmTrain/useEventQuery';
+import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
+import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
 import EventList from '../EventList/EventList';
 
 interface EventListQueryProps {
@@ -19,7 +19,7 @@ const EventListQuery = ({ searchText }: EventListQueryProps) => {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%' }}>
         <LottieAnimation
-          source={require(`../../../../../assets/animations/loading-hand.json`)}
+          source={require(`../../../../../../../assets/animations/loading-hand.json`)}
           finalFramePosition={1}
           shouldLoop={true}
         />
@@ -35,7 +35,7 @@ const EventListQuery = ({ searchText }: EventListQueryProps) => {
           Oops, something went wrong
         </Text>
         <LottieAnimation
-          source={require(`../../../../../assets/animations/broken-branch.json`)}
+          source={require(`../../../../../../../assets/animations/broken-branch.json`)}
           finalFramePosition={1}
           shouldLoop={false}
           style={{
