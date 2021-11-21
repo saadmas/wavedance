@@ -3,7 +3,7 @@ import Title from '../../../../components/Title/Title';
 import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
-import { ActivityIndicator, Button, FAB, IconButton, Surface } from 'react-native-paper';
+import { Button, FAB, Surface } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'react-native';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
@@ -91,7 +91,7 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
         <FAB
           onPress={onUploadPhoto}
           icon={'pencil-outline'}
-          style={{ position: 'absolute', bottom: 80, left: 40 }}
+          style={{ position: 'absolute', bottom: 100, left: 40 }}
           theme={{ colors: { accent: '#878484' } }}
         />
       )}

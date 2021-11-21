@@ -14,7 +14,7 @@ export interface EdmTrainResponse {
   message?: string;
 }
 
-interface EdmTrainEvent {
+export interface EdmTrainEvent {
   id: number;
   link: string;
   name: string | null;
@@ -28,7 +28,7 @@ interface EdmTrainEvent {
   endTime: string | null;
   createdDate: string; // e.g. '2016-12-08T18:39:58Z'
   venue: EdmTrainVenue;
-  artistList: EdmTrainArtist;
+  artistList: EdmTrainArtist[];
 }
 
 interface EdmTrainVenue {

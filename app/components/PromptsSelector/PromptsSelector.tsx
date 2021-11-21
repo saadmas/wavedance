@@ -97,7 +97,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
       </ScrollView>
-      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < maxPromptCount} />
+      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < minPromptCount} />
     </>
   );
 };

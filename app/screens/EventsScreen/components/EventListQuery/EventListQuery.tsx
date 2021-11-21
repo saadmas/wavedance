@@ -3,12 +3,14 @@ import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
 import { useEventQuery } from '../../../../edmTrain/useEventQuery';
+import EventList from '../EventList/EventList';
 
 const EventListQuery = () => {
-  const { isLoading, isError, data } = useEventQuery(70);
+  const { isLoading, isError, data } = useEventQuery(70); ///
   const { fonts } = useTheme();
+  const isFailure = data ? !data.success : false;
 
-  if (isError || !data?.success) {
+  if (isError || isFailure) {
     /// test again
     return (
       <View style={{ display: 'flex', justifyContent: 'center', height: '100%', alignItems: 'center', width: '100%' }}>
@@ -18,7 +20,7 @@ const EventListQuery = () => {
         <LottieAnimation
           source={require(`../../../../../assets/animations/broken-branch.json`)}
           finalFramePosition={1}
-          shouldLoop={true}
+          shouldLoop={false}
           style={{
             width: 100,
             height: 100,
@@ -40,10 +42,9 @@ const EventListQuery = () => {
     );
   }
 
-  ///
-  console.log(data.data.map(d => d.link));
+  const edmTrainEvents = data?.data;
 
-  if (!data.data?.length) {
+  if (!edmTrainEvents?.length) {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', height: '100%', alignItems: 'center', width: '100%' }}>
         <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
@@ -63,7 +64,7 @@ const EventListQuery = () => {
     );
   }
 
-  return null;
+  return <EventList events={edmTrainEvents} />;
 };
 
 export default EventListQuery;
