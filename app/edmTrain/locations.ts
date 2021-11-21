@@ -1,6 +1,6 @@
 import { EdmTrainLocation } from './types';
 
-export const edmTrainlocations: EdmTrainLocation[] = [
+export const edmTrainLocations: EdmTrainLocation[] = [
   {
     id: 1,
     city: null,
@@ -974,3 +974,27 @@ export const edmTrainlocations: EdmTrainLocation[] = [
     link: 'https://edmtrain.com/wyoming',
   },
 ];
+
+export const getEdmTrainCities = (): Map<number, EdmTrainLocation> => {
+  const edmTrainCities = new Map();
+
+  for (const location of edmTrainLocations) {
+    if (location.city) {
+      edmTrainCities.set(location.id, location);
+    }
+  }
+
+  return edmTrainCities;
+};
+
+export const getEdmTrainStates = (): Map<number, EdmTrainLocation> => {
+  const edmTrainStates = new Map();
+
+  for (const location of edmTrainLocations) {
+    if (!location.city) {
+      edmTrainStates.set(location.id, location);
+    }
+  }
+
+  return edmTrainStates;
+};
