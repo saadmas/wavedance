@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Image, View } from 'react-native';
 import { List, Surface, Text, useTheme } from 'react-native-paper';
-import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
 import { getEventDateDisplay } from '../../../../utils/prompts/date.util';
 import { DisplayEvent } from '../EventList/EventList';
 
@@ -23,10 +22,10 @@ const EventCard = ({ event }: EventCardProps) => {
     return (
       <List.Item
         style={{ padding: 0, marginBottom: 5, position: 'relative' }}
-        titleStyle={{ padding: 0, margin: 0, fontSize: 12 }}
+        titleStyle={{ padding: 0, margin: 0, fontSize: 12, color: '#fff' }}
         title={title}
         titleNumberOfLines={100}
-        left={props => <List.Icon {...props} icon={icon} style={{ margin: 0, width: 20, height: 25 }} />}
+        left={props => <List.Icon {...props} icon={icon} style={{ margin: 0, width: 20, height: 25 }} color="#fff" />}
       />
     );
   };
@@ -64,6 +63,7 @@ const EventCard = ({ event }: EventCardProps) => {
         style={{
           fontSize: 18,
           fontFamily: fonts.thin.fontFamily,
+          color: '#fff',
         }}
       >
         {getTitle()}
