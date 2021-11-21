@@ -19,11 +19,13 @@ const EventStack = () => {
         animation: 'slide_from_bottom',
         headerTransparent: true,
         headerTitle: '',
+        headerShown: false,
         headerLeft: ({ canGoBack }) =>
           canGoBack && <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />,
       })}
     >
       <Stack.Screen name={Path.EventList} component={EventsScreen} />
+      <Stack.Screen name={Path.CurrentLocationSelect} component={() => null} options={{ headerShown: true }} />
     </Stack.Navigator>
   );
 };

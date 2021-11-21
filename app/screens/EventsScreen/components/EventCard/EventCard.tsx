@@ -93,7 +93,6 @@ const EventCard = ({ event }: EventCardProps) => {
           finalFramePosition={1}
           shouldLoop={true}
         /> */}
-        {/* /// */}
         {/* {renderImageContent()} */}
       </Surface>
       {renderEventDate()}
