@@ -5,6 +5,7 @@ import EventListQuery from './components/EventListQuery/EventListQuery';
 
 const EventsScreen = () => {
   const [searchText, setSearchText] = React.useState<string>('');
+  const [locationId, setLocationId] = React.useState<number | null>(null);
 
   return (
     <View>
