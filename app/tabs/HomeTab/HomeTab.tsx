@@ -12,7 +12,7 @@ const foo = () => {
 const HomeTab = () => {
   return (
     <Tab.Navigator initialRouteName={Path.Events} shifting={true} barStyle={{ position: 'absolute' }} labeled={true}>
-      <Tab.Screen name={Path.Events} component={EventsScreen} options={{ tabBarIcon: 'calendar-search' }} />
+      <Tab.Screen name={Path.Events} component={EventsScreen} options={{ tabBarIcon: 'calendar' }} />
       <Tab.Screen name={Path.Matches} component={foo} options={{ tabBarIcon: 'chat' }} />
       <Tab.Screen name={Path.Profile} component={foo} options={{ tabBarIcon: 'account' }} />
     </Tab.Navigator>
