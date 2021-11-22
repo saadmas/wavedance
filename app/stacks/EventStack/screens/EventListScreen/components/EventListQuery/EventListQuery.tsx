@@ -11,11 +11,11 @@ interface EventListQueryProps {
 }
 
 const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
-  const { isLoading, isError, data } = useEventQuery(locationId ?? 70); ///
+  const { isLoading, isError, data } = useEventQuery(locationId);
   const { fonts } = useTheme();
   const isFailure = data ? !data.success : false;
 
-  if (isLoading) {
+  if (isLoading || !locationId) {
     //* too fast ?
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%' }}>
