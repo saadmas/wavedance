@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, ImageBackground, View } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 import { IconButton, List, Surface, Text, useTheme } from 'react-native-paper';
 import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
 import { DisplayEvent } from '../EventList/EventList';
