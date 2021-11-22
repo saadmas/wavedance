@@ -16,7 +16,6 @@ interface LocationSelectScreenProps extends LocationSelectScreenNavProps {}
 const LocationSelectScreen = ({ navigation }: LocationSelectScreenProps) => {
   const [searchText, setSearchText] = React.useState<string>('');
 
-  /// test this fn
   const saveSelectedLocation = async (location: EdmTrainLocation) => {
     try {
       await SecureStore.setItemAsync(SecureStoreKey.UserSelectedLocation, JSON.stringify(location));

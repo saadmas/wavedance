@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, View } from 'react-native';
+import { Image, ImageBackground, View } from 'react-native';
 import { IconButton, List, Surface, Text, useTheme } from 'react-native-paper';
 import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
 import { DisplayEvent } from '../EventList/EventList';
@@ -82,7 +82,7 @@ const EventCard = ({ event }: EventCardProps) => {
           borderRadius,
         }}
       >
-        <Image
+        <ImageBackground
           source={{ uri: 'https://i.scdn.co/image/ab6761610000e5eb2dc40ac263ef07c16a95af4e' }}
           style={{ height: '100%', width: '100%' }}
           borderRadius={borderRadius}

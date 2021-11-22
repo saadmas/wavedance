@@ -35,7 +35,6 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
       setLocation(defaultLocation);
     };
 
-    /// test this fn
     const initializeUserLocation = async () => {
       try {
         const selectedLocationString = await SecureStore.getItemAsync(SecureStoreKey.UserSelectedLocation);
@@ -59,14 +58,16 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         const userCurrentLocationSnapshot = await firebase.database().ref(userCurrentLocationPath).get();
         const userCurrentLocation = userCurrentLocationSnapshot.val();
         if (!userCurrentLocation) {
-          return;
+          throw Error(`Failed to run getUserLocationFromFirebase, userCurrentLocation: ${userCurrentLocation}`);
         }
 
         const edmTrainCurrentLocation = getEdmTrainLocationFromUserCurrentLocation(userCurrentLocation);
-        if (edmTrainCurrentLocation) {
-          setLocation(userCurrentLocation);
+        if (!edmTrainCurrentLocation) {
+          throw Error(`Failed to run getUserLocationFromFirebase, edmTrainCurrentLocation: ${edmTrainCurrentLocation}`);
         }
-      } catch {
+
+        setLocation(edmTrainCurrentLocation);
+      } catch (e) {
         setDefaultLocation();
       }
     };

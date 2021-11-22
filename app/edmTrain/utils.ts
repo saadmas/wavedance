@@ -14,7 +14,7 @@ export const getEdmTrainLocationFromUserCurrentLocation = (
   const edmTrainCities = [...getEdmTrainCities().values()];
 
   const matchedCity = edmTrainCities.find(location =>
-    location.city?.toLowerCase().includes(userCurrentLocation.toLowerCase())
+    location.city ? userCurrentLocation.toLowerCase().includes(location.city.toLowerCase()) : undefined
   );
 
   if (matchedCity) {
@@ -24,7 +24,7 @@ export const getEdmTrainLocationFromUserCurrentLocation = (
   const edmTrainStates = [...getEdmTrainStates().values()];
 
   const matchedState = edmTrainStates.find(location =>
-    location.state.toLowerCase().includes(userCurrentLocation.toLowerCase())
+    userCurrentLocation.toLowerCase().includes(location.state.toLowerCase())
   );
 
   if (matchedState) {
