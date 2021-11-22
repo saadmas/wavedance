@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { View } from 'react-native';
-import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
 import EventList from '../EventList/EventList';
 import EventListError from '../EventListError/EventListError';

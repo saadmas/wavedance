@@ -35,7 +35,7 @@ const EventList = ({ events, searchText }: EventListProps) => {
 
     setFilteredEvents(nextFilteredEvents);
 
-    if (nextFilteredEvents.length > 1) {
+    if (nextFilteredEvents.length > 5) {
       listRef.current?.scrollToIndex({ index: 0 });
     }
   }, [searchText]);
