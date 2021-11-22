@@ -3,6 +3,7 @@ export enum FirebaseNode {
   UserAdditionalInfo = 'userAdditionalInfo',
   UserPrompts = 'userPrompts',
   UserPhotos = 'userPhoto',
+  UserSelectedLocation = 'userSelectedLocation',
 }
 
 export enum UserBasicInfo {

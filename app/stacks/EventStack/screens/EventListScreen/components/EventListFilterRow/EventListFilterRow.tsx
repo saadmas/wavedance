@@ -20,11 +20,11 @@ const EventListFilterRow = ({
   const { colors } = useTheme();
 
   const renderLocationButton = (): React.ReactNode => {
-    // if (!location) {
-    //   return;
-    // } ///
+    if (!location) {
+      return;
+    }
 
-    const locationText = location ? getLocationDisplayText(location) : 'Foo';
+    const locationText = getLocationDisplayText(location);
 
     return (
       <Button

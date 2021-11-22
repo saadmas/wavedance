@@ -12,7 +12,7 @@ const theme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
-    primary: '#B79CED',
+    primary: '#864879',
     accent: '#239874',
     text: '#efd9ce',
     onSurface: '#333333',
