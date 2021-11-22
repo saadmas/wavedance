@@ -39,7 +39,6 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         const uid = firebase.auth().currentUser?.uid;
 
         if (!uid) {
-          // setDefaultLocation();
           throw Error('Failed to run getUserLocationFromFirebase, uid undefined');
         }
 
