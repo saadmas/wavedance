@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
-import { Searchbar, useTheme } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { getEdmTrainCities } from '../../../../edmTrain/locations';
 import { EdmTrainLocation } from '../../../../edmTrain/types';
 import { getEdmTrainLocationFromUserCurrentLocation } from '../../../../edmTrain/utils';
@@ -12,6 +12,8 @@ import { Path } from '../../../../routing/paths';
 import { EventStackParamList } from '../../EventStack';
 import EventListFilterRow from './components/EventListFilterRow/EventListFilterRow';
 import EventListQuery from './components/EventListQuery/EventListQuery';
+import * as SecureStore from 'expo-secure-store';
+import { SecureStoreKey } from '../../../../secureStore/keys';
 
 type EventListScreenNavProps = NativeStackScreenProps<EventStackParamList, Path.EventList>;
 
@@ -34,21 +36,18 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
     };
 
     /// test this fn
-    const setUserLocationFromFirebase = async () => {
+    const initializeUserLocation = async () => {
       try {
-        const uid = firebase.auth().currentUser?.uid;
-
-        if (!uid) {
-          throw Error('Failed to run getUserLocationFromFirebase, uid undefined');
+        const selectedLocationString = await SecureStore.getItemAsync(SecureStoreKey.UserSelectedLocation);
+        if (selectedLocationString) {
+          const selectedLocation = JSON.parse(selectedLocationString);
+          setLocation(selectedLocation);
+          return;
         }
 
-        const userSelectedLocationPath = getFirebasePath(FirebaseNode.UserSelectedLocation, uid);
-        const userSelectedLocationSnapshot = await firebase.database().ref(userSelectedLocationPath).get();
-        const userSelectedLocation = userSelectedLocationSnapshot.val();
-
-        if (userSelectedLocation) {
-          setLocation(userSelectedLocation);
-          return;
+        const uid = firebase.auth().currentUser?.uid;
+        if (!uid) {
+          throw Error('Failed to run getUserLocationFromFirebase, uid undefined');
         }
 
         const userCurrentLocationPath = getFirebasePath(
@@ -56,21 +55,23 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
           uid,
           UserAdditionalInfo.CurrentLocation
         );
+
         const userCurrentLocationSnapshot = await firebase.database().ref(userCurrentLocationPath).get();
         const userCurrentLocation = userCurrentLocationSnapshot.val();
+        if (!userCurrentLocation) {
+          return;
+        }
 
-        if (userCurrentLocation) {
-          const edmTrainCurrentLocation = getEdmTrainLocationFromUserCurrentLocation(userCurrentLocation);
-          if (edmTrainCurrentLocation) {
-            setLocation(userCurrentLocation);
-          }
+        const edmTrainCurrentLocation = getEdmTrainLocationFromUserCurrentLocation(userCurrentLocation);
+        if (edmTrainCurrentLocation) {
+          setLocation(userCurrentLocation);
         }
       } catch {
         setDefaultLocation();
       }
     };
 
-    setUserLocationFromFirebase();
+    initializeUserLocation();
   }, []);
 
   React.useEffect(() => {
