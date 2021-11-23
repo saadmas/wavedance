@@ -24,3 +24,9 @@ export enum UserAdditionalInfo {
 export enum UserPhotos {
   ProfilePhoto = 'profilePhoto',
 }
+
+export enum EventPhotos {
+  EdmTrainArtistId = 'edmTrainArtistId',
+  SpotifyArtistId = 'spotifyArtistId',
+  ImageUrl = 'imageUrl',
+}

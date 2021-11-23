@@ -9,14 +9,19 @@ export type DisplayEvent = EdmTrainEvent;
 
 interface EventListProps {
   events: DisplayEvent[];
+  locationId: number;
   searchText: string;
   isFavoriteList?: boolean;
 }
 
-const EventList = ({ events, searchText }: EventListProps) => {
+const EventList = ({ events, searchText, locationId }: EventListProps) => {
   const { fonts } = useTheme();
   const listRef = React.useRef<VirtualizedList<EdmTrainEvent>>(null);
   const [filteredEvents, setFilteredEvents] = React.useState<DisplayEvent[]>(events);
+
+  React.useEffect(() => {
+    setFilteredEvents(events);
+  }, [events]);
 
   React.useEffect(() => {
     if (!searchText) {
@@ -46,7 +51,14 @@ const EventList = ({ events, searchText }: EventListProps) => {
 
   const getItemKey = (listItem: DisplayEvent): string => listItem.id.toString();
 
-  const renderItem = (itemInfo: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => <EventCard event={itemInfo.item} />;
+  const renderItem = React.useCallback(
+    (itemInfo: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
+      <EventCard event={itemInfo.item} locationId={locationId} />
+    ),
+    [locationId]
+  );
+
+  console.log(filteredEvents[0]);
 
   const renderNoData = () => {
     return (
@@ -78,6 +90,7 @@ const EventList = ({ events, searchText }: EventListProps) => {
       contentContainerStyle={{ paddingBottom: 150 }}
       ListEmptyComponent={renderNoData}
       ref={listRef}
+      removeClippedSubviews={true}
     />
   );
 };

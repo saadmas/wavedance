@@ -35,7 +35,7 @@ const SignUp = ({}: SignUpProps) => {
       // return ref.put(blob);
     } catch (e) {
       //*
-      console.log(e);
+      console.error(e);
     }
   };
 

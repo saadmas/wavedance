@@ -21,7 +21,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
     return <EventListError />;
   }
 
-  return <EventList events={data?.data ?? []} searchText={searchText} />;
+  return <EventList events={data?.data ?? []} searchText={searchText} locationId={locationId} />;
 };
 
 export default EventListQuery;

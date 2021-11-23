@@ -81,6 +81,10 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
     }
   }, [route.params?.location]);
 
+  React.useEffect(() => {
+    setSearchText('');
+  }, [location]);
+
   const onFavoriteSwitch = () => setFavoriteList(prev => !prev);
 
   const onLocationClick = () => {

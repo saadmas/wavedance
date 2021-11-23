@@ -1,12 +1,14 @@
 import * as functions from 'firebase-functions';
-import { getEdmTrainEvents, getEventPhotoUrl, initializeSpotifyApi } from './utils';
+import { getEdmTrainEvents, getEventPrimaryArtist, initializeSpotifyApi } from './utils';
 import * as admin from 'firebase-admin';
+import { Artist } from './types';
+import { getEdmTrainCities } from './edmTrainLocations';
 const SpotifyWebApi = require('spotify-web-api-node');
 
 admin.initializeApp();
 
-exports.fetchSpotifyArtists = functions
-  .runWith({ timeoutSeconds: 540 }) ///
+exports.fetchAndStoreEventArtists = functions
+  .runWith({ timeoutSeconds: 540 })
   .database.ref('foo')
   .onUpdate(async (snapshot, context) => {
     const spotifyApi = new SpotifyWebApi({
@@ -21,32 +23,38 @@ exports.fetchSpotifyArtists = functions
       return;
     }
 
-    const edmTrainLocationIds = [70]; /// get all
+    //* get states too!
+    const edmTrainLocationIds = [...getEdmTrainCities().values()].map(city => city.id);
+
+    // K = EDM Train Artist ID, V = Artist to store in Firebase
+    const cachedArtists: Map<number, Artist> = new Map();
 
     for (const edmTrainLocationId of edmTrainLocationIds) {
-      let edmTrainEvents = await getEdmTrainEvents(edmTrainLocationId);
+      let locationEvents = await getEdmTrainEvents(edmTrainLocationId);
 
-      if (!edmTrainEvents?.length) {
+      if (!locationEvents?.length) {
         continue;
       }
 
-      // K = Event ID, V = Photo URL for the event
-      const eventPhotoMap = new Map<number, string>();
+      //* dont slice!
+      locationEvents = locationEvents.slice(0, 100);
 
-      for (const edmTrainEvent of edmTrainEvents) {
-        const { id, artistList } = edmTrainEvent;
+      // K = EDM Train Event ID, V = primary artist for the event
+      const eventArtistMap = new Map<number, Artist>();
 
-        const artistNames = artistList.map(artist => artist.name);
-        const eventPhotoUrl = await getEventPhotoUrl(artistNames, spotifyApi);
+      for (const locationEvent of locationEvents) {
+        const { id, artistList } = locationEvent;
 
-        if (eventPhotoUrl) {
-          eventPhotoMap.set(id, eventPhotoUrl);
+        const eventPrimaryArtist = await getEventPrimaryArtist(artistList, spotifyApi, cachedArtists);
+
+        if (eventPrimaryArtist) {
+          eventArtistMap.set(id, eventPrimaryArtist);
         }
       }
 
       const path = `eventPhotos/${edmTrainLocationId}`;
-      admin.database().ref(path).set(Object.fromEntries(eventPhotoMap));
+      admin.database().ref(path).set(Object.fromEntries(eventArtistMap));
     }
 
-    console.log('succesfully ran!');
+    console.log('succesfully ran fetchAndStoreEventArtist!');
   });

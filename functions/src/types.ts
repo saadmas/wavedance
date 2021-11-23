@@ -1,12 +1,22 @@
-export interface SpotifyArtistImageResponse {
-  imageUrl: string;
+export interface SpotifyArtist {
+  id: string;
+  name: string;
   popularity: number;
+  genres: string[];
+  images: SpotifyArtistImage[];
 }
 
 export interface SpotifyArtistImage {
   height: number;
   width: number;
   url: string;
+}
+
+export interface Artist {
+  edmTrainArtistId: number;
+  spotifyArtistId: string;
+  imageUrl: string;
+  popularity: number;
 }
 
 export interface EdmTrainLocation {
@@ -52,7 +62,7 @@ interface EdmTrainVenue {
   longitude: number;
 }
 
-interface EdmTrainArtist {
+export interface EdmTrainArtist {
   id: number;
   name: string;
   link: string;
