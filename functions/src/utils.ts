@@ -34,28 +34,24 @@ const getHighestResolutionImageUrl = (artistImages: SpotifyArtistImage[]): strin
 };
 
 const tryGetRetryAfter = (error: any): number => {
-  return 'getResponseHeader' in error ? +error?.getResponseHeader('retry-after') : NaN;
+  return error?.['headers']?.['retry-after'] ?? NaN;
 };
 
-const searchSpotifyForArtist = async (artist: string, spotifyApi: any) => {
-  let shouldRetry = true;
+const searchSpotifyForArtist = async (artist: string, spotifyApi: any): Promise<any> => {
+  try {
+    const searchResult = await spotifyApi.searchArtists(artist);
+    const matchedArtist = searchResult?.body?.artists?.items?.[0];
+    return matchedArtist;
+  } catch (e) {
+    const retryAfter = tryGetRetryAfter(e);
 
-  while (shouldRetry) {
-    try {
-      const searchResult = await spotifyApi.searchArtists(artist);
-      const matchedArtist = searchResult?.body?.artists?.items?.[0];
-      return matchedArtist;
-    } catch (e) {
-      const retryAfter = tryGetRetryAfter(e);
-      if (!Number.isNaN(retryAfter)) {
-        await new Promise(r => setTimeout(r, retryAfter + 1));
-      } else {
-        shouldRetry = false;
-        console.error('searchSpotifyForArtist failed');
-        console.error(e);
-        break;
-      }
+    if (retryAfter) {
+      await new Promise(r => setTimeout(r, retryAfter * 1000 + 1000));
+      return searchSpotifyForArtist(artist, spotifyApi);
     }
+
+    console.error('searchSpotifyForArtist failed');
+    console.error(e);
   }
 };
 
