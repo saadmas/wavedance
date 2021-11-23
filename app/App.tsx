@@ -33,6 +33,15 @@ const App = () => {
     });
   }, []);
 
+  React.useEffect(() => {
+    const foo = async () => {
+      await firebase.database().ref('foo').set('bar'); ///
+      await firebase.database().ref('foo').set('baz'); ///
+    };
+
+    foo();
+  }, []);
+
   if (!fontsLoaded || isLoadingUser) {
     return <AppLoading />;
   }
