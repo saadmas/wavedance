@@ -1,10 +1,8 @@
-import firebase from 'firebase';
 import * as React from 'react';
-import { ImageBackground, View } from 'react-native';
-import { IconButton, List, Surface, Text, useTheme } from 'react-native-paper';
-import { FirebaseNode } from '../../../../../../firebase/keys';
-import { getFirebasePath } from '../../../../../../firebase/utils';
+import { View } from 'react-native';
+import { IconButton, List, Text, useTheme } from 'react-native-paper';
 import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
+import EventCardImage from '../EventCardImage/EventCardImage';
 import { DisplayEvent } from '../EventList/EventList';
 
 interface EventCardProps {
@@ -13,24 +11,7 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, locationId }: EventCardProps) => {
-  ///
-  const [source, setSource] = React.useState<string>(
-    'https://i.scdn.co/image/ab6761610000e5eb2dc40ac263ef07c16a95af4e'
-  );
-  React.useEffect(() => {
-    const foo = async () => {
-      const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), event.id.toString());
-      const url = await firebase.database().ref(path).get();
-      if (url.val()) {
-        setSource(url.val().imageUrl);
-      }
-    };
-
-    foo();
-  }, []);
-
   const { fonts } = useTheme();
-  const borderRadius = 10;
 
   const getArtists = (): string => event.artistList.map(artist => artist.name).join(', ');
 
@@ -90,31 +71,7 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
       >
         {getTitle()}
       </Text>
-      <Surface
-        style={{
-          marginTop: 5,
-          marginBottom: 10,
-          height: 350,
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          elevation: 12,
-          borderRadius,
-        }}
-      >
-        <ImageBackground
-          source={{ uri: source }}
-          style={{ height: '100%', width: '100%' }}
-          borderRadius={borderRadius}
-          resizeMode="cover"
-        />
-        {/* <LottieAnimation
-          source={require(`../../../../../assets/animations/dj-mixer.json`)}
-          finalFramePosition={1}
-          shouldLoop={true}
-        /> */}
-        {/* {renderImageContent()} */}
-      </Surface>
+      <EventCardImage locationId={locationId} eventId={event.id} />
       {renderEventDate()}
       {renderArtists()}
       {renderEventVenue()}

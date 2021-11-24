@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder';
+import { eventCardImageHeight } from '../EventCardImage/EventCardImage';
 
 interface EventListLoadingSkeletonProps {}
 
@@ -43,7 +44,7 @@ const EventListLoadingSkeleton = ({}: EventListLoadingSkeletonProps) => {
           backgroundColor,
           margin: 0,
           marginBottom: 10,
-          height: 350,
+          height: eventCardImageHeight,
           width: '100%',
           elevation: 12,
           borderRadius: 10,
