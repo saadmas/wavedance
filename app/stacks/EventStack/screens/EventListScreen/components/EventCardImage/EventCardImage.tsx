@@ -25,22 +25,31 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
   const backgroundColor = colors.background;
   const borderRadius = 10;
 
-  ///'https://i.scdn.co/image/ab6761610000e5eb2dc40ac263ef07c16a95af4e'
   const [source, setSource] = React.useState<ImageSource>(undefined);
 
   React.useEffect(() => {
     const fetchImageSource = async () => {
-      const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
-      const url = await firebase.database().ref(path).get();
-      if (url.val()) {
-        setSource(url.val().imageUrl);
-      } else {
+      try {
+        const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
+        const url = await firebase.database().ref(path).get();
+        if (url.val()) {
+          setSource(url.val().imageUrl);
+        } else {
+          setSource(null);
+        }
+      } catch (e) {
+        console.error('fetchImageSource failed:');
+        console.error(e);
         setSource(null);
       }
     };
 
     fetchImageSource();
   }, [locationId, eventId]);
+
+  const onUriLoadError = () => {
+    setSource(null);
+  };
 
   const renderImageContent = (): React.ReactNode => {
     // Loading
@@ -73,6 +82,7 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
     return (
       <ImageBackground
         source={{ uri: source }}
+        onError={onUriLoadError}
         style={{ height: '100%', width: '100%' }}
         borderRadius={borderRadius}
         resizeMode="cover"
