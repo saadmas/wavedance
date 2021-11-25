@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image, View } from 'react-native';
-import { IconButton, useTheme } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 
 interface EventActionsProps {
@@ -10,7 +10,6 @@ interface EventActionsProps {
 }
 
 const EventActions = ({ eventId, spotifyArtistId, isFavorite }: EventActionsProps) => {
-  const { colors } = useTheme();
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
@@ -23,8 +22,8 @@ const EventActions = ({ eventId, spotifyArtistId, isFavorite }: EventActionsProp
         alignItems: 'center',
         flex: 1,
         position: 'relative',
-        top: 5,
         left: 10,
+        top: 5,
       }}
     >
       <IconButton

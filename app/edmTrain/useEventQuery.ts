@@ -11,7 +11,7 @@ const fetchEvents = async (locationId = 70) => {
 };
 
 export const useEventQuery = (locationId?: number) => {
-  const { isLoading, isError, data } = useQuery<EdmTrainResponse, Error>(
+  const { isLoading, isError, data, isRefetching } = useQuery<EdmTrainResponse, Error>(
     ['events', locationId],
     () => fetchEvents(locationId),
     {
@@ -20,5 +20,5 @@ export const useEventQuery = (locationId?: number) => {
     }
   );
 
-  return { isLoading, isError, data };
+  return { isLoading, isError, data, isRefetching };
 };

@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder';
+import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import { eventCardImageHeight } from '../EventCardImage/EventCardImage';
 
 interface EventListLoadingSkeletonProps {}
@@ -26,17 +27,32 @@ const EventListLoadingSkeleton = ({}: EventListLoadingSkeletonProps) => {
   };
 
   return (
-    <Placeholder Animation={Fade} style={{ padding: 20, paddingTop: 0 }}>
+    <LottieAnimation
+      source={require(`../../../../../../../assets/animations/loading-hand.json`)}
+      finalFramePosition={1}
+      shouldLoop={true}
+      style={{
+        width: '80%',
+        height: '80%',
+      }}
+    />
+  );
+
+  //* figure out which looks better!
+
+  return (
+    <Placeholder Animation={Fade} style={{ padding: 20, paddingTop: 0, position: 'relative', bottom: 20 }}>
       <PlaceholderLine
-        width={80}
-        height={12}
+        width={0}
+        height={30}
         style={{
           backgroundColor,
           marginTop: 10,
           marginLeft: 5,
           position: 'relative',
-          top: 5,
-          borderRadius: lineBorderRadius,
+          top: 20,
+          width: '98%',
+          borderRadius: lineBorderRadius + 5,
         }}
       />
       <PlaceholderMedia

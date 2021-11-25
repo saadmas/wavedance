@@ -88,7 +88,7 @@ const EventList = ({ events, searchText, locationId }: EventListProps) => {
       contentContainerStyle={{ paddingBottom: 150 }}
       ListEmptyComponent={renderNoData}
       ref={listRef}
-      removeClippedSubviews={true}
+      // removeClippedSubviews={true}
     />
   );
 };

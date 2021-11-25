@@ -18,7 +18,7 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
 
   const renderTitle = (): React.ReactNode => {
     return (
-      <View style={{ flex: 0.9 }}>
+      <View style={{ maxWidth: '62%' }}>
         <Text
           style={{
             fontSize: 18,
@@ -68,7 +68,7 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
 
   return (
     <View style={{ margin: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'baseline', position: 'relative', top: 5 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
         {renderTitle()}
         <EventActions eventId={event.id} />
       </View>

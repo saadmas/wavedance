@@ -10,10 +10,10 @@ interface EventListQueryProps {
 }
 
 const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
-  const { isLoading, isError, data } = useEventQuery(locationId);
+  const { isLoading, isError, data, isRefetching } = useEventQuery(locationId);
   const isFailure = data ? !data.success : false;
 
-  if (isLoading || !locationId) {
+  if (isLoading || isRefetching || !locationId) {
     return <EventListLoadingSkeleton />;
   }
 

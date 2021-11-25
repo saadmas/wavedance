@@ -59,7 +59,7 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
           <PlaceholderMedia
             style={{
               backgroundColor,
-              height: eventCardImageHeight,
+              height: '100%',
               width: '100%',
             }}
           />
@@ -93,7 +93,6 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
   return (
     <Surface
       style={{
-        marginTop: 5,
         marginBottom: 10,
         height: eventCardImageHeight,
         width: '100%',
