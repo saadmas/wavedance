@@ -32,7 +32,7 @@ const EventHeader = ({ event, spotifyArtistId, isFavorite, locationId }: EventHe
   };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', height: 55 }}>
       {renderTitle()}
       <EventActions
         eventLink={event.link}
