@@ -58,8 +58,6 @@ const EventList = ({ events, searchText, locationId }: EventListProps) => {
     [locationId]
   );
 
-  console.log(filteredEvents[0]);
-
   const renderNoData = () => {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>

@@ -56,5 +56,5 @@ exports.fetchAndStoreEventArtists = functions
       admin.database().ref(path).set(Object.fromEntries(eventArtistMap));
     }
 
-    console.log('succesfully ran fetchAndStoreEventArtist!');
+    console.info('succesfully ran fetchAndStoreEventArtist!');
   });
