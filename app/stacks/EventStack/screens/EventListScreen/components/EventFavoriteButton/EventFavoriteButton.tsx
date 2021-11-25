@@ -1,23 +1,33 @@
 import * as React from 'react';
-import LottieInteractiveAnimation from '../../../../../../components/LottieInteractiveAnimation/LottieInteractiveAnimation';
+import LottieInteractiveAnimation, {
+  FramePosition,
+} from '../../../../../../components/LottieInteractiveAnimation/LottieInteractiveAnimation';
 
 interface EventFavoriteButtonProps {
-  isFavoritesList: boolean;
+  isFavorite: boolean;
   size: number;
   eventId: number;
+  locationId: number;
 }
 
-const EventFavoriteButton = ({ isFavoritesList, size }: EventFavoriteButtonProps) => {
-  const onPress = () => {};
-  return (
+const EventFavoriteButton = ({ isFavorite, size }: EventFavoriteButtonProps) => {
+  const [isFavoriteEvent, setIsFavoriteEvent] = React.useState<boolean | undefined>(isFavorite);
+
+  const onPress = () => {
+    if (isFavoriteEvent) {
+      /// open unfavorite confirmation modal
+    } else {
+      /// navigate to prompt page
+    }
+    setIsFavoriteEvent(!isFavoriteEvent);
+  };
+
+  return isFavoriteEvent === undefined ? null : (
     <LottieInteractiveAnimation
       source={require(`'../../../../../../../assets/animations/heart-favorite.json`)}
       onPress={onPress}
-      playBackwards={true}
-      style={{
-        width: size,
-        height: size,
-      }}
+      initialFramePosition={isFavoriteEvent ? FramePosition.End : FramePosition.Start}
+      style={{ width: size, height: size }}
     />
   );
 };

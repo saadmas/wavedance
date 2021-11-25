@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { Image, View } from 'react-native';
 import { IconButton, TouchableRipple } from 'react-native-paper';
-import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import * as WebBrowser from 'expo-web-browser';
-import FavoriteButton from '../EventFavoriteButton/EventFavoriteButton';
 import EventFavoriteButton from '../EventFavoriteButton/EventFavoriteButton';
 
 interface EventActionsProps {
   eventLink: string;
-  isFavoritesList: boolean;
+  eventId: number;
+  locationId: number;
+  isFavorite: boolean;
   spotifyArtistId?: string;
 }
 
-const EventActions = ({ eventLink, spotifyArtistId, isFavoritesList }: EventActionsProps) => {
+const EventActions = ({ eventLink, spotifyArtistId, isFavorite, locationId, eventId }: EventActionsProps) => {
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
@@ -52,8 +52,9 @@ const EventActions = ({ eventLink, spotifyArtistId, isFavoritesList }: EventActi
   };
 
   const renderFavoriteAction = () => {
-    /// pass eventId
-    return <EventFavoriteButton size={favoriteSize} eventId={-1} isFavoritesList={isFavoritesList} />;
+    return (
+      <EventFavoriteButton size={favoriteSize} isFavorite={isFavorite} locationId={locationId} eventId={eventId} />
+    );
   };
 
   return (

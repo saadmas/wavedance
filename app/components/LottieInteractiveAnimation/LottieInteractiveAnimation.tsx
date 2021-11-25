@@ -3,7 +3,7 @@ import LottieView from 'lottie-react-native';
 import { StyleProp, TouchableWithoutFeedback, ViewStyle } from 'react-native';
 import AnimatedLottieView from 'lottie-react-native';
 
-enum FramePosition {
+export enum FramePosition {
   Start = 0,
   End = 1,
 }
@@ -14,6 +14,7 @@ interface LottieInteractiveAnimationProps {
   initialFramePosition?: FramePosition;
   style?: StyleProp<ViewStyle>;
 }
+
 const LottieInteractiveAnimation = ({
   source,
   style,
@@ -21,10 +22,10 @@ const LottieInteractiveAnimation = ({
   initialFramePosition,
 }: LottieInteractiveAnimationProps) => {
   const animationRef = React.useRef<AnimatedLottieView>(null);
-  const [framePosition, setFramePosition] = React.useState<number | undefined>(initialFramePosition);
+  const [framePosition, setFramePosition] = React.useState<FramePosition>(initialFramePosition ?? FramePosition.Start);
 
   const playAnimation = () => {
-    if (framePosition === 1) {
+    if (framePosition === FramePosition.End) {
       animationRef.current?.play(FramePosition.End, FramePosition.Start);
       return;
     }

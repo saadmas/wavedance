@@ -12,9 +12,10 @@ interface EventListProps {
   locationId: number;
   searchText: string;
   isFavoritesList: boolean;
+  locationFavoriteEventIds?: Set<string>;
 }
 
-const EventList = ({ events, searchText, locationId, isFavoritesList }: EventListProps) => {
+const EventList = ({ events, searchText, locationId, isFavoritesList, locationFavoriteEventIds }: EventListProps) => {
   const { fonts } = useTheme();
   const listRef = React.useRef<VirtualizedList<EdmTrainEvent>>(null);
   const [filteredEvents, setFilteredEvents] = React.useState<DisplayEvent[]>(events);
@@ -52,13 +53,17 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
   const getItemKey = (listItem: DisplayEvent): string => listItem.id.toString();
 
   const renderItem = React.useCallback(
-    (itemInfo: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
-      <EventCard event={itemInfo.item} locationId={locationId} isFavoritesList={isFavoritesList} />
+    ({ item }: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
+      <EventCard
+        event={item}
+        locationId={locationId}
+        isFavorite={!!(isFavoritesList || locationFavoriteEventIds?.has(item.id.toString()))}
+      />
     ),
-    [locationId]
+    [locationId, locationFavoriteEventIds, isFavoritesList]
   );
 
-  const renderNoData = () => {
+  const renderNoData = React.useCallback(() => {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
         <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
@@ -76,7 +81,7 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
         />
       </View>
     );
-  };
+  }, []);
 
   return (
     <VirtualizedList
@@ -89,6 +94,8 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
       ListEmptyComponent={renderNoData}
       ref={listRef}
       removeClippedSubviews={true}
+      initialNumToRender={1} //* double check 1 is ok for all screen sizes
+      windowSize={5}
     />
   );
 };
