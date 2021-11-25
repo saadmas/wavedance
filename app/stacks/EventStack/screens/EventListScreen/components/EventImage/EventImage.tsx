@@ -29,6 +29,8 @@ const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps
   const [source, setSource] = React.useState<ImageSource>(undefined);
 
   React.useEffect(() => {
+    let mounted = true;
+
     const fetchImageSource = async () => {
       try {
         const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
@@ -47,7 +49,13 @@ const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps
       }
     };
 
-    fetchImageSource();
+    if (mounted) {
+      fetchImageSource();
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, [locationId, eventId]);
 
   const onUriLoadError = () => {
