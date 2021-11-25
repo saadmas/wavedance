@@ -57,17 +57,18 @@ const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps
   const renderImageContent = (): React.ReactNode => {
     // Loading
     if (source === undefined) {
-      return (
-        <Placeholder Animation={Fade}>
-          <PlaceholderMedia
-            style={{
-              backgroundColor,
-              height: '100%',
-              width: '100%',
-            }}
-          />
-        </Placeholder>
-      );
+      return; //* check speed in prod!
+      // return (
+      //   <Placeholder Animation={Fade}>
+      //     <PlaceholderMedia
+      //       style={{
+      //         backgroundColor,
+      //         height: '100%',
+      //         width: '100%',
+      //       }}
+      //     />
+      //   </Placeholder>
+      // );
     }
 
     // Failed to fetch source URI

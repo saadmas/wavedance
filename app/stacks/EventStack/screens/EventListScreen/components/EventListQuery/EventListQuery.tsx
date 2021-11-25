@@ -46,7 +46,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
     fetchLocationFavoriteEvents();
   }, [locationId]);
 
-  if (isLoading || isRefetching || !locationId) {
+  if (isLoading || !locationId) {
     return <EventListLoadingSkeleton />;
   }
 

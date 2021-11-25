@@ -1,5 +1,6 @@
 import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
+import { View, ViewStyle } from 'react-native';
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import { eventCardImageHeight } from '../EventImage/EventImage';
@@ -10,51 +11,61 @@ const EventListLoadingSkeleton = ({}: EventListLoadingSkeletonProps) => {
   const { colors } = useTheme();
   const backgroundColor = colors.background;
   const lineBorderRadius = 4;
+  const lineHeight = 10;
 
-  const renderCardDetailLines = () => {
-    const detailLineWidths = [50, 60, 20];
-
-    const detailLines = detailLineWidths.map(width => (
+  const getPlaceholderLine = (styles: ViewStyle = {}) => {
+    return (
       <PlaceholderLine
-        key={width}
-        width={width}
-        height={10}
-        style={{ backgroundColor, marginLeft: 5, borderRadius: lineBorderRadius }}
+        width={0}
+        height={lineHeight}
+        style={{
+          backgroundColor,
+          borderRadius: lineBorderRadius,
+          ...styles,
+        }}
       />
-    ));
-
-    return <>{detailLines}</>;
+    );
   };
 
-  return (
-    <LottieAnimation
-      source={require(`../../../../../../../assets/animations/loading-hand.json`)}
-      finalFramePosition={1}
-      shouldLoop={true}
-      style={{
-        width: '80%',
-        height: '80%',
-      }}
-    />
-  );
+  const renderCardHeader = () => {
+    const lineWidths = ['30%', '40%'];
+    const placeholders = lineWidths.map(width => (
+      <React.Fragment key={width}>{getPlaceholderLine({ width })}</React.Fragment>
+    ));
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 40,
+          marginLeft: 5,
+          position: 'relative',
+          top: 5,
+        }}
+      >
+        {placeholders}
+      </View>
+    );
+  };
+
+  // return (
+  //   <LottieAnimation
+  //     source={require(`../../../../../../../assets/animations/loading-hand.json`)}
+  //     finalFramePosition={1}
+  //     shouldLoop={true}
+  //     style={{
+  //       width: '80%',
+  //       height: '80%',
+  //     }}
+  //   />
+  // );
 
   //* figure out which looks better!
 
   return (
     <Placeholder Animation={Fade} style={{ padding: 20, paddingTop: 0, position: 'relative', bottom: 20 }}>
-      <PlaceholderLine
-        width={0}
-        height={30}
-        style={{
-          backgroundColor,
-          marginTop: 10,
-          marginLeft: 5,
-          position: 'relative',
-          top: 20,
-          width: '98%',
-          borderRadius: lineBorderRadius + 5,
-        }}
-      />
+      {renderCardHeader()}
       <PlaceholderMedia
         style={{
           backgroundColor,
@@ -66,7 +77,11 @@ const EventListLoadingSkeleton = ({}: EventListLoadingSkeletonProps) => {
           borderRadius: 10,
         }}
       />
-      {renderCardDetailLines()}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        {getPlaceholderLine({ width: '25%' })}
+        {getPlaceholderLine({ width: '20%' })}
+      </View>
+      {getPlaceholderLine({ width: '40%' })}
     </Placeholder>
   );
 };
