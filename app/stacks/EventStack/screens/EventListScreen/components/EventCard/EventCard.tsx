@@ -7,15 +7,16 @@ import { DisplayEvent } from '../EventList/EventList';
 
 interface EventCardProps {
   event: DisplayEvent;
+  isFavoritesList: boolean;
   locationId: number;
 }
 
-const EventCard = ({ event, locationId }: EventCardProps) => {
+const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   const [spotifyArtistId, setSpotifyArtistId] = React.useState<string | undefined>(undefined);
 
   return (
     <View style={{ margin: 10 }}>
-      <EventHeader event={event} spotifyArtistId={spotifyArtistId} />
+      <EventHeader event={event} spotifyArtistId={spotifyArtistId} isFavoritesList={isFavoritesList} />
       <EventImage locationId={locationId} eventId={event.id} setSpotifyArtistId={setSpotifyArtistId} />
       <EventDetails event={event} />
     </View>

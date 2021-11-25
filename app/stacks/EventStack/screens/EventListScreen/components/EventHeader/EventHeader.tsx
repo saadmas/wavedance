@@ -7,10 +7,11 @@ import { DisplayEvent } from '../EventList/EventList';
 
 interface EventHeaderProps {
   event: DisplayEvent;
+  isFavoritesList: boolean;
   spotifyArtistId?: string;
 }
 
-const EventHeader = ({ event, spotifyArtistId }: EventHeaderProps) => {
+const EventHeader = ({ event, spotifyArtistId, isFavoritesList }: EventHeaderProps) => {
   const { fonts } = useTheme();
 
   const renderTitle = (): React.ReactNode => {
@@ -32,7 +33,7 @@ const EventHeader = ({ event, spotifyArtistId }: EventHeaderProps) => {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
       {renderTitle()}
-      <EventActions eventLink={event.link} spotifyArtistId={spotifyArtistId} />
+      <EventActions eventLink={event.link} spotifyArtistId={spotifyArtistId} isFavoritesList={isFavoritesList} />
     </View>
   );
 };

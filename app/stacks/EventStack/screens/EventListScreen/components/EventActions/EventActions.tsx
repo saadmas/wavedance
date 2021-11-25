@@ -3,18 +3,19 @@ import { Image, View } from 'react-native';
 import { IconButton, TouchableRipple } from 'react-native-paper';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import * as WebBrowser from 'expo-web-browser';
+import FavoriteButton from '../EventFavoriteButton/EventFavoriteButton';
+import EventFavoriteButton from '../EventFavoriteButton/EventFavoriteButton';
 
 interface EventActionsProps {
   eventLink: string;
-  isFavorite?: boolean; /// handle
-  spotifyArtistId?: string; /// only render spotify btn if this prop is there
+  isFavoritesList: boolean;
+  spotifyArtistId?: string;
 }
 
-const EventActions = ({ eventLink, spotifyArtistId, isFavorite }: EventActionsProps) => {
+const EventActions = ({ eventLink, spotifyArtistId, isFavoritesList }: EventActionsProps) => {
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
-  const rippleColor = 'grey';
 
   const openEdmTrainEventWebpage = () => {
     WebBrowser.openBrowserAsync(eventLink);
@@ -51,17 +52,8 @@ const EventActions = ({ eventLink, spotifyArtistId, isFavorite }: EventActionsPr
   };
 
   const renderFavoriteAction = () => {
-    return (
-      <LottieAnimation
-        source={require(`'../../../../../../../assets/animations/heart-favorite.json`)}
-        finalFramePosition={1}
-        shouldLoop={false}
-        style={{
-          width: favoriteSize,
-          height: favoriteSize,
-        }}
-      />
-    );
+    /// pass eventId
+    return <EventFavoriteButton size={favoriteSize} eventId={-1} isFavoritesList={isFavoritesList} />;
   };
 
   return (
