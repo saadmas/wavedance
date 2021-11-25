@@ -32,11 +32,23 @@ const EventList = ({ events, searchText, locationId, isFavoritesList, locationFa
 
     const nextFilteredEvents = events.filter(event => {
       const lowerCaseSearchText = searchText.trim().toLowerCase();
+
       const isNameMatch = event.name?.toLowerCase?.()?.includes(lowerCaseSearchText);
-      const isArtistMatch = event.artistList?.some(artist => artist.name.toLowerCase().includes(lowerCaseSearchText));
+      if (isNameMatch) {
+        return true;
+      }
+
       const isVenueMatch = event.venue?.name?.toLowerCase?.()?.includes(lowerCaseSearchText);
-      const isMatch = isNameMatch || isArtistMatch || isVenueMatch;
-      return isMatch;
+      if (isVenueMatch) {
+        return true;
+      }
+
+      const isArtistMatch = event.artistList?.some(artist => artist.name.toLowerCase().includes(lowerCaseSearchText));
+      if (isArtistMatch) {
+        return true;
+      }
+
+      return false;
     });
 
     setFilteredEvents(nextFilteredEvents);
