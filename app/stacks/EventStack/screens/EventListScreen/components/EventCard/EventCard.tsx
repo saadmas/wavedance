@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import EventActions from '../EventActions/EventActions';
-import EventCardImage from '../EventCardImage/EventCardImage';
 import EventDetails from '../EventDetails/EventDetails';
+import EventHeader from '../EventHeader/EventHeader';
+import EventImage from '../EventImage/EventImage';
 import { DisplayEvent } from '../EventList/EventList';
 
 interface EventCardProps {
@@ -12,34 +11,12 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, locationId }: EventCardProps) => {
-  const { fonts } = useTheme();
-
-  const getArtists = (): string => event.artistList.map(artist => artist.name).join(', ');
-
-  const renderTitle = (): React.ReactNode => {
-    return (
-      <View style={{ maxWidth: '62%' }}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: fonts.thin.fontFamily,
-            color: '#fff',
-          }}
-        >
-          {event.name ?? getArtists()}
-        </Text>
-      </View>
-    );
-  };
+  const [spotifyArtistId, setSpotifyArtistId] = React.useState<string | undefined>(undefined);
 
   return (
     <View style={{ margin: 10 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-        {/* /// Put EventHeader in sep comp Fix jank space b/w title/actions & image */}
-        {renderTitle()}
-        <EventActions eventId={event.id} />
-      </View>
-      <EventCardImage locationId={locationId} eventId={event.id} />
+      <EventHeader event={event} spotifyArtistId={spotifyArtistId} />
+      <EventImage locationId={locationId} eventId={event.id} setSpotifyArtistId={setSpotifyArtistId} />
       <EventDetails event={event} />
     </View>
   );

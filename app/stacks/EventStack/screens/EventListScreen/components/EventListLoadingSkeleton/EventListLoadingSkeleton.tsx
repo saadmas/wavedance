@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
-import { eventCardImageHeight } from '../EventCardImage/EventCardImage';
+import { eventCardImageHeight } from '../EventImage/EventImage';
 
 interface EventListLoadingSkeletonProps {}
 

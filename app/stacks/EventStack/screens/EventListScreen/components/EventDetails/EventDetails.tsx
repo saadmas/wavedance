@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
+import { getArtistsDisplay } from '../../../../../../edmTrain/utils';
 import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
 import { DisplayEvent } from '../EventList/EventList';
 
@@ -9,8 +10,6 @@ interface EventDetailProps {
 }
 
 const EventDetails = ({ event }: EventDetailProps) => {
-  const getArtists = (): string => event.artistList.map(artist => artist.name).join(', ');
-
   const renderEventDetail = (title: string, icon: string) => {
     const iconSize = 15;
     return (
@@ -30,7 +29,7 @@ const EventDetails = ({ event }: EventDetailProps) => {
 
   const renderArtists = (): React.ReactNode => {
     if (event.artistList.length) {
-      const artists = getArtists();
+      const artists = getArtistsDisplay(event);
       return renderEventDetail(artists, 'account-music-outline');
     }
   };

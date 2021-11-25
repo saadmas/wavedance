@@ -8,7 +8,8 @@ import LottieAnimation from '../../../../../../components/LottieAnimation/Lottie
 import { PlaceholderMedia } from 'rn-placeholder/lib/PlaceholderMedia';
 import { Fade, Placeholder } from 'rn-placeholder';
 
-interface EventCardImageProps {
+interface EventImageProps {
+  setSpotifyArtistId: (artistId: string) => void;
   locationId: number;
   eventId: number;
 }
@@ -20,7 +21,7 @@ type ImageSource = string | null | undefined;
 
 export const eventCardImageHeight = 350;
 
-const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
+const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps) => {
   const { colors } = useTheme();
   const backgroundColor = colors.background;
   const borderRadius = 10;
@@ -33,7 +34,9 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
         const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
         const url = await firebase.database().ref(path).get();
         if (url.val()) {
-          setSource(url.val().imageUrl);
+          const eventPhotoDetails = url.val();
+          setSource(eventPhotoDetails.imageUrl);
+          setSpotifyArtistId(eventPhotoDetails.spotifyArtistId);
         } else {
           setSource(null);
         }
@@ -107,4 +110,4 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
   );
 };
 
-export default EventCardImage;
+export default EventImage;

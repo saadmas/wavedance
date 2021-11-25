@@ -1,5 +1,5 @@
 import { getEdmTrainCities, getEdmTrainStates } from './locations';
-import { EdmTrainLocation } from './types';
+import { EdmTrainEvent, EdmTrainLocation } from './types';
 
 export const getLocationDisplayText = (location: EdmTrainLocation): string => {
   if (location.city) {
@@ -31,3 +31,6 @@ export const getEdmTrainLocationFromUserCurrentLocation = (
     return matchedState;
   }
 };
+
+export const getArtistsDisplay = (event: EdmTrainEvent): string =>
+  event.artistList.map(artist => artist.name).join(', ');
