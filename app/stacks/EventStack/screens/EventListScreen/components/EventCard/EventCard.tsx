@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { IconButton, List, Text, useTheme } from 'react-native-paper';
 import { getEventDateDisplay } from '../../../../../../utils/prompts/date.util';
+import EventActions from '../EventActions/EventActions';
 import EventCardImage from '../EventCardImage/EventCardImage';
 import { DisplayEvent } from '../EventList/EventList';
 
@@ -15,8 +16,20 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
 
   const getArtists = (): string => event.artistList.map(artist => artist.name).join(', ');
 
-  const getTitle = (): string => {
-    return event.name ?? getArtists();
+  const renderTitle = (): React.ReactNode => {
+    return (
+      <View style={{ flex: 0.9 }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontFamily: fonts.thin.fontFamily,
+            color: '#fff',
+          }}
+        >
+          {event.name ?? getArtists()}
+        </Text>
+      </View>
+    );
   };
 
   const renderListItem = (title: string, icon: string) => {
@@ -34,12 +47,10 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
   };
 
   const renderArtists = (): React.ReactNode => {
-    if (!event.artistList.length) {
-      return;
+    if (event.artistList.length) {
+      const artists = getArtists();
+      return renderListItem(artists, 'account-music-outline');
     }
-
-    const artists = getArtists();
-    return renderListItem(artists, 'account-music-outline');
   };
 
   const renderEventDate = (): React.ReactNode => {
@@ -56,21 +67,11 @@ const EventCard = ({ event, locationId }: EventCardProps) => {
   };
 
   return (
-    <View
-      style={{
-        display: 'flex',
-        margin: 25,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 18,
-          fontFamily: fonts.thin.fontFamily,
-          color: '#fff',
-        }}
-      >
-        {getTitle()}
-      </Text>
+    <View style={{ margin: 25 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'baseline', position: 'relative', top: 5 }}>
+        {renderTitle()}
+        <EventActions eventId={event.id} />
+      </View>
       <EventCardImage locationId={locationId} eventId={event.id} />
       {renderEventDate()}
       {renderArtists()}

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Image, ImageBackground, View } from 'react-native';
-import { Button, IconButton, Surface, useTheme } from 'react-native-paper';
+import { Image } from 'react-native';
+import { Surface, useTheme } from 'react-native-paper';
 import firebase from 'firebase';
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import { getFirebasePath } from '../../../../../../firebase/utils';
@@ -24,7 +24,6 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
   const { colors } = useTheme();
   const backgroundColor = colors.background;
   const borderRadius = 10;
-  const iconButtonSize = 40;
 
   const [source, setSource] = React.useState<ImageSource>(undefined);
 
@@ -50,53 +49,6 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
 
   const onUriLoadError = () => {
     setSource(null);
-  };
-
-  const renderActionButtons = (): React.ReactNode => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          justifyContent: 'flex-end',
-          height: '100%',
-          width: '100%',
-        }}
-      >
-        <View
-          style={{
-            alignItems: 'center',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            width: '55%',
-            position: 'relative',
-            top: 12,
-          }}
-        >
-          <IconButton
-            icon={require('../../../../../../../assets/icons/spotify-icon.png')}
-            size={iconButtonSize}
-            color="#1DB954"
-            onPress={() => {}}
-          />
-          <View>
-            <Image
-              source={require('../../../../../../../assets/icons/edm-train-icon.png')}
-              style={{ height: iconButtonSize, width: iconButtonSize, borderRadius: 1000 }}
-            />
-          </View>
-          <LottieAnimation
-            source={require(`'../../../../../../../assets/animations/heart-favorite.json`)}
-            finalFramePosition={1}
-            shouldLoop={false}
-            style={{
-              width: iconButtonSize + 8,
-              height: iconButtonSize + 8,
-            }}
-          />
-        </View>
-      </View>
-    );
   };
 
   const renderImageContent = (): React.ReactNode => {
@@ -128,15 +80,13 @@ const EventCardImage = ({ locationId, eventId }: EventCardImageProps) => {
 
     // Valid source URI
     return (
-      <ImageBackground
+      <Image
         source={{ uri: source }}
         onError={onUriLoadError}
         style={{ height: '100%', width: '100%' }}
         borderRadius={borderRadius}
         resizeMode="cover"
-      >
-        {renderActionButtons()}
-      </ImageBackground>
+      />
     );
   };
 
