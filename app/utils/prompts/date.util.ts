@@ -6,8 +6,8 @@ export const getFormattedDate = (date: Date): string => {
 
 export const getEventDateDisplay = (eventDate: string) => {
   const eventDateDisplay = new Date(eventDate).toLocaleString('en-US', {
-    year: 'numeric',
-    month: 'long',
+    year: '2-digit',
+    month: 'short',
     day: 'numeric',
   });
   return eventDateDisplay;
