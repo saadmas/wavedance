@@ -9,10 +9,18 @@ interface EventActionsProps {
   eventId: number;
   locationId: number;
   isFavorite: boolean;
+  onFavoriteEvent: () => void;
   spotifyArtistId?: string;
 }
 
-const EventActions = ({ eventLink, spotifyArtistId, isFavorite, locationId, eventId }: EventActionsProps) => {
+const EventActions = ({
+  eventLink,
+  spotifyArtistId,
+  isFavorite,
+  locationId,
+  eventId,
+  onFavoriteEvent,
+}: EventActionsProps) => {
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
@@ -53,7 +61,13 @@ const EventActions = ({ eventLink, spotifyArtistId, isFavorite, locationId, even
 
   const renderFavoriteAction = () => {
     return (
-      <EventFavoriteButton size={favoriteSize} isFavorite={isFavorite} locationId={locationId} eventId={eventId} />
+      <EventFavoriteButton
+        size={favoriteSize}
+        isFavorite={isFavorite}
+        locationId={locationId}
+        eventId={eventId}
+        onFavoriteEvent={onFavoriteEvent}
+      />
     );
   };
 

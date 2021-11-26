@@ -28,7 +28,7 @@ const PromptsSelector = ({
 }: PromptsSelectorProps) => {
   const { fonts } = useTheme();
   const cardActionIconSize = 20;
-  const minPromptCount = 1;
+  const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
 
   const openPromptDrawer = () => {
@@ -76,7 +76,14 @@ const PromptsSelector = ({
     if (selectionType === PromptSelectionType.General) {
       return 'Add some flair to your profile';
     }
-    return '///';
+    return 'Share your excitement about this event';
+  };
+
+  const getDescription = () => {
+    if (selectionType === PromptSelectionType.General) {
+      return `Answer at least ${minPromptCount} prompt`;
+    }
+    return 'Answer a prompt';
   };
 
   return (
@@ -91,7 +98,7 @@ const PromptsSelector = ({
           marginBottom: 10,
         }}
       >
-        <Text>{`Answer at least ${minPromptCount} prompt`}</Text>
+        <Text>{getDescription()}</Text>
         <Text>
           {filledPrompts.size}/{maxPromptCount}
         </Text>

@@ -12,6 +12,7 @@ interface LottieInteractiveAnimationProps {
   source: string;
   onPress: () => void;
   initialFramePosition?: FramePosition;
+  speed?: number;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -20,6 +21,7 @@ const LottieInteractiveAnimation = ({
   style,
   onPress,
   initialFramePosition,
+  speed,
 }: LottieInteractiveAnimationProps) => {
   const animationRef = React.useRef<AnimatedLottieView>(null);
   const [framePosition, setFramePosition] = React.useState<FramePosition>(initialFramePosition ?? FramePosition.Start);
@@ -50,6 +52,7 @@ const LottieInteractiveAnimation = ({
         progress={framePosition}
         onAnimationFinish={onAnimationFinish}
         loop={false}
+        speed={speed}
         style={style}
       />
     </TouchableWithoutFeedback>

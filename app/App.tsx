@@ -43,7 +43,6 @@ const App = () => {
         <SafeAreaView style={styles.app}>
           <QueryClientProvider client={queryClient}>
             <NavigationContainer ref={navigationRef} theme={theme}>
-              {/* ///! */}
               {!isLoggedIn ? <HomeTab /> : <AuthScreen />}
             </NavigationContainer>
           </QueryClientProvider>

@@ -13,7 +13,7 @@ import PassionsInput from './screens/PassionsInput/PassionsInput';
 import PhotoInput from './screens/PhotoInput/PhotoInput';
 import GenresInput from './screens/GenresInput/GenresInput';
 import InstagramHandleInputInput from './screens/InstagramHandleInput/InstagramHandleInput';
-import PromptsManager from './screens/PromptsManager/PromptsManager';
+import SignupPromptsManager from './screens/SignupPromptsManager/SignupPromptsManager';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
@@ -28,7 +28,7 @@ const StepComponents = [
   OccupationInput,
   GenresInput,
   PassionsInput,
-  PromptsManager,
+  SignupPromptsManager,
   InstagramHandleInputInput,
   PhotoInput,
   SignUp,

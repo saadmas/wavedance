@@ -8,7 +8,7 @@ import { PromptSelectionType } from '../../../../state/enums/promptSelectionType
 
 interface SignupPromptsManagerProps extends SignUpStepProps {}
 
-const SignupPromptsManagerProps = ({ goToNextStep }: SignupPromptsManagerProps) => {
+const SignupPromptsManager = ({ goToNextStep }: SignupPromptsManagerProps) => {
   const dispatch = useSignUpDispatch();
 
   const onPromptsSubmit = (filledPrompts: Map<Prompt | EventPrompt, string>) => {
@@ -19,4 +19,4 @@ const SignupPromptsManagerProps = ({ goToNextStep }: SignupPromptsManagerProps) 
   return <PromptsManager onSubmit={onPromptsSubmit} selectionType={PromptSelectionType.General} />;
 };
 
-export default SignupPromptsManagerProps;
+export default SignupPromptsManager;

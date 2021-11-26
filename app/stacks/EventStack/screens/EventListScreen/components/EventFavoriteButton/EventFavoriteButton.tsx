@@ -7,17 +7,18 @@ interface EventFavoriteButtonProps {
   isFavorite: boolean;
   size: number;
   eventId: number;
+  onFavoriteEvent: () => void;
   locationId: number;
 }
 
-const EventFavoriteButton = ({ isFavorite, size }: EventFavoriteButtonProps) => {
+const EventFavoriteButton = ({ isFavorite, size, onFavoriteEvent }: EventFavoriteButtonProps) => {
   const [isFavoriteEvent, setIsFavoriteEvent] = React.useState<boolean | undefined>(isFavorite);
 
   const onPress = () => {
     if (isFavoriteEvent) {
       /// open unfavorite confirmation modal
     } else {
-      /// navigate to prompt page
+      onFavoriteEvent();
     }
     setIsFavoriteEvent(!isFavoriteEvent);
   };
@@ -28,6 +29,7 @@ const EventFavoriteButton = ({ isFavorite, size }: EventFavoriteButtonProps) => 
       onPress={onPress}
       initialFramePosition={isFavoriteEvent ? FramePosition.End : FramePosition.Start}
       style={{ width: size, height: size }}
+      speed={2}
     />
   );
 };

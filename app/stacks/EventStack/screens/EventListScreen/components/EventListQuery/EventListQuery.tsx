@@ -15,7 +15,7 @@ interface EventListQueryProps {
 
 const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
   const [locationFavoriteEventIds, setLocationFavoriteEventIds] = React.useState<Set<string>>(new Set());
-  const { isLoading, isError, data, isRefetching } = useEventQuery(locationId);
+  const { isLoading, isError, data } = useEventQuery(locationId);
   const isFailure = data ? !data.success : false;
 
   React.useEffect(() => {

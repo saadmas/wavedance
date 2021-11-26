@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
-import { EdmTrainEvent, EdmTrainLocation } from '../../edmTrain/types';
+import { EdmTrainLocation } from '../../edmTrain/types';
 import { Path } from '../../routing/paths';
-import { EventPrompt } from '../../state/enums/eventPrompt';
+import { defaultScreenPadding } from '../../styles/theme';
 import EventListScreen from './screens/EventListScreen/EventListScreen';
-import EventPromptScreen from './screens/EventPromptScreen/EventPromptScreen';
+import EventPromptScreen, { EventPromptsProps } from './screens/EventPromptScreen/EventPromptScreen';
 import LocationSelectScreen from './screens/LocationSelectScreen/LocationSelectScreen';
 
 const Stack = createNativeStackNavigator();
@@ -13,12 +13,7 @@ const Stack = createNativeStackNavigator();
 export type EventStackParamList = {
   [Path.LocationSelect]: undefined;
   [Path.EventList]: { location?: EdmTrainLocation };
-  [Path.EventPrompts]: {
-    locationId: number;
-    event: EdmTrainEvent;
-    eventPhotoUri?: string;
-    filledPrompts?: Map<EventPrompt, string>;
-  };
+  [Path.EventPrompts]: EventPromptsProps;
 };
 
 const EventStack = () => {
@@ -26,7 +21,7 @@ const EventStack = () => {
     <Stack.Navigator
       initialRouteName={Path.EventList}
       screenOptions={({ navigation }) => ({
-        animation: 'simple_push',
+        animation: 'slide_from_bottom',
         headerTransparent: true,
         headerTitle: '',
         headerShown: false,
@@ -36,7 +31,11 @@ const EventStack = () => {
     >
       <Stack.Screen name={Path.EventList} component={EventListScreen} />
       <Stack.Screen name={Path.LocationSelect} component={LocationSelectScreen} options={{ headerShown: true }} />
-      <Stack.Screen name={Path.LocationSelect} component={EventPromptScreen} options={{ headerShown: true }} />
+      <Stack.Screen
+        name={Path.EventPrompts}
+        component={EventPromptScreen}
+        options={{ headerShown: true, contentStyle: { paddingTop: 50, paddingHorizontal: defaultScreenPadding } }}
+      />
     </Stack.Navigator>
   );
 };

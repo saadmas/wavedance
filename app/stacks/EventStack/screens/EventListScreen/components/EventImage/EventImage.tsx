@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import { Surface, useTheme } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import firebase from 'firebase';
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import { getFirebasePath } from '../../../../../../firebase/utils';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
-import { PlaceholderMedia } from 'rn-placeholder/lib/PlaceholderMedia';
-import { Fade, Placeholder } from 'rn-placeholder';
+import { SpotifyArtist } from '../EventCard/EventCard';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface EventImageProps {
-  setSpotifyArtistId: (artistId: string) => void;
   locationId: number;
   eventId: number;
+  setSpotifyArtist: (artist: SpotifyArtist) => void;
+  onFavoriteEvent: () => void;
 }
 
 // null = failed to get image source
@@ -21,9 +22,7 @@ type ImageSource = string | null | undefined;
 
 export const eventCardImageHeight = 350;
 
-const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps) => {
-  const { colors } = useTheme();
-  const backgroundColor = colors.background;
+const EventImage = ({ locationId, eventId, setSpotifyArtist, onFavoriteEvent }: EventImageProps) => {
   const borderRadius = 10;
 
   const [source, setSource] = React.useState<ImageSource>(undefined);
@@ -36,9 +35,9 @@ const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps
         const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
         const url = await firebase.database().ref(path).get();
         if (url.val()) {
-          const eventPhotoDetails = url.val();
-          setSource(eventPhotoDetails.imageUrl);
-          setSpotifyArtistId(eventPhotoDetails.spotifyArtistId);
+          const { imageUrl, spotifyArtistId } = url.val();
+          setSource(imageUrl);
+          setSpotifyArtist({ spotifyArtistId, spotifyArtistImageUri: imageUrl });
         } else {
           setSource(null);
         }
@@ -103,19 +102,21 @@ const EventImage = ({ locationId, eventId, setSpotifyArtistId }: EventImageProps
   };
 
   return (
-    <Surface
-      style={{
-        marginBottom: 10,
-        height: eventCardImageHeight,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 12,
-        borderRadius,
-      }}
-    >
-      {renderImageContent()}
-    </Surface>
+    <TouchableWithoutFeedback onPress={onFavoriteEvent}>
+      <Surface
+        style={{
+          marginBottom: 10,
+          height: eventCardImageHeight,
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 12,
+          borderRadius,
+        }}
+      >
+        {renderImageContent()}
+      </Surface>
+    </TouchableWithoutFeedback>
   );
 };
 
