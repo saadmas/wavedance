@@ -7,4 +7,5 @@ export enum Path {
   Profile = 'Profile',
   LocationSelect = 'LocationSelect',
   EventPrompts = 'EventPrompts',
+  EventCarousel = 'EventCarousel',
 }
