@@ -12,10 +12,9 @@ interface EventListProps {
   locationId: number;
   searchText: string;
   isFavoritesList: boolean;
-  locationFavoriteEventIds?: Set<string>;
 }
 
-const EventList = ({ events, searchText, locationId, isFavoritesList, locationFavoriteEventIds }: EventListProps) => {
+const EventList = ({ events, searchText, locationId, isFavoritesList }: EventListProps) => {
   const { fonts } = useTheme();
   const listRef = React.useRef<VirtualizedList<EdmTrainEvent>>(null);
   const [filteredEvents, setFilteredEvents] = React.useState<DisplayEvent[]>(events);
@@ -71,13 +70,9 @@ const EventList = ({ events, searchText, locationId, isFavoritesList, locationFa
 
   const renderItem = React.useCallback(
     ({ item }: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
-      <EventCard
-        event={item}
-        locationId={locationId}
-        isFavorite={!!(isFavoritesList || locationFavoriteEventIds?.has(item.id.toString()))}
-      />
+      <EventCard event={item} locationId={locationId} isFavoritesList={isFavoritesList} />
     ),
-    [locationId, locationFavoriteEventIds, isFavoritesList]
+    [locationId, isFavoritesList]
   );
 
   const renderNoData = React.useCallback(() => {

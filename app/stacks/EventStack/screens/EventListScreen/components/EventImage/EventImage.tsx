@@ -12,7 +12,7 @@ interface EventImageProps {
   locationId: number;
   eventId: number;
   setSpotifyArtist: (artist: SpotifyArtist) => void;
-  onFavoriteEvent: () => void;
+  onImagePress: () => void;
 }
 
 // null = failed to get image source
@@ -22,7 +22,7 @@ type ImageSource = string | null | undefined;
 
 export const eventCardImageHeight = 350;
 
-const EventImage = ({ locationId, eventId, setSpotifyArtist, onFavoriteEvent }: EventImageProps) => {
+const EventImage = ({ locationId, eventId, setSpotifyArtist, onImagePress }: EventImageProps) => {
   const borderRadius = 10;
 
   const [source, setSource] = React.useState<ImageSource>(undefined);
@@ -102,7 +102,7 @@ const EventImage = ({ locationId, eventId, setSpotifyArtist, onFavoriteEvent }: 
   };
 
   return (
-    <TouchableWithoutFeedback onPress={onFavoriteEvent}>
+    <TouchableWithoutFeedback onPress={onImagePress}>
       <Surface
         style={{
           marginBottom: 10,

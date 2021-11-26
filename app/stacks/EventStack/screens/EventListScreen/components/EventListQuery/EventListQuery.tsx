@@ -1,9 +1,9 @@
 import firebase from 'firebase';
 import * as React from 'react';
-import { EdmTrainEvent } from '../../../../../../edmTrain/types';
 import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import { getFirebasePath } from '../../../../../../firebase/utils';
+import { useEventFavoritesCacheUpdater } from '../../../../../../state/events/EventFavoritesCacheProvider';
 import EventList from '../EventList/EventList';
 import EventListError from '../EventListError/EventListError';
 import EventListLoadingSkeleton from '../EventListLoadingSkeleton/EventListLoadingSkeleton';
@@ -14,7 +14,7 @@ interface EventListQueryProps {
 }
 
 const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
-  const [locationFavoriteEventIds, setLocationFavoriteEventIds] = React.useState<Set<string>>(new Set());
+  const setEventFavoritesCache = useEventFavoritesCacheUpdater();
   const { isLoading, isError, data } = useEventQuery(locationId);
   const isFailure = data ? !data.success : false;
 
@@ -33,7 +33,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
         const favoritedEvents = snapshot.val();
         if (favoritedEvents) {
           const favoriteEventIds = Object.keys(favoritedEvents);
-          setLocationFavoriteEventIds(new Set(favoriteEventIds));
+          setEventFavoritesCache(new Set(favoriteEventIds));
         }
       } catch (e) {
         console.error('updateEventFavoriteStatus failed');
@@ -55,13 +55,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
   }
 
   return (
-    <EventList
-      events={data?.data ?? []}
-      searchText={searchText}
-      locationId={locationId}
-      isFavoritesList={false}
-      locationFavoriteEventIds={locationFavoriteEventIds}
-    />
+    <EventList events={data?.data ?? []} searchText={searchText} locationId={locationId} isFavoritesList={false} />
   );
 };
 
