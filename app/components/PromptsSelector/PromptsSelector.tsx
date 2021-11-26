@@ -3,20 +3,29 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button, Card, Divider, IconButton, Paragraph, Text, useTheme } from 'react-native-paper';
 import { Path } from '../../routing/paths';
-import { PromptDrawerParamList } from '../../stacks/SignUpStack/screens/PromptsManager/PromptsManager';
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 import * as Animatable from 'react-native-animatable';
+import { EventPrompt } from '../../state/enums/eventPrompt';
+import { PromptDrawerParamList } from '../PromptsManager/PromptsManager';
+import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 
 interface PromptsSelectorProps {
-  filledPrompts: Map<Prompt, string>;
-  navigation: DrawerNavigationProp<PromptDrawerParamList, Path.SignUpPromptSelector>;
+  selectionType: PromptSelectionType;
+  filledPrompts: Map<Prompt | EventPrompt, string>;
+  navigation: DrawerNavigationProp<PromptDrawerParamList, Path.PromptSelector>;
   onPromptsSubmit: () => void;
-  deletePrompt: (prompt: Prompt) => void;
+  deletePrompt: (prompt: Prompt | EventPrompt) => void;
 }
 
-const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePrompt }: PromptsSelectorProps) => {
+const PromptsSelector = ({
+  filledPrompts,
+  onPromptsSubmit,
+  navigation,
+  deletePrompt,
+  selectionType,
+}: PromptsSelectorProps) => {
   const { fonts } = useTheme();
   const cardActionIconSize = 20;
   const minPromptCount = 1;
@@ -31,7 +40,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       const [prompt, value] = entry;
 
       const onEdit = () => {
-        navigation.navigate(Path.SignUpPromptInput, {
+        navigation.navigate(Path.PromptInput, {
           selectedPrompt: { prompt, value },
         });
       };
@@ -63,9 +72,16 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
     return promptCards;
   };
 
+  const getTitleText = () => {
+    if (selectionType === PromptSelectionType.General) {
+      return 'Add some flair to your profile';
+    }
+    return '///';
+  };
+
   return (
     <>
-      <Title title="Add some flair to your profile" />
+      <Title title={getTitleText()} />
       <View
         style={{
           display: 'flex',
@@ -81,7 +97,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
         </Text>
       </View>
       <View style={{ display: 'flex', alignItems: 'center' }}>
-        {filledPrompts.size < minPromptCount && (
+        {filledPrompts.size < maxPromptCount && (
           <Button
             icon="plus"
             mode="outlined"

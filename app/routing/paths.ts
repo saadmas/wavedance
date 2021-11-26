@@ -1,9 +1,10 @@
 export enum Path {
-  SignUpPromptSelector = 'SignUpPromptSelector',
-  SignUpPromptInput = 'SignUpPromptInput',
+  PromptSelector = 'PromptSelector',
+  PromptInput = 'PromptInput',
   Events = 'Events',
   EventList = 'EventList',
   Matches = 'Matches',
   Profile = 'Profile',
   LocationSelect = 'LocationSelect',
+  EventPrompts = 'EventPrompts',
 }

@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
 import { FirebaseNode, UserAdditionalInfo, UserBasicInfo, UserPhotos } from '../../../../firebase/keys';
 import { getFirebasePath } from '../../../../firebase/utils';
+import { PromptSelectionType } from '../../../../state/enums/promptSelectionType';
 import { useSignUpState } from '../../../../state/signUp/SignUpProvider';
 import { getPromptsToStore } from '../../../../utils/prompts/prompt.util';
 import { SignUpStepProps } from '../../../SignUpStack/SignUpStack';
@@ -41,7 +42,7 @@ const SignUp = ({}: SignUpProps) => {
 
   const uploadUserPrompts = async (uid: string) => {
     const { prompts } = signUpState;
-    const promptsToStore = getPromptsToStore(prompts);
+    const promptsToStore = getPromptsToStore(PromptSelectionType.General, prompts);
     const path = getFirebasePath(FirebaseNode.UserPrompts, uid);
 
     try {

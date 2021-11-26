@@ -4,24 +4,28 @@ import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Divider, Text } from 'react-native-paper';
 import { Prompt } from '../../state/enums/prompt';
 import { Path } from '../../routing/paths';
-import { View } from 'react-native';
+import { PromptSelectionType } from '../../state/enums/promptSelectionType';
+import { EventPrompt } from '../../state/enums/eventPrompt';
 
 interface PromptListProps {
-  filledPrompts: Map<Prompt, string>;
+  selectionType: PromptSelectionType;
+  filledPrompts: Map<Prompt | EventPrompt, string>;
   navigate: (path: Path, params: object) => void;
 }
 
-const PromptList = ({ filledPrompts, navigate }: PromptListProps) => {
+const PromptList = ({ filledPrompts, navigate, selectionType }: PromptListProps) => {
   const renderListItems = () => {
     const listItems: JSX.Element[] = [];
+    const promptValues =
+      selectionType === PromptSelectionType.General ? Object.values(Prompt) : Object.values(EventPrompt);
 
-    Object.values(Prompt).forEach(prompt => {
+    promptValues.forEach((prompt: Prompt | EventPrompt) => {
       if (filledPrompts.has(prompt)) {
         return;
       }
 
       const onPromptSelect = () => {
-        navigate(Path.SignUpPromptInput, {
+        navigate(Path.PromptInput, {
           selectedPrompt: { prompt, value: '' },
         });
       };

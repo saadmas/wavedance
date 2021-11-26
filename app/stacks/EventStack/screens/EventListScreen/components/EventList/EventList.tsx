@@ -55,7 +55,7 @@ const EventList = ({ events, searchText, locationId, isFavoritesList, locationFa
 
     if (nextFilteredEvents.length > 1) {
       try {
-        listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+        listRef.current?.scrollToOffset({ animated: false, offset: 0 });
       } catch (e) {
         console.error('scrollToOffset failed');
         console.error(e);
