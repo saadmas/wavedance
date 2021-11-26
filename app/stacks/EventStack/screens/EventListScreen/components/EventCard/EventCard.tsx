@@ -15,7 +15,7 @@ const EventCard = ({ event, locationId, isFavorite }: EventCardProps) => {
   const [spotifyArtistId, setSpotifyArtistId] = React.useState<string | undefined>(undefined);
 
   return (
-    <View style={{ margin: 10 }}>
+    <View style={{ margin: 5 }}>
       <EventHeader event={event} spotifyArtistId={spotifyArtistId} isFavorite={isFavorite} locationId={locationId} />
       <EventImage locationId={locationId} eventId={event.id} setSpotifyArtistId={setSpotifyArtistId} />
       <EventDetails event={event} />

@@ -14,6 +14,7 @@ import EventListFilterRow from './components/EventListFilterRow/EventListFilterR
 import EventListQuery from './components/EventListQuery/EventListQuery';
 import * as SecureStore from 'expo-secure-store';
 import { SecureStoreKey } from '../../../../secureStore/keys';
+import useDebounce from '../../../../hooks/useDebounce';
 
 type EventListScreenNavProps = NativeStackScreenProps<EventStackParamList, Path.EventList>;
 
@@ -23,6 +24,8 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
   const [searchText, setSearchText] = React.useState<string>('');
   const [location, setLocation] = React.useState<EdmTrainLocation | undefined>(route.params?.location);
   const [isFavoriteList, setFavoriteList] = React.useState(false);
+
+  const debouncedSearchText = useDebounce(searchText, 200);
 
   React.useEffect(() => {
     if (location) {
@@ -105,7 +108,7 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         isFavoriteList={isFavoriteList}
         onLocationClick={onLocationClick}
       />
-      <EventListQuery searchText={searchText} locationId={location?.id} />
+      <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
     </View>
   );
 };

@@ -53,8 +53,13 @@ const EventList = ({ events, searchText, locationId, isFavoritesList, locationFa
 
     setFilteredEvents(nextFilteredEvents);
 
-    if (nextFilteredEvents.length > 5) {
-      listRef.current?.scrollToIndex({ index: 0 });
+    if (nextFilteredEvents.length > 1) {
+      try {
+        listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+      } catch (e) {
+        console.error('scrollToOffset failed');
+        console.error(e);
+      }
     }
   }, [searchText]);
 
@@ -94,6 +99,15 @@ const EventList = ({ events, searchText, locationId, isFavoritesList, locationFa
       </View>
     );
   }, []);
+
+  const onScrollToIndexFailed = (info: {
+    index: number;
+    highestMeasuredFrameIndex: number;
+    averageItemLength: number;
+  }) => {
+    console.error('onScrollToIndexFailed');
+    console.error(info);
+  };
 
   return (
     <VirtualizedList
