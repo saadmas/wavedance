@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { EventImageInfo } from '../../hooks/useEventImageQuery';
+import { EventImageInfo } from '../../firebase/types';
 
 const EventImageCacheContext = React.createContext<Map<number, EventImageInfo>>(new Map());
 

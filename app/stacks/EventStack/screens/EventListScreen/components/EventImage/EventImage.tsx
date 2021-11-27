@@ -3,12 +3,12 @@ import { Image } from 'react-native';
 import { Surface, useTheme } from 'react-native-paper';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { EventImageInfo } from '../../../../../../hooks/useEventImageQuery';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import { useEventImageCache, useEventImageCacheUpdater } from '../../../../../../state/events/EventImageCacheProvider';
 import { getFirebasePath } from '../../../../../../firebase/utils';
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import firebase from 'firebase';
+import { EventImageInfo } from '../../../../../../firebase/types';
 
 interface EventImageProps {
   locationId: number;
