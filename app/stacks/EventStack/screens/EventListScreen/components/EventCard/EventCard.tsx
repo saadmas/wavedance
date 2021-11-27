@@ -50,7 +50,7 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   };
 
   const navigateToEventCarousel = () => {
-    ///
+    navigation?.navigate(Path.EventCarousel, { eventId: event.id });
   };
 
   const addEventToFavorites = async () => {
@@ -59,15 +59,14 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   };
 
   const removeEventFromFavorites = async () => {
-    if (isFavoritesList) {
-      /// open modal
+    /// open modal for below
+    if (!isFavoritesList) {
+      setEventFavoritesCache(prevCache => {
+        prevCache.delete(eventCacheKey);
+        return new Set(prevCache);
+      });
       return;
     }
-
-    setEventFavoritesCache(prevCache => {
-      prevCache.delete(eventCacheKey);
-      return new Set(prevCache);
-    });
   };
 
   const openEvent = () => {

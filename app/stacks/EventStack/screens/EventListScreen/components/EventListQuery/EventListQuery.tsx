@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
 import { FirebaseNode } from '../../../../../../firebase/keys';
-import { getFirebasePath } from '../../../../../../firebase/utils';
+import { getFirebasePath, getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { useEventFavoritesCacheUpdater } from '../../../../../../state/events/EventFavoritesCacheProvider';
 import EventList from '../EventList/EventList';
 import EventListError from '../EventListError/EventListError';
@@ -24,9 +24,9 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
         return;
       }
 
-      /// remove foo
+      //f remove foo
       const uid = firebase.auth().currentUser?.uid ?? 'foo';
-      const path = getFirebasePath(FirebaseNode.UserEvents, uid, locationId.toString());
+      const path = getUserFavoriteEventsPath(uid, locationId);
 
       try {
         const snapshot = await firebase.database().ref(path).get();
