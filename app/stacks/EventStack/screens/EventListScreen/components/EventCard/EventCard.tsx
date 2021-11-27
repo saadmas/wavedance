@@ -1,13 +1,11 @@
 import { NavigationContext } from '@react-navigation/native';
 import * as React from 'react';
 import { View } from 'react-native';
-import { FavoriteEvent } from '../../../../../../firebase/types';
 import { Path } from '../../../../../../routing/paths';
 import {
   useEventFavoritesCache,
   useEventFavoritesCacheUpdater,
 } from '../../../../../../state/events/EventFavoritesCacheProvider';
-import { EventPromptsProps } from '../../../EventPromptScreen/EventPromptScreen';
 import EventDetails from '../EventDetails/EventDetails';
 import EventHeader from '../EventHeader/EventHeader';
 import EventImage from '../EventImage/EventImage';
@@ -19,12 +17,16 @@ interface EventCardProps {
   locationId: number;
 }
 
-export type SpotifyArtist = Pick<FavoriteEvent, 'spotifyArtistId' | 'spotifyArtistImageUri'>;
+export interface SpotifyArtist {
+  id?: string;
+  imageUrl?: string;
+}
 
 const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   const navigation = React.useContext(NavigationContext);
 
-  const eventCacheKey = event.id.toString();
+  const eventId = event.id;
+  const eventCacheKey = eventId.toString();
   const eventFavoritesCache = useEventFavoritesCache();
   const setEventFavoritesCache = useEventFavoritesCacheUpdater();
 
@@ -35,22 +37,14 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
 
   React.useEffect(() => {
     setIsEventFavorited(eventFavoritesCache.has(eventCacheKey));
-  }, [eventFavoritesCache, event.id]);
+  }, [eventFavoritesCache, eventId]);
 
   const navigateToEventPrompts = () => {
-    const favoriteEvent: FavoriteEvent = {
-      ...event,
-      ...spotifyArtist,
-      locationId,
-    };
-
-    const eventPromptsProps: EventPromptsProps = { favoriteEvent };
-
-    navigation?.navigate(Path.EventPrompts, eventPromptsProps);
+    navigation?.navigate(Path.EventPrompts, { eventId });
   };
 
   const navigateToEventCarousel = () => {
-    navigation?.navigate(Path.EventCarousel, { eventId: event.id });
+    navigation?.navigate(Path.EventCarousel, { eventId: eventId });
   };
 
   const addEventToFavorites = async () => {
@@ -95,14 +89,14 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
     <View style={{ margin: 5 }}>
       <EventHeader
         event={event}
-        spotifyArtistId={spotifyArtist?.spotifyArtistId}
+        spotifyArtistId={spotifyArtist?.id}
         isFavorite={isEventFavorited}
         locationId={locationId}
         onHeartPress={onEventFavoriteToggle}
       />
       <EventImage
         locationId={locationId}
-        eventId={event.id}
+        eventId={eventId}
         setSpotifyArtist={setSpotifyArtist}
         onImagePress={openEvent}
       />

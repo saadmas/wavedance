@@ -38,7 +38,7 @@ const EventImage = ({ locationId, eventId, setSpotifyArtist, onImagePress }: Eve
         if (url.val()) {
           const { imageUrl, spotifyArtistId } = url.val();
           setSource(imageUrl);
-          setSpotifyArtist({ spotifyArtistId, spotifyArtistImageUri: imageUrl });
+          setSpotifyArtist({ id: spotifyArtistId, imageUrl });
         } else {
           setSource(null);
         }

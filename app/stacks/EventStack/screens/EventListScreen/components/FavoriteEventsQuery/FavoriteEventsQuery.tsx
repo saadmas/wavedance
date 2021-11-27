@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
-import { FavoriteEvent } from '../../../../../../firebase/types';
+import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
 import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventList from '../EventList/EventList';
@@ -14,28 +15,43 @@ interface FavoriteEventsQueryProps {
 }
 
 const FavoriteEventsQuery = ({ searchText, locationId }: FavoriteEventsQueryProps) => {
-  const [favoriteEvents, setFavoriteEvents] = React.useState<FavoriteEvent[] | undefined>(undefined);
+  const [favoriteEvents, setFavoriteEvents] = React.useState<EdmTrainEvent[] | undefined>(undefined); // fetched from EDM Train API
+  const [favoriteEventIds, setFavoriteEventIds] = React.useState<Set<string> | undefined>(undefined); // fetched from firebase
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
+  const { isError, data } = useEventQuery(locationId);
 
   React.useEffect(() => {
-    const fetchFavoriteEvents = async () => {
-      if (!locationId) {
-        return;
-      }
+    if (data && favoriteEventIds) {
+      const favEvents = (data.data ?? []).filter(event => favoriteEventIds.has(event.id.toString()));
+      setFavoriteEvents(favEvents);
+      setResponseStatus(ResponseStatus.Success);
+    }
+  }, [data, favoriteEventIds]);
 
+  React.useEffect(() => {
+    if (isError || !data?.success) {
+      setResponseStatus(ResponseStatus.Error);
+    }
+  }, [isError, data?.success]);
+
+  React.useEffect(() => {
+    const fetchFavoriteEventIds = async () => {
       //f remove foo
       const uid = firebase.auth().currentUser?.uid ?? 'foo';
-      const path = getUserFavoriteEventsPath(uid, locationId);
+      const path = getUserFavoriteEventsPath(uid);
 
       try {
         const snapshot = await firebase.database().ref(path).get();
-        const events = snapshot.val();
-        setResponseStatus(ResponseStatus.Success);
-        if (events) {
-          setFavoriteEvents(Object.values(events));
+        const snapshotValue = snapshot.val();
+
+        if (!snapshotValue) {
+          setFavoriteEventIds(new Set());
+          setFavoriteEvents([]);
+          setResponseStatus(ResponseStatus.Success);
           return;
         }
-        setFavoriteEvents([]);
+
+        setFavoriteEventIds(new Set(Object.keys(snapshotValue)));
       } catch (e) {
         setResponseStatus(ResponseStatus.Error);
         console.error('fetchFavoriteEvents failed');
@@ -45,8 +61,8 @@ const FavoriteEventsQuery = ({ searchText, locationId }: FavoriteEventsQueryProp
       }
     };
 
-    fetchFavoriteEvents();
-  }, [locationId]);
+    fetchFavoriteEventIds();
+  }, []);
 
   if (responseStatus === ResponseStatus.Loading || !locationId) {
     return null; //* loading is really fast locally, check if that is the case after deploying!

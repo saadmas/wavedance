@@ -3,10 +3,9 @@ import { ListRenderItemInfo, View, VirtualizedList } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
-import { FavoriteEvent } from '../../../../../../firebase/types';
 import EventCard from '../EventCard/EventCard';
 
-export type DisplayEvent = EdmTrainEvent | FavoriteEvent;
+export type DisplayEvent = EdmTrainEvent;
 
 interface EventListProps {
   events: DisplayEvent[];

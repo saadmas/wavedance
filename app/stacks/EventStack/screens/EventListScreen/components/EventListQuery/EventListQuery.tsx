@@ -25,13 +25,14 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
 
       //f remove foo
       const uid = firebase.auth().currentUser?.uid ?? 'foo';
-      const path = getUserFavoriteEventsPath(uid, locationId);
+      const path = getUserFavoriteEventsPath(uid);
 
       try {
         const snapshot = await firebase.database().ref(path).get();
-        const favoritedEvents = snapshot.val();
-        if (favoritedEvents) {
-          const favoriteEventIds = Object.keys(favoritedEvents);
+        const snapshotValue = snapshot.val();
+        if (snapshotValue) {
+          ///
+          const favoriteEventIds = Object.keys(snapshotValue);
           setEventFavoritesCache(new Set(favoriteEventIds));
         }
       } catch (e) {

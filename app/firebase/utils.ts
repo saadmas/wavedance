@@ -25,8 +25,8 @@ export const getUseBasicInfoPath = (uid: string) => {
   return path;
 };
 
-export const getUserFavoriteEventsPath = (uid: string, locationId: number, eventId?: number) => {
-  const path = getFirebasePath(FirebaseNode.UserFavoriteEvents, uid, locationId.toString(), eventId?.toString());
+export const getUserFavoriteEventsPath = (uid: string, eventId?: number) => {
+  const path = getFirebasePath(FirebaseNode.UserFavoriteEvents, uid, eventId?.toString());
   return path;
 };
 
