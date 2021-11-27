@@ -62,6 +62,10 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
     }
   }, [searchText]);
 
+  React.useEffect(() => {
+    listRef.current?.scrollToOffset({ animated: false, offset: 0 });
+  }, [locationId]);
+
   const getItemCount = (listItems: DisplayEvent[]): number => listItems.length;
 
   const getItem = (listItems: DisplayEvent[], index: number): DisplayEvent => listItems[index];
