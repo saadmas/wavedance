@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import { Surface } from 'react-native-paper';
+import { Surface, useTheme } from 'react-native-paper';
 import firebase from 'firebase';
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import { getFirebasePath } from '../../../../../../firebase/utils';
@@ -23,6 +23,7 @@ type ImageSource = string | null | undefined;
 export const eventCardImageHeight = 350;
 
 const EventImage = ({ locationId, eventId, setSpotifyArtist, onImagePress }: EventImageProps) => {
+  const { colors } = useTheme();
   const borderRadius = 10;
 
   const [source, setSource] = React.useState<ImageSource>(undefined);
@@ -112,7 +113,7 @@ const EventImage = ({ locationId, eventId, setSpotifyArtist, onImagePress }: Eve
           justifyContent: 'center',
           elevation: 12,
           borderRadius,
-          backgroundColor: 'black', ///
+          backgroundColor: source === undefined ? colors.background : undefined,
         }}
       >
         {renderImageContent()}
