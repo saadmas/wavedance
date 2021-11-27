@@ -1,5 +1,5 @@
 import got from 'got';
-import { Artist, EdmTrainArtist, EdmTrainEvent, EdmTrainResponse, SpotifyArtist, SpotifyArtistImage } from './types';
+import { Artist, EdmTrainArtist, EdmTrainEvent, EdmTrainResponse, EventImageInfo, SpotifyArtistImage } from './types';
 
 const edmTrainApiKey = '224d286b-9da6-4b89-baab-c7cd0640cd72&livestreamInd=false';
 
@@ -121,8 +121,8 @@ const cleanArtistName = (name: string) => {
 
 const getClosedMatchingSpotifyArtist = (
   artistName: string,
-  spotifyArtists: SpotifyArtist[]
-): SpotifyArtist | undefined => {
+  spotifyArtists: EventImageInfo[]
+): EventImageInfo | undefined => {
   const closedMatchingSpotifyArtist = spotifyArtists.find(artist => {
     const artistNameToMatch = cleanArtistName(artistName);
     const currentArtistName = cleanArtistName(artist.name);
@@ -141,7 +141,7 @@ const getClosedMatchingSpotifyArtist = (
   return closedMatchingSpotifyArtist;
 };
 
-const searchSpotifyForArtist = async (artistName: string, spotifyApi: any): Promise<SpotifyArtist | undefined> => {
+const searchSpotifyForArtist = async (artistName: string, spotifyApi: any): Promise<EventImageInfo | undefined> => {
   try {
     const searchResult = await spotifyApi.searchArtists(artistName);
     const matchedArtist = getClosedMatchingSpotifyArtist(artistName, searchResult?.body?.artists?.items ?? []);

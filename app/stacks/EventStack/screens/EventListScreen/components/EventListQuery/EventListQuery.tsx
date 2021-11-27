@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import * as React from 'react';
-import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
+import { useEventQuery } from '../../../../../../hooks/useEventQuery';
 import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { useEventFavoritesCacheUpdater } from '../../../../../../state/events/EventFavoritesCacheProvider';
 import EventList from '../EventList/EventList';
@@ -31,7 +31,6 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
         const snapshot = await firebase.database().ref(path).get();
         const snapshotValue = snapshot.val();
         if (snapshotValue) {
-          ///
           const favoriteEventIds = Object.keys(snapshotValue);
           setEventFavoritesCache(new Set(favoriteEventIds));
         }

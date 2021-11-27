@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
-import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
+import { useEventQuery } from '../../../../../../hooks/useEventQuery';
 import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventList from '../EventList/EventList';

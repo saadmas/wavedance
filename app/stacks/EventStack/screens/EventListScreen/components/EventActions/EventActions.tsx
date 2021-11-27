@@ -3,6 +3,7 @@ import { Image, View } from 'react-native';
 import { IconButton, TouchableRipple } from 'react-native-paper';
 import * as WebBrowser from 'expo-web-browser';
 import EventFavoriteButton from '../EventFavoriteButton/EventFavoriteButton';
+import { useEventImageCache } from '../../../../../../state/events/EventImageCacheProvider';
 
 interface EventActionsProps {
   eventLink: string;
@@ -10,20 +11,15 @@ interface EventActionsProps {
   locationId: number;
   isFavorite: boolean;
   onHeartPress: () => void;
-  spotifyArtistId?: string;
 }
 
-const EventActions = ({
-  eventLink,
-  spotifyArtistId,
-  isFavorite,
-  locationId,
-  eventId,
-  onHeartPress,
-}: EventActionsProps) => {
+const EventActions = ({ eventLink, isFavorite, locationId, eventId, onHeartPress }: EventActionsProps) => {
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
+
+  const eventImageCache = useEventImageCache();
+  const spotifyArtistId = eventImageCache.get(eventId)?.spotifyArtistId;
 
   const openEdmTrainEventWebpage = () => {
     WebBrowser.openBrowserAsync(eventLink);

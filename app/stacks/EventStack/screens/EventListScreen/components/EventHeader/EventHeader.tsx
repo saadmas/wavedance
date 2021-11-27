@@ -10,10 +10,9 @@ interface EventHeaderProps {
   locationId: number;
   isFavorite: boolean;
   onHeartPress: () => void;
-  spotifyArtistId?: string;
 }
 
-const EventHeader = ({ event, spotifyArtistId, isFavorite, locationId, onHeartPress }: EventHeaderProps) => {
+const EventHeader = ({ event, isFavorite, locationId, onHeartPress }: EventHeaderProps) => {
   const { fonts } = useTheme();
 
   const renderTitle = (): React.ReactNode => {
@@ -38,7 +37,6 @@ const EventHeader = ({ event, spotifyArtistId, isFavorite, locationId, onHeartPr
       <EventActions
         onHeartPress={onHeartPress}
         eventLink={event.link}
-        spotifyArtistId={spotifyArtistId}
         isFavorite={isFavorite}
         eventId={event.id}
         locationId={locationId}

@@ -17,6 +17,7 @@ import { SecureStoreKey } from '../../../../secureStore/keys';
 import useDebounce from '../../../../hooks/useDebounce';
 import { EventFavoritesCacheProvider } from '../../../../state/events/EventFavoritesCacheProvider';
 import FavoriteEventsQuery from './components/FavoriteEventsQuery/FavoriteEventsQuery';
+import { EventImageCacheProvider } from '../../../../state/events/EventImageCacheProvider';
 
 type EventListScreenNavProps = NativeStackScreenProps<EventStackParamList, Path.EventList>;
 
@@ -111,11 +112,13 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         onLocationClick={onLocationClick}
       />
       <EventFavoritesCacheProvider>
-        {isFavoriteList ? (
-          <FavoriteEventsQuery searchText={debouncedSearchText} locationId={location?.id} />
-        ) : (
-          <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
-        )}
+        <EventImageCacheProvider>
+          {isFavoriteList ? (
+            <FavoriteEventsQuery searchText={debouncedSearchText} locationId={location?.id} />
+          ) : (
+            <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
+          )}
+        </EventImageCacheProvider>
       </EventFavoritesCacheProvider>
     </View>
   );

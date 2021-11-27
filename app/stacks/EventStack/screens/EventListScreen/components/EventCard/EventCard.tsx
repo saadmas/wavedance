@@ -17,26 +17,20 @@ interface EventCardProps {
   locationId: number;
 }
 
-export interface SpotifyArtist {
-  id?: string;
-  imageUrl?: string;
-}
-
 const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   const navigation = React.useContext(NavigationContext);
-
   const eventId = event.id;
-  const eventCacheKey = eventId.toString();
+
+  const eventFavoritesCacheKey = eventId.toString();
   const eventFavoritesCache = useEventFavoritesCache();
   const setEventFavoritesCache = useEventFavoritesCacheUpdater();
 
-  const [spotifyArtist, setSpotifyArtist] = React.useState<SpotifyArtist>({});
   const [isEventFavorited, setIsEventFavorited] = React.useState<boolean>(
-    isFavoritesList || eventFavoritesCache.has(eventCacheKey)
+    isFavoritesList || eventFavoritesCache.has(eventFavoritesCacheKey)
   );
 
   React.useEffect(() => {
-    setIsEventFavorited(eventFavoritesCache.has(eventCacheKey));
+    setIsEventFavorited(eventFavoritesCache.has(eventFavoritesCacheKey));
   }, [eventFavoritesCache, eventId]);
 
   const navigateToEventPrompts = () => {
@@ -56,7 +50,7 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
     /// open modal for below
     if (!isFavoritesList) {
       setEventFavoritesCache(prevCache => {
-        prevCache.delete(eventCacheKey);
+        prevCache.delete(eventFavoritesCacheKey);
         return new Set(prevCache);
       });
       return;
@@ -64,13 +58,13 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   };
 
   const openEvent = () => {
-    if (isFavoritesList || eventFavoritesCache.has(eventCacheKey)) {
+    if (isFavoritesList || eventFavoritesCache.has(eventFavoritesCacheKey)) {
       navigateToEventCarousel();
       return;
     }
 
     setEventFavoritesCache(prevCache => {
-      prevCache.add(eventCacheKey);
+      prevCache.add(eventFavoritesCacheKey);
       return new Set(prevCache);
     });
 
@@ -89,17 +83,11 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
     <View style={{ margin: 5 }}>
       <EventHeader
         event={event}
-        spotifyArtistId={spotifyArtist?.id}
         isFavorite={isEventFavorited}
         locationId={locationId}
         onHeartPress={onEventFavoriteToggle}
       />
-      <EventImage
-        locationId={locationId}
-        eventId={eventId}
-        setSpotifyArtist={setSpotifyArtist}
-        onImagePress={openEvent}
-      />
+      <EventImage locationId={locationId} eventId={eventId} onImagePress={openEvent} />
       <EventDetails event={event} />
     </View>
   );

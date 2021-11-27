@@ -1,4 +1,4 @@
-export interface SpotifyArtist {
+export interface EventImageInfo {
   id: string;
   name: string;
   popularity: number;

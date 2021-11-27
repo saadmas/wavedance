@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { edmTrainApiKey } from './config';
-import { EdmTrainResponse } from './types';
+import { edmTrainApiKey } from '../edmTrain/config';
+import { EdmTrainResponse } from '../edmTrain/types';
 
 const fetchEvents = async (locationId = 70) => {
   const response = await fetch(
