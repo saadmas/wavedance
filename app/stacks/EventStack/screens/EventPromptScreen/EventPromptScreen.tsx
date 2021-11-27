@@ -24,10 +24,10 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
   const saveEvent = async (locationId: number) => {
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    const path = getUserFavoriteEventsPath(uid, locationId);
+    const path = getUserFavoriteEventsPath(uid, locationId, favoriteEvent.id);
 
     try {
-      await firebase.database().ref(path).push(favoriteEvent);
+      await firebase.database().ref(path).set(favoriteEvent);
     } catch (e) {
       console.error('saveEvent failed');
       console.error(e);
@@ -54,10 +54,10 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
   const saveUserUnderEventMembers = async () => {
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    const path = getEventMembersPath(favoriteEvent.id);
+    const path = getEventMembersPath(favoriteEvent.id, uid);
 
     try {
-      await firebase.database().ref(path).push(uid);
+      await firebase.database().ref(path).set(true);
     } catch (e) {
       console.error('saveUserUnderEventMembers failed');
       console.error(e);

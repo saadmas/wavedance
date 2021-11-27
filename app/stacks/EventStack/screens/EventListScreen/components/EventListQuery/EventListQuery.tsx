@@ -1,8 +1,7 @@
 import firebase from 'firebase';
 import * as React from 'react';
 import { useEventQuery } from '../../../../../../edmTrain/useEventQuery';
-import { FirebaseNode } from '../../../../../../firebase/keys';
-import { getFirebasePath, getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
+import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { useEventFavoritesCacheUpdater } from '../../../../../../state/events/EventFavoritesCacheProvider';
 import EventList from '../EventList/EventList';
 import EventListError from '../EventListError/EventListError';

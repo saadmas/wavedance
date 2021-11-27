@@ -112,6 +112,7 @@ const EventImage = ({ locationId, eventId, setSpotifyArtist, onImagePress }: Eve
           justifyContent: 'center',
           elevation: 12,
           borderRadius,
+          backgroundColor: 'black', ///
         }}
       >
         {renderImageContent()}

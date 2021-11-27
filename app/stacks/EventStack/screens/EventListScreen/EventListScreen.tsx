@@ -16,6 +16,7 @@ import * as SecureStore from 'expo-secure-store';
 import { SecureStoreKey } from '../../../../secureStore/keys';
 import useDebounce from '../../../../hooks/useDebounce';
 import { EventFavoritesCacheProvider } from '../../../../state/events/EventFavoritesCacheProvider';
+import FavoriteEventsQuery from './components/FavoriteEventsQuery/FavoriteEventsQuery';
 
 type EventListScreenNavProps = NativeStackScreenProps<EventStackParamList, Path.EventList>;
 
@@ -110,7 +111,11 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         onLocationClick={onLocationClick}
       />
       <EventFavoritesCacheProvider>
-        <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
+        {isFavoriteList ? (
+          <FavoriteEventsQuery searchText={debouncedSearchText} locationId={location?.id} />
+        ) : (
+          <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
+        )}
       </EventFavoritesCacheProvider>
     </View>
   );

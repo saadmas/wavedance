@@ -1,7 +1,8 @@
 import { FirebaseNode, UserPhotos } from './keys';
 
-export const getFirebasePath = (...args: string[]): string => {
-  return args.join('/');
+export const getFirebasePath = (...args: (string | undefined)[]): string => {
+  const validArgs = args.filter(arg => !!arg);
+  return validArgs.join('/');
 };
 
 export const getUserPhotosPath = (uid: string) => {
@@ -24,13 +25,13 @@ export const getUseBasicInfoPath = (uid: string) => {
   return path;
 };
 
-export const getUserFavoriteEventsPath = (uid: string, locationId: number) => {
-  const path = getFirebasePath(FirebaseNode.UserFavoriteEvents, uid, locationId.toString());
+export const getUserFavoriteEventsPath = (uid: string, locationId: number, eventId?: number) => {
+  const path = getFirebasePath(FirebaseNode.UserFavoriteEvents, uid, locationId.toString(), eventId?.toString());
   return path;
 };
 
-export const getEventMembersPath = (eventId: number) => {
-  const path = getFirebasePath(FirebaseNode.EventMembers, eventId.toString());
+export const getEventMembersPath = (eventId: number, uid?: string) => {
+  const path = getFirebasePath(FirebaseNode.EventMembers, eventId.toString(), uid);
   return path;
 };
 
