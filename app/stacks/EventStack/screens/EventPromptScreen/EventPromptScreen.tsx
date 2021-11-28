@@ -2,7 +2,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import firebase from 'firebase';
 import * as React from 'react';
 import PromptsManager from '../../../../components/PromptsManager/PromptsManager';
-import { getEdmTrainCities, getEdmTrainStates } from '../../../../edmTrain/locations';
+import { EdmTrainEvent } from '../../../../edmTrain/types';
+import { FavoriteEvent } from '../../../../firebase/types';
 import { getEventMembersPath, getUserEventPromptsPath, getUserFavoriteEventsPath } from '../../../../firebase/utils';
 import { Path } from '../../../../routing/paths';
 import { EventPrompt } from '../../../../state/enums/eventPrompt';
@@ -11,22 +12,25 @@ import { getPromptsToStore } from '../../../../utils/prompts/prompt.util';
 import { EventStackParamList } from '../../EventStack';
 
 export interface EventPromptsProps {
-  eventId: number;
+  event: EdmTrainEvent;
   filledPrompts?: Map<EventPrompt, string>;
 }
 
 type EventPromptScreenProps = NativeStackScreenProps<EventStackParamList, Path.EventPrompts>;
 
 const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
-  const { eventId, filledPrompts } = route.params;
+  const { event, filledPrompts } = route.params;
 
   const saveEvent = async () => {
+    const { id, createdDate } = event;
+    const favoriteEvent: FavoriteEvent = { createdDate };
+
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    const path = getUserFavoriteEventsPath(uid, eventId);
+    const path = getUserFavoriteEventsPath(uid, id);
 
     try {
-      await firebase.database().ref(path).set(true);
+      await firebase.database().ref(path).set(favoriteEvent);
     } catch (e) {
       console.error('saveEvent failed');
       console.error(e);
@@ -37,14 +41,14 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
   const saveUserUnderEventMembers = async () => {
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    const path = getEventMembersPath(eventId, uid);
+    const path = getEventMembersPath(event.id, uid);
 
     try {
       await firebase.database().ref(path).set(true);
     } catch (e) {
       console.error('saveUserUnderEventMembers failed');
       console.error(e);
-      console.error(`eventId: ${eventId}`);
+      console.error(`eventId ${event.id}`);
       console.error(`uid: ${uid}`);
     }
   };
@@ -56,7 +60,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
 
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    const path = getUserEventPromptsPath(uid, eventId);
+    const path = getUserEventPromptsPath(uid, event.id);
     const promptsToStore = getPromptsToStore(PromptSelectionType.Event, filledPrompts);
 
     try {
@@ -64,7 +68,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
     } catch (e) {
       console.error('saveUserUnderEventMembers failed');
       console.error(e);
-      console.error(`eventId: ${eventId}`);
+      console.error(`eventId ${event.id}`);
       console.error(`uid: ${uid}`);
       console.error(`filledPrompts: ${promptsToStore}`);
     }
@@ -74,7 +78,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
     await saveEvent();
     await saveUserUnderEventMembers();
     await saveUserEventPrompts();
-    navigation.navigate(Path.EventCarousel, { eventId: eventId });
+    navigation.navigate(Path.EventCarousel, { eventId: event.id });
   };
 
   return <PromptsManager onSubmit={onPromptsSubmit} selectionType={PromptSelectionType.Event} />;

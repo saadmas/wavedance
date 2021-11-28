@@ -30,15 +30,15 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   );
 
   React.useEffect(() => {
-    setIsEventFavorited(eventFavoritesCache.has(eventFavoritesCacheKey));
-  }, [eventFavoritesCache, eventId]);
+    setIsEventFavorited(isFavoritesList || eventFavoritesCache.has(eventFavoritesCacheKey));
+  }, [eventFavoritesCache, eventId, isFavoritesList]);
 
   const navigateToEventPrompts = () => {
-    navigation?.navigate(Path.EventPrompts, { eventId });
+    navigation?.navigate(Path.EventPrompts, { event });
   };
 
   const navigateToEventCarousel = () => {
-    navigation?.navigate(Path.EventCarousel, { eventId: eventId });
+    navigation?.navigate(Path.EventCarousel, { eventId });
   };
 
   const addEventToFavorites = async () => {
