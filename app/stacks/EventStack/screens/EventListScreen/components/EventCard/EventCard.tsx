@@ -47,7 +47,6 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
   };
 
   const removeEventFromFavorites = async () => {
-    /// open modal for below
     if (!isFavoritesList) {
       setEventFavoritesCache(prevCache => {
         prevCache.delete(eventFavoritesCacheKey);
@@ -85,7 +84,7 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
         event={event}
         isFavorite={isEventFavorited}
         locationId={locationId}
-        onHeartPress={onEventFavoriteToggle}
+        onFavoriteToggle={onEventFavoriteToggle}
       />
       <EventImage locationId={locationId} eventId={eventId} onImagePress={openEvent} />
       <EventDetails event={event} />

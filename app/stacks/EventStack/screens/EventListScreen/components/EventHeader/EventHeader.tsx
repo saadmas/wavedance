@@ -9,10 +9,10 @@ interface EventHeaderProps {
   event: DisplayEvent;
   locationId: number;
   isFavorite: boolean;
-  onHeartPress: () => void;
+  onFavoriteToggle: () => void;
 }
 
-const EventHeader = ({ event, isFavorite, locationId, onHeartPress }: EventHeaderProps) => {
+const EventHeader = ({ event, isFavorite, locationId, onFavoriteToggle }: EventHeaderProps) => {
   const { fonts } = useTheme();
 
   const renderTitle = (): React.ReactNode => {
@@ -35,7 +35,7 @@ const EventHeader = ({ event, isFavorite, locationId, onHeartPress }: EventHeade
     <View style={{ flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', height: 55 }}>
       {renderTitle()}
       <EventActions
-        onHeartPress={onHeartPress}
+        onFavoriteToggle={onFavoriteToggle}
         eventLink={event.link}
         isFavorite={isFavorite}
         eventId={event.id}

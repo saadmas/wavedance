@@ -10,10 +10,10 @@ interface EventActionsProps {
   eventId: number;
   locationId: number;
   isFavorite: boolean;
-  onHeartPress: () => void;
+  onFavoriteToggle: () => void;
 }
 
-const EventActions = ({ eventLink, isFavorite, locationId, eventId, onHeartPress }: EventActionsProps) => {
+const EventActions = ({ eventLink, isFavorite, locationId, eventId, onFavoriteToggle }: EventActionsProps) => {
   const baseSize = 40;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
@@ -62,7 +62,7 @@ const EventActions = ({ eventLink, isFavorite, locationId, eventId, onHeartPress
         isFavorite={isFavorite}
         locationId={locationId}
         eventId={eventId}
-        onHeartPress={onHeartPress}
+        onFavoriteToggle={onFavoriteToggle}
       />
     );
   };
