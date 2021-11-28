@@ -25,6 +25,7 @@ const EventFavoriteButton = ({ isFavorite, size, onFavoriteToggle }: EventFavori
 
   const onDialogConfirm = () => {
     onFavoriteToggle();
+    setIsDialogOpen(false);
   };
 
   const onDialogDismiss = () => {
