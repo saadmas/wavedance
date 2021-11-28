@@ -32,7 +32,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
         const snapshotValue = snapshot.val();
         if (snapshotValue) {
           const favoriteEventIds = Object.keys(snapshotValue);
-          setEventFavoritesCache(new Set(favoriteEventIds));
+          setEventFavoritesCache?.(new Set(favoriteEventIds));
         }
       } catch (e) {
         console.error('updateEventFavoriteStatus failed');

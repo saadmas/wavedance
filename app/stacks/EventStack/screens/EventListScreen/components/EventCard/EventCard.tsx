@@ -1,4 +1,5 @@
 import { NavigationContext } from '@react-navigation/native';
+import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
 import { Path } from '../../../../../../routing/paths';
@@ -6,6 +7,13 @@ import {
   useEventFavoritesCache,
   useEventFavoritesCacheUpdater,
 } from '../../../../../../state/events/EventFavoritesCacheProvider';
+import {
+  removeUserEvent,
+  removeUserEventPrompts,
+  removeUserFromEventMembers,
+  saveUserEvent,
+  saveUserUnderEventMembers,
+} from '../../../../utils';
 import EventDetails from '../EventDetails/EventDetails';
 import EventHeader from '../EventHeader/EventHeader';
 import EventImage from '../EventImage/EventImage';
@@ -15,9 +23,11 @@ interface EventCardProps {
   event: DisplayEvent;
   isFavoritesList: boolean;
   locationId: number;
+  eventIndex: number;
+  removeEventFromList: (eventIndex: number) => void;
 }
 
-const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
+const EventCard = ({ event, locationId, isFavoritesList, eventIndex, removeEventFromList }: EventCardProps) => {
   const navigation = React.useContext(NavigationContext);
   const eventId = event.id;
 
@@ -41,40 +51,51 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
     navigation?.navigate(Path.EventCarousel, { eventId });
   };
 
-  const addEventToFavorites = async () => {
-    await new Promise(r => setTimeout(r, 400)); // To let the heart-favorite animation play out nicely :)
-    openEvent();
-  };
+  const onRemoveEventFromFavorites = async () => {
+    //f remove foo
+    const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    await removeUserEvent(uid, eventId);
+    await removeUserFromEventMembers(uid, eventId);
+    await removeUserEventPrompts(uid, eventId);
 
-  const removeEventFromFavorites = async () => {
-    if (!isFavoritesList) {
-      setEventFavoritesCache(prevCache => {
-        prevCache.delete(eventFavoritesCacheKey);
-        return new Set(prevCache);
-      });
+    if (isFavoritesList) {
+      removeEventFromList(eventIndex);
       return;
     }
+
+    setEventFavoritesCache?.(prevCache => {
+      prevCache.delete(eventFavoritesCacheKey);
+      return new Set(prevCache);
+    });
   };
 
-  const openEvent = () => {
+  const onAddEventToFavorites = async () => {
     if (isFavoritesList || eventFavoritesCache.has(eventFavoritesCacheKey)) {
       navigateToEventCarousel();
       return;
     }
 
-    setEventFavoritesCache(prevCache => {
+    setEventFavoritesCache?.(prevCache => {
       prevCache.add(eventFavoritesCacheKey);
       return new Set(prevCache);
     });
 
+    //f remove foo
+    const uid = firebase.auth().currentUser?.uid ?? 'foo';
+
+    await saveUserEvent(uid, event);
+    await saveUserUnderEventMembers(uid, event.id);
+
+    return; /// remove
     navigateToEventPrompts();
   };
 
-  const onEventFavoriteToggle = () => {
+  const onEventFavoriteButtonToggle = async () => {
     if (isEventFavorited) {
-      removeEventFromFavorites();
+      onRemoveEventFromFavorites();
     } else {
-      addEventToFavorites();
+      await new Promise(r => setTimeout(r, 400)); // To let the heart-favorite animation play out nicely :)
+      onAddEventToFavorites();
     }
   };
 
@@ -84,9 +105,9 @@ const EventCard = ({ event, locationId, isFavoritesList }: EventCardProps) => {
         event={event}
         isFavorite={isEventFavorited}
         locationId={locationId}
-        onFavoriteToggle={onEventFavoriteToggle}
+        onFavoriteToggle={onEventFavoriteButtonToggle}
       />
-      <EventImage locationId={locationId} eventId={eventId} onImagePress={openEvent} />
+      <EventImage locationId={locationId} eventId={eventId} onImagePress={onAddEventToFavorites} />
       <EventDetails event={event} />
     </View>
   );

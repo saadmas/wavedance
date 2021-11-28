@@ -75,7 +75,7 @@ const FavoriteEventsQuery = ({ searchText, locationId }: FavoriteEventsQueryProp
   }
 
   return favoriteEvents ? (
-    <EventList events={favoriteEvents} searchText={searchText} locationId={locationId} isFavoritesList={false} />
+    <EventList events={favoriteEvents} searchText={searchText} locationId={locationId} isFavoritesList={true} />
   ) : null;
 };
 

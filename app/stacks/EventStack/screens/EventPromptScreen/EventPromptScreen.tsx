@@ -7,7 +7,7 @@ import { Path } from '../../../../routing/paths';
 import { EventPrompt } from '../../../../state/enums/eventPrompt';
 import { PromptSelectionType } from '../../../../state/enums/promptSelectionType';
 import { EventStackParamList } from '../../EventStack';
-import { saveEvent, saveUserEventPrompts, saveUserUnderEventMembers } from '../../utils';
+import { saveUserEventPrompts } from '../../utils';
 
 export interface EventPromptsProps {
   event: EdmTrainEvent;
@@ -22,9 +22,6 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
   const onPromptsSubmit = async () => {
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-
-    await saveEvent(uid, event);
-    await saveUserUnderEventMembers(uid, event.id);
     await saveUserEventPrompts(uid, event.id, filledPrompts);
 
     navigation.navigate(Path.EventCarousel, { eventId: event.id });

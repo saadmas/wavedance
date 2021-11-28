@@ -72,19 +72,38 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
 
   const getItemKey = (listItem: DisplayEvent): string => listItem.id.toString();
 
+  const removeEventFromList = (index: number) => {
+    setFilteredEvents(prevEvents => {
+      prevEvents.splice(index, 1);
+      console.log(index);
+      console.log(prevEvents);
+      const nextEvents = [...prevEvents];
+      return nextEvents;
+    });
+  };
+
   const renderItem = React.useCallback(
-    ({ item }: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
-      <EventCard event={item} locationId={locationId} isFavoritesList={isFavoritesList} />
+    ({ item, index }: ListRenderItemInfo<EdmTrainEvent>): JSX.Element => (
+      <EventCard
+        event={item}
+        locationId={locationId}
+        isFavoritesList={isFavoritesList}
+        removeEventFromList={removeEventFromList}
+        eventIndex={index}
+      />
     ),
     [locationId, isFavoritesList]
   );
 
+  const getNoDataText = () => {
+    const noDataText = isFavoritesList ? 'No favorites added yet' : 'Bummer, no events found';
+    return noDataText;
+  };
+
   const renderNoData = React.useCallback(() => {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-        <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
-          Bummer, no events found
-        </Text>
+        <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>{getNoDataText()}</Text>
         <LottieAnimation
           source={require(`../../../../../../../assets/animations/bummer.json`)}
           finalFramePosition={1}

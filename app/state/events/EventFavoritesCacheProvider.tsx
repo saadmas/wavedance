@@ -23,10 +23,5 @@ export const useEventFavoritesCache = () => {
 
 export const useEventFavoritesCacheUpdater = () => {
   const eventFavoritesCacheUpdater = React.useContext(EventFavoritesCacheUpdaterContext);
-
-  if (typeof eventFavoritesCacheUpdater === 'undefined') {
-    throw new Error('useEventFavoritesCacheUpdater must be used within a EventFavoritesCacheProvider');
-  }
-
   return eventFavoritesCacheUpdater;
 };

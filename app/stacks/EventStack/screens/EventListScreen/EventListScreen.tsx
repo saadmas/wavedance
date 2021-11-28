@@ -97,6 +97,17 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
     navigation.navigate(Path.LocationSelect);
   };
 
+  const renderEventListQuery = () => {
+    if (isFavoriteList) {
+      return <FavoriteEventsQuery searchText={debouncedSearchText} locationId={location?.id} />;
+    }
+    return (
+      <EventFavoritesCacheProvider>
+        <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
+      </EventFavoritesCacheProvider>
+    );
+  };
+
   return (
     <View>
       <Searchbar
@@ -111,15 +122,7 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
         isFavoriteList={isFavoriteList}
         onLocationClick={onLocationClick}
       />
-      <EventFavoritesCacheProvider>
-        <EventImageCacheProvider>
-          {isFavoriteList ? (
-            <FavoriteEventsQuery searchText={debouncedSearchText} locationId={location?.id} />
-          ) : (
-            <EventListQuery searchText={debouncedSearchText} locationId={location?.id} />
-          )}
-        </EventImageCacheProvider>
-      </EventFavoritesCacheProvider>
+      <EventImageCacheProvider>{renderEventListQuery()}</EventImageCacheProvider>
     </View>
   );
 };
