@@ -41,7 +41,6 @@ const EventImage = ({ locationId, eventId, onImagePress }: EventImageProps) => {
     const fetchEventImage = async () => {
       try {
         const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
-        console.log(path);
         const snapshot = await firebase.database().ref(path).get();
         const snapshotValue = snapshot.val();
 

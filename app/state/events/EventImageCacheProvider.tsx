@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { EventImageInfo } from '../../firebase/types';
 
+// K = Event ID, V = image info for the event
 const EventImageCacheContext = React.createContext<Map<number, EventImageInfo>>(new Map());
 
 const EventImageCacheUpdaterContext = React.createContext<
