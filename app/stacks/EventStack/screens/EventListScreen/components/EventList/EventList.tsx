@@ -95,15 +95,12 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
     [locationId, isFavoritesList]
   );
 
-  const getNoDataText = () => {
-    const noDataText = isFavoritesList ? 'No favorites added yet' : 'Bummer, no events found';
-    return noDataText;
-  };
-
   const renderNoData = React.useCallback(() => {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-        <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>{getNoDataText()}</Text>
+        <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
+          Bummer, no events found
+        </Text>
         <LottieAnimation
           source={require(`../../../../../../../assets/animations/bummer.json`)}
           finalFramePosition={1}

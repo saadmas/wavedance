@@ -14,18 +14,21 @@ interface EventFavoriteButtonProps {
 
 const EventFavoriteButton = ({ isFavorite, size, onFavoriteToggle }: EventFavoriteButtonProps) => {
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
+  const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);
 
   const onPress = () => {
     if (isFavorite) {
       setIsDialogOpen(true);
       return;
     }
+    setAnimationPlayerFlag(prev => prev + 1);
     onFavoriteToggle();
   };
 
   const onDialogConfirm = () => {
+    setAnimationPlayerFlag(prev => prev + 1);
     onFavoriteToggle();
-    setIsDialogOpen(false);
+    onDialogDismiss();
   };
 
   const onDialogDismiss = () => {
@@ -35,6 +38,7 @@ const EventFavoriteButton = ({ isFavorite, size, onFavoriteToggle }: EventFavori
   return (
     <>
       <LottieInteractiveAnimation
+        animationPlayerFlag={animationPlayerFlag}
         source={require(`'../../../../../../../assets/animations/heart-favorite.json`)}
         onPress={onPress}
         initialFramePosition={isFavorite ? FramePosition.End : FramePosition.Start}

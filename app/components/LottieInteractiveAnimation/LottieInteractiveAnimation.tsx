@@ -10,6 +10,7 @@ export enum FramePosition {
 
 interface LottieInteractiveAnimationProps {
   source: string;
+  animationPlayerFlag: number;
   onPress: () => void;
   initialFramePosition?: FramePosition;
   speed?: number;
@@ -22,20 +23,26 @@ const LottieInteractiveAnimation = ({
   onPress,
   initialFramePosition,
   speed,
+  animationPlayerFlag,
 }: LottieInteractiveAnimationProps) => {
   const animationRef = React.useRef<AnimatedLottieView>(null);
   const [framePosition, setFramePosition] = React.useState<FramePosition>(initialFramePosition ?? FramePosition.Start);
 
-  const playAnimation = () => {
-    if (framePosition === FramePosition.End) {
-      animationRef.current?.play(FramePosition.End, FramePosition.Start);
-      return;
+  React.useEffect(() => {
+    const playAnimation = () => {
+      if (framePosition === FramePosition.End) {
+        animationRef.current?.play(FramePosition.End, FramePosition.Start);
+        return;
+      }
+      animationRef.current?.play();
+    };
+
+    if (animationPlayerFlag) {
+      playAnimation();
     }
-    animationRef.current?.play();
-  };
+  }, [animationPlayerFlag]);
 
   const onAnimationViewPress = () => {
-    playAnimation();
     onPress();
   };
 
