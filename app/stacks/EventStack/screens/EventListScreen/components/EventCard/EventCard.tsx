@@ -86,7 +86,6 @@ const EventCard = ({ event, locationId, isFavoritesList, eventIndex, removeEvent
     await saveUserEvent(uid, event);
     await saveUserUnderEventMembers(uid, event.id);
 
-    return; /// remove
     navigateToEventPrompts();
   };
 
