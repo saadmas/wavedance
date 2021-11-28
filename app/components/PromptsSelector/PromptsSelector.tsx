@@ -27,7 +27,7 @@ const PromptsSelector = ({
   selectionType,
 }: PromptsSelectorProps) => {
   const { fonts } = useTheme();
-  const cardActionIconSize = 20;
+  const cardActionIconSize = 15;
   const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
 
@@ -54,12 +54,12 @@ const PromptsSelector = ({
           <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
             <Card.Title
               title={prompt}
-              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5 }}
+              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5, fontSize: 13 }}
               titleNumberOfLines={10}
             />
             <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
             <Card.Content>
-              <Paragraph>{value}</Paragraph>
+              <Paragraph style={{ fontSize: 12 }}>{value}</Paragraph>
             </Card.Content>
             <Card.Actions>
               <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
