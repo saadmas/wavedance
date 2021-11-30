@@ -63,7 +63,7 @@ const SignUpStack = () => {
   const renderStep = () => {
     const StepComponent = StepComponents[currentStepIndex];
     return (
-      <View style={{ padding: defaultScreenPadding, height: '100%' }}>
+      <View style={{ margin: defaultScreenPadding, height: '100%' }}>
         <StepComponent goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
       </View>
     );
@@ -74,7 +74,7 @@ const SignUpStack = () => {
   return (
     <SignUpProvider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ display: 'flex', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <IconButton size={40} icon={stepIcons[currentStepIndex]} />
         </View>
       </TouchableWithoutFeedback>

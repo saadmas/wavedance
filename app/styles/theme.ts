@@ -4,7 +4,8 @@ import { fontConfig } from './fonts';
 
 export const backgroundColor = 'black'; //121212
 export const inputTextColor = '#444';
-export const defaultScreenPadding = 20;
+export const defaultScreenPadding = 10;
+export const textFontSize = 10;
 
 const theme = {
   ...PaperDefaultTheme,

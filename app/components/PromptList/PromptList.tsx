@@ -6,6 +6,7 @@ import { Prompt } from '../../state/enums/prompt';
 import { Path } from '../../routing/paths';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import { EventPrompt } from '../../state/enums/eventPrompt';
+import { textFontSize } from '../../styles/theme';
 
 interface PromptListProps {
   selectionType: PromptSelectionType;
@@ -32,7 +33,7 @@ const PromptList = ({ filledPrompts, navigate, selectionType }: PromptListProps)
 
       listItems.push(
         <React.Fragment key={prompt}>
-          <Text onPress={onPromptSelect} style={{ padding: 20 }}>
+          <Text onPress={onPromptSelect} style={{ padding: 20, fontSize: textFontSize + 2 }}>
             {prompt}
           </Text>
           <Divider style={{ width: '95%' }} />

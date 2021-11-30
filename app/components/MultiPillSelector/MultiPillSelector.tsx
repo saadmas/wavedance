@@ -3,6 +3,7 @@ import { Button, Searchbar, Text, useTheme } from 'react-native-paper';
 import { ScrollView, View } from 'react-native';
 import Title from '../Title/Title';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
+import { textFontSize } from '../../styles/theme';
 
 interface MultiPillSelectorProps {
   titleText: string;
@@ -73,8 +74,8 @@ const MultiPillSelector = ({
           marginBottom: 10,
         }}
       >
-        <Text>Select at least {minPillCount}</Text>
-        <Text>
+        <Text style={{ fontSize: textFontSize }}>Select at least {minPillCount}</Text>
+        <Text style={{ fontSize: textFontSize }}>
           {selectedPillTexts.size}/{maxPillCount}
         </Text>
       </View>
@@ -82,9 +83,12 @@ const MultiPillSelector = ({
         placeholder="Search"
         onChangeText={setSearchText}
         value={searchText}
-        style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: 10, height: 40 }}
-        inputStyle={{ fontSize: 12 }}
+        style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: textFontSize, height: 35 }}
+        inputStyle={{ fontSize: textFontSize }}
       />
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+        <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
+      </View>
       <ScrollView
         contentContainerStyle={{
           display: 'flex',
@@ -96,7 +100,6 @@ const MultiPillSelector = ({
       >
         {renderPills()}
       </ScrollView>
-      <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
     </>
   );
 };

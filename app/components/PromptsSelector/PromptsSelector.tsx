@@ -10,6 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
+import { textFontSize } from '../../styles/theme';
 
 interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
@@ -94,16 +95,22 @@ const PromptsSelector = ({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 10,
-          marginBottom: 10,
         }}
       >
-        <Text>{getDescription()}</Text>
-        <Text>
+        <Text style={{ fontSize: textFontSize }}>{getDescription()}</Text>
+        <Text style={{ fontSize: textFontSize }}>
           {filledPrompts.size}/{maxPromptCount}
         </Text>
       </View>
-      <View style={{ display: 'flex', alignItems: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: filledPrompts.size ? 'space-between' : 'center',
+          alignItems: 'center',
+          marginTop: 20,
+          height: filledPrompts.size ? undefined : 400,
+        }}
+      >
         {filledPrompts.size < maxPromptCount && (
           <Button
             icon="plus"
@@ -111,16 +118,16 @@ const PromptsSelector = ({
             onPress={openPromptDrawer}
             theme={{ colors: { primary: '#fff' } }}
             labelStyle={{ fontSize: 10 }}
-            style={{ width: '50%', marginTop: filledPrompts.size ? 10 : 100 }}
+            style={{ width: 150 }}
           >
             Add prompt
           </Button>
         )}
+        <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < minPromptCount} />
       </View>
       <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
       </ScrollView>
-      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < minPromptCount} />
     </>
   );
 };

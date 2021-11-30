@@ -73,7 +73,7 @@ const SignUp = ({}: SignUpProps) => {
         });
     } catch {}
   };
-  f;
+
   const uploadUserBasicInfo = async (uid: string) => {
     const { birthday, name } = signUpState;
     const path = getUseBasicInfoPath(uid);

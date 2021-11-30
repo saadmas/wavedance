@@ -5,7 +5,7 @@ import { SignUpStepProps } from '../../SignUpStack';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
 import { Button, FAB, Surface } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
 
 interface PhotoInputProps extends SignUpStepProps {}
@@ -86,14 +86,17 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
       >
         {renderImageContent()}
       </Surface>
-      <NextScreenButton onPress={onPhotoSubmit} isDisabled={!photoUri} />
       {photoUri && (
-        <FAB
-          onPress={onUploadPhoto}
-          icon={'pencil-outline'}
-          style={{ position: 'absolute', bottom: 100, left: 40 }}
-          theme={{ colors: { accent: '#878484' } }}
-        />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+          {/* /// use IconButton */}
+          <FAB
+            onPress={onUploadPhoto}
+            icon={'pencil-outline'}
+            theme={{ colors: { accent: '#878484' } }}
+            style={{ height: 40, width: 40 }}
+          />
+          <NextScreenButton onPress={onPhotoSubmit} isDisabled={!photoUri} />
+        </View>
       )}
     </>
   );
