@@ -3,6 +3,7 @@ import Dialog from '../../../../../../components/Dialog/Dialog';
 import LottieInteractiveAnimation, {
   FramePosition,
 } from '../../../../../../components/LottieInteractiveAnimation/LottieInteractiveAnimation';
+import * as Haptics from 'expo-haptics';
 
 interface EventFavoriteButtonProps {
   isFavorite: boolean;
@@ -23,6 +24,7 @@ const EventFavoriteButton = ({ isFavorite, size, onFavoriteToggle }: EventFavori
     }
     setAnimationPlayerFlag(prev => prev + 1);
     onFavoriteToggle();
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
 
   const onDialogConfirm = () => {

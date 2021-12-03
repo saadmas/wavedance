@@ -89,7 +89,6 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
       </Surface>
       {photoUri && (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-          {/* /// use IconButton */}
           <FAB
             onPress={onUploadPhoto}
             icon={'pencil-outline'}

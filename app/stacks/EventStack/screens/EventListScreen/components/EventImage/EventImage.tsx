@@ -85,6 +85,7 @@ const EventImage = ({ locationId, eventId, onImagePress }: EventImageProps) => {
       //   </Placeholder>
       // );
       case ResponseStatus.Error:
+        return null; ///
         return (
           <LottieAnimation
             source={require(`../../../../../../../assets/animations/dj-mixer.json`)}
