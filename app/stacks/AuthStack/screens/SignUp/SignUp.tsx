@@ -56,7 +56,7 @@ const SignUp = ({}: SignUpProps) => {
   };
 
   const uploadUserAdditionalInfo = async (uid: string) => {
-    const { currentLocation, hometown, passions, genres, instagramHandle, occupation } = signUpState;
+    const { currentLocation, hometown, passions, genres, instagramHandle, occupation, pronouns } = signUpState;
     const path = getUserAdditionalInfoPath(uid);
 
     try {
@@ -68,6 +68,7 @@ const SignUp = ({}: SignUpProps) => {
           [UserAdditionalInfo.Hometown]: hometown,
           [UserAdditionalInfo.Passions]: [...passions],
           [UserAdditionalInfo.Genres]: [...genres],
+          [UserAdditionalInfo.Pronouns]: [...pronouns],
           [UserAdditionalInfo.InstagramHandle]: instagramHandle ?? null,
           [UserAdditionalInfo.Occupation]: occupation ?? null,
         });

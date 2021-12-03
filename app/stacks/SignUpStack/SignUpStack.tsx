@@ -14,6 +14,7 @@ import PhotoInput from './screens/PhotoInput/PhotoInput';
 import GenresInput from './screens/GenresInput/GenresInput';
 import InstagramHandleInputInput from './screens/InstagramHandleInput/InstagramHandleInput';
 import SignupPromptsManager from './screens/SignupPromptsManager/SignupPromptsManager';
+import PronounsInput from './screens/PronounsInput/PronounsInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
@@ -26,6 +27,7 @@ const StepComponents = [
   HometownInput,
   CurrentLocationInput,
   OccupationInput,
+  PronounsInput,
   GenresInput,
   PassionsInput,
   SignupPromptsManager,
@@ -40,6 +42,7 @@ const stepIcons = [
   'home-circle',
   'map-marker',
   'briefcase-outline',
+  'account-circle-outline',
   'music-circle',
   'heart-outline',
   'thought-bubble',

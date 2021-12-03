@@ -20,6 +20,7 @@ export enum UserAdditionalInfo {
   Hometown = 'hometown',
   Passions = 'passions',
   Genres = 'genres',
+  Pronouns = 'pronouns',
   InstagramHandle = 'instagramHandle',
   Occupation = 'occupation',
 }

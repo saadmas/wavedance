@@ -62,6 +62,12 @@ const MultiPillSelector = ({
     return pills;
   };
 
+  const renderMinSelectionText = () => {
+    if (minPillCount) {
+      return <Text style={{ fontSize: textFontSize }}>Select at least {minPillCount}</Text>;
+    }
+  };
+
   return (
     <>
       <Title title={titleText} />
@@ -74,7 +80,7 @@ const MultiPillSelector = ({
           marginBottom: 10,
         }}
       >
-        <Text style={{ fontSize: textFontSize }}>Select at least {minPillCount}</Text>
+        {renderMinSelectionText()}
         <Text style={{ fontSize: textFontSize }}>
           {selectedPillTexts.size}/{maxPillCount}
         </Text>
