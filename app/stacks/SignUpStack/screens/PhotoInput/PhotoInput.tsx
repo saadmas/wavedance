@@ -3,7 +3,7 @@ import Title from '../../../../components/Title/Title';
 import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
-import { Button, FAB, Surface } from 'react-native-paper';
+import { Button, FAB, Surface, useTheme } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, View } from 'react-native';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
@@ -11,6 +11,7 @@ import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimat
 interface PhotoInputProps extends SignUpStepProps {}
 
 const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
+  const { colors } = useTheme();
   const [photoUri, setPhotoUri] = React.useState<string | undefined>(undefined);
   const [isLoadingPhoto, setIsLoadingPhoto] = React.useState<boolean>(false);
 
@@ -92,8 +93,8 @@ const PhotoInput = ({ goToNextStep }: PhotoInputProps) => {
           <FAB
             onPress={onUploadPhoto}
             icon={'pencil-outline'}
-            theme={{ colors: { accent: '#878484' } }}
-            style={{ height: 40, width: 40 }}
+            theme={{ colors: { accent: colors.onSurface } }}
+            style={{ width: 40, height: 40, borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}
           />
           <NextScreenButton onPress={onPhotoSubmit} isDisabled={!photoUri} />
         </View>

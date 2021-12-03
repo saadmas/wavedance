@@ -3,7 +3,6 @@ import { useSignUpDispatch } from '../../../../state/signUp/SignUpProvider';
 import { SignUpStepProps } from '../../SignUpStack';
 import { Pronoun } from '../../../../state/enums/pronoun';
 import MultiPillSelector from '../../../../components/MultiPillSelector/MultiPillSelector';
-import { Text } from 'react-native-paper';
 
 interface PronounsInputProps extends SignUpStepProps {}
 
