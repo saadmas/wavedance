@@ -28,7 +28,7 @@ const LocationSelectScreen = ({ navigation }: LocationSelectScreenProps) => {
   };
 
   return (
-    <View style={{ padding: 40 }}>
+    <View style={{ paddingHorizontal: 20, paddingTop: 45 }}>
       <Searchbar
         onChangeText={setSearchText}
         value={searchText}

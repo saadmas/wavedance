@@ -16,7 +16,7 @@ interface EventImageProps {
   onImagePress: () => void;
 }
 
-export const eventCardImageHeight = 350;
+export const eventCardImageHeight = 340;
 
 const EventImage = ({ locationId, eventId, onImagePress }: EventImageProps) => {
   const eventImageCache = useEventImageCache();

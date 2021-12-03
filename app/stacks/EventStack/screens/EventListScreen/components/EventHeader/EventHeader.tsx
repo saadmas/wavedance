@@ -32,7 +32,7 @@ const EventHeader = ({ event, isFavorite, locationId, onFavoriteToggle }: EventH
   };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', height: 55 }}>
+    <View style={{ flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', height: 45 }}>
       {renderTitle()}
       <EventActions
         onFavoriteToggle={onFavoriteToggle}

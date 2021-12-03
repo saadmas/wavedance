@@ -14,7 +14,7 @@ interface EventActionsProps {
 }
 
 const EventActions = ({ eventLink, isFavorite, locationId, eventId, onFavoriteToggle }: EventActionsProps) => {
-  const baseSize = 40;
+  const baseSize = 35;
   const spotifySize = baseSize - 10;
   const favoriteSize = baseSize + 5;
 
@@ -76,7 +76,7 @@ const EventActions = ({ eventLink, isFavorite, locationId, eventId, onFavoriteTo
         flex: 1,
         position: 'relative',
         left: 10,
-        top: 5,
+        top: 3,
       }}
     >
       {renderSpotifyAction()}

@@ -18,6 +18,7 @@ import useDebounce from '../../../../hooks/useDebounce';
 import { EventFavoritesCacheProvider } from '../../../../state/events/EventFavoritesCacheProvider';
 import FavoriteEventsQuery from './components/FavoriteEventsQuery/FavoriteEventsQuery';
 import { EventImageCacheProvider } from '../../../../state/events/EventImageCacheProvider';
+import { defaultScreenPadding } from '../../../../styles/theme';
 
 type EventListScreenNavProps = NativeStackScreenProps<EventStackParamList, Path.EventList>;
 
@@ -109,11 +110,11 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
   };
 
   return (
-    <View>
+    <View style={{ marginTop: defaultScreenPadding }}>
       <Searchbar
         onChangeText={setSearchText}
         value={searchText}
-        style={{ margin: 20, marginBottom: 0, marginTop: 0, borderRadius: 5, fontSize: 10, height: 40 }}
+        style={{ margin: 20, marginBottom: 0, marginTop: 0, borderRadius: 5, fontSize: 10, height: 35 }}
         inputStyle={{ fontSize: 12 }}
       />
       <EventListFilterRow
