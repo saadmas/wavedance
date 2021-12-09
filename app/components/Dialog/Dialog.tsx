@@ -11,7 +11,7 @@ interface DialogProps {
 }
 
 const Dialog = ({ isVisible, onPrimaryAction, onDismiss, primaryButtonText, title, description }: DialogProps) => {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const fontSize = 10;
   const lineHeight = 0;
 
@@ -26,9 +26,11 @@ const Dialog = ({ isVisible, onPrimaryAction, onDismiss, primaryButtonText, titl
         onDismiss={onDismiss}
         style={{ borderRadius: 5, backgroundColor: colors.onSurface }}
       >
-        <RnpDialog.Title style={{ fontSize: 14, lineHeight }}>{title}</RnpDialog.Title>
+        <RnpDialog.Title style={{ fontSize: 14, lineHeight, fontFamily: fonts.thin.fontFamily }}>
+          {title}
+        </RnpDialog.Title>
         <RnpDialog.Content>
-          <Paragraph style={{ fontSize, lineHeight }}>{description}</Paragraph>
+          <Paragraph style={{ fontSize, lineHeight, fontFamily: fonts.thin.fontFamily }}>{description}</Paragraph>
         </RnpDialog.Content>
         <RnpDialog.Actions>
           <Button

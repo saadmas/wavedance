@@ -102,12 +102,12 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
           Bummer, no events found
         </Text>
         <LottieAnimation
-          source={require(`../../../../../../../assets/animations/bummer.json`)}
+          source={require(`../../../../../../../assets/animations/tumbleweed-rolling.json`)}
           finalFramePosition={1}
           shouldLoop={true}
           style={{
-            width: 200,
-            height: 200,
+            width: 150,
+            height: 150,
             marginTop: 5,
           }}
         />

@@ -35,7 +35,6 @@ const EventActionsMenu = ({ event, isFavorite }: EventActionsMenuProps) => {
 
   const navigateToEventPrompts = () => {
     closeMenu();
-
     navigation?.navigate(Path.EventPrompts, { event });
   };
 
