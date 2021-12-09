@@ -75,8 +75,6 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
   const removeEventFromList = (index: number) => {
     setFilteredEvents(prevEvents => {
       prevEvents.splice(index, 1);
-      console.log(index);
-      console.log(prevEvents);
       const nextEvents = [...prevEvents];
       return nextEvents;
     });

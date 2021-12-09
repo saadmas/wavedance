@@ -105,10 +105,9 @@ const PromptsSelector = ({
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: filledPrompts.size ? 'space-between' : 'center',
+          justifyContent: 'space-between',
           alignItems: 'center',
           marginTop: 20,
-          height: filledPrompts.size ? undefined : 400,
         }}
       >
         {filledPrompts.size < maxPromptCount && (

@@ -11,6 +11,7 @@ import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 
 interface PromptsManagerProps {
   selectionType: PromptSelectionType;
+  previouslyFilledPrompts?: Map<EventPrompt, string>;
   onSubmit: (filledPrompts: Map<Prompt | EventPrompt, string>) => void;
 }
 
@@ -26,8 +27,11 @@ export type PromptDrawerParamList = {
 
 const DrawerNavigator = createDrawerNavigator<PromptDrawerParamList>();
 
-const PromptsManager = ({ onSubmit, selectionType }: PromptsManagerProps) => {
-  const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt | EventPrompt, string>>(new Map());
+const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: PromptsManagerProps) => {
+  const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt | EventPrompt, string>>(
+    previouslyFilledPrompts ?? new Map()
+  );
+
   const { colors } = useTheme();
 
   const onPromptsSubmit = () => {

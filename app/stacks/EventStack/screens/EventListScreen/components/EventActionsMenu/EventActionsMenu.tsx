@@ -6,6 +6,8 @@ import { useEventImageCache } from '../../../../../../state/events/EventImageCac
 import { NavigationContext } from '@react-navigation/native';
 import { Path } from '../../../../../../routing/paths';
 import { EdmTrainEvent } from '../../../../../../../functions/src/types';
+import { getUserEventPrompts } from '../../../../utils';
+import firebase from 'firebase';
 
 interface EventActionsMenuProps {
   event: EdmTrainEvent;
@@ -33,9 +35,12 @@ const EventActionsMenu = ({ event, isFavorite }: EventActionsMenuProps) => {
     WebBrowser.openBrowserAsync(`https://open.spotify.com/artist/${spotifyArtistId}`);
   };
 
-  const navigateToEventPrompts = () => {
+  const navigateToEventPrompts = async () => {
     closeMenu();
-    navigation?.navigate(Path.EventPrompts, { event });
+    //f remove foo
+    const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    const previouslyFilledPrompts = await getUserEventPrompts(uid, event.id);
+    navigation?.navigate(Path.EventPrompts, { event, previouslyFilledPrompts, isEditMode: true });
   };
 
   const getMenuOptionStyles = (): ViewStyle => ({

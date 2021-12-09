@@ -58,6 +58,21 @@ export const removeUserFromEventMembers = async (uid: string, eventId: number) =
   }
 };
 
+export const getUserEventPrompts = async (uid: string, eventId: number) => {
+  const path = getUserEventPromptsPath(uid, eventId);
+
+  try {
+    const snapshot = await firebase.database().ref(path).get();
+    const prompts = snapshot.val() ?? undefined;
+    return prompts;
+  } catch (e) {
+    console.error('saveUserUnderEventMembers failed');
+    console.error(e);
+    console.error(`eventId ${eventId}`);
+    console.error(`uid: ${uid}`);
+  }
+};
+
 export const saveUserEventPrompts = async (uid: string, eventId: number, filledPrompts?: Map<EventPrompt, string>) => {
   if (!filledPrompts) {
     return;
