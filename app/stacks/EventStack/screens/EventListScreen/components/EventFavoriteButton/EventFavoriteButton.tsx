@@ -7,13 +7,13 @@ import * as Haptics from 'expo-haptics';
 
 interface EventFavoriteButtonProps {
   isFavorite: boolean;
-  size: number;
   eventId: number;
   onFavoriteToggle: () => void;
   locationId: number;
 }
 
-const EventFavoriteButton = ({ isFavorite, size, onFavoriteToggle }: EventFavoriteButtonProps) => {
+const EventFavoriteButton = ({ isFavorite, onFavoriteToggle }: EventFavoriteButtonProps) => {
+  const size = 40;
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
   const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);
 

@@ -32,15 +32,18 @@ const EventHeader = ({ event, isFavorite, locationId, onFavoriteToggle }: EventH
   };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', height: 45 }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        height: 45,
+        position: 'relative',
+        top: 5,
+      }}
+    >
       {renderTitle()}
-      <EventActions
-        onFavoriteToggle={onFavoriteToggle}
-        eventLink={event.link}
-        isFavorite={isFavorite}
-        eventId={event.id}
-        locationId={locationId}
-      />
+      <EventActions onFavoriteToggle={onFavoriteToggle} isFavorite={isFavorite} locationId={locationId} event={event} />
     </View>
   );
 };
