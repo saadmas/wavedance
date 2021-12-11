@@ -35,10 +35,7 @@ const SignUp = ({}: SignUpProps) => {
     try {
       const response = await fetch(profilePhotoUri);
       const blob = await response.blob();
-
       firebase.storage().ref(path).put(blob);
-      // var ref = firebase.storage().ref(path).put('my-image');
-      // return ref.put(blob);
     } catch (e) {
       //*
       console.error(e);

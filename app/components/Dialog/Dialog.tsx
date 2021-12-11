@@ -30,7 +30,7 @@ const Dialog = ({ isVisible, onPrimaryAction, onDismiss, primaryButtonText, titl
           {title}
         </RnpDialog.Title>
         <RnpDialog.Content>
-          <Paragraph style={{ fontSize, lineHeight, fontFamily: fonts.thin.fontFamily }}>{description}</Paragraph>
+          <Paragraph style={{ fontSize, lineHeight }}>{description}</Paragraph>
         </RnpDialog.Content>
         <RnpDialog.Actions>
           <Button

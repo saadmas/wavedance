@@ -66,7 +66,7 @@ export const getUserEventPrompts = async (uid: string, eventId: number) => {
     const prompts = snapshot.val() ?? undefined;
     return prompts;
   } catch (e) {
-    console.error('saveUserUnderEventMembers failed');
+    console.error('getUserEventPrompts failed');
     console.error(e);
     console.error(`eventId ${eventId}`);
     console.error(`uid: ${uid}`);
@@ -84,7 +84,7 @@ export const saveUserEventPrompts = async (uid: string, eventId: number, filledP
   try {
     await firebase.database().ref(path).set(promptsToStore);
   } catch (e) {
-    console.error('saveUserUnderEventMembers failed');
+    console.error('saveUserEventPrompts failed');
     console.error(e);
     console.error(`eventId ${eventId}`);
     console.error(`uid: ${uid}`);
@@ -96,9 +96,9 @@ export const removeUserEventPrompts = async (uid: string, eventId: number) => {
   const path = getUserEventPromptsPath(uid, eventId);
 
   try {
-    await firebase.database().ref(path).remove(); /// test what happs if no filled prompts
+    await firebase.database().ref(path).remove();
   } catch (e) {
-    console.error('saveUserUnderEventMembers failed');
+    console.error('removeUserEventPrompts failed');
     console.error(e);
     console.error(`eventId ${eventId}`);
     console.error(`uid: ${uid}`);
