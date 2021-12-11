@@ -1,1 +1,45 @@
-{"kind":"identitytoolkit#DownloadAccountResponse","users":[]}
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "foo",
+      "createdAt": "1639186833359",
+      "lastLoginAt": "1639186833359",
+      "emailVerified": false,
+      "email": "sms1159@nyu.edu",
+      "salt": "fakeSaltpTrM1MFbXdAJvm7Duhdx",
+      "passwordHash": "fakeHash:salt=fakeSaltpTrM1MFbXdAJvm7Duhdx:password=foobarbazoaoq",
+      "passwordUpdatedAt": 1639186833359,
+      "validSince": "1639186833",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "sms1159@nyu.edu",
+          "federatedId": "sms1159@nyu.edu",
+          "rawId": "sms1159@nyu.edu"
+        }
+      ],
+      "lastRefreshAt": "2021-12-11T01:40:33.362Z"
+    },
+    {
+      "localId": "8IkFehtMxwsG4vlBcJKnzSr4aQqK",
+      "createdAt": "1639186833359",
+      "lastLoginAt": "1639186833359",
+      "emailVerified": false,
+      "email": "anu@hotmail.com",
+      "salt": "fakeSaltpTrM1MFbXdAJvm7Duhdx",
+      "passwordHash": "fakeHash:salt=fakeSaltpTrM1MFbXdAJvm7Duhdx:password=foobarbazoaoq",
+      "passwordUpdatedAt": 1639186833359,
+      "validSince": "1639186833",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "anu@hotmail.com",
+          "federatedId": "anu@hotmail.com",
+          "rawId": "anu@hotmail.com"
+        }
+      ],
+      "lastRefreshAt": "2021-12-11T01:40:33.362Z"
+    }
+  ]
+}
