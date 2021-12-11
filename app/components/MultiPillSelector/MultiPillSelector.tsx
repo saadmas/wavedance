@@ -62,10 +62,15 @@ const MultiPillSelector = ({
     return pills;
   };
 
-  const renderMinSelectionText = () => {
-    if (minPillCount) {
+  const renderCurrentSelectionText = () => {
+    if (minPillCount && isSubmitButtonDisabled) {
       return <Text style={{ fontSize: textFontSize }}>Select at least {minPillCount}</Text>;
     }
+    return (
+      <Text style={{ fontSize: textFontSize }}>
+        {selectedPillTexts.size}/{maxPillCount}
+      </Text>
+    );
   };
 
   return (
@@ -76,14 +81,11 @@ const MultiPillSelector = ({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 10,
-          marginBottom: 10,
+          alignItems: 'center',
         }}
       >
-        {renderMinSelectionText()}
-        <Text style={{ fontSize: textFontSize }}>
-          {selectedPillTexts.size}/{maxPillCount}
-        </Text>
+        {renderCurrentSelectionText()}
+        <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
       </View>
       <Searchbar
         placeholder="Search"
@@ -92,9 +94,7 @@ const MultiPillSelector = ({
         style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: textFontSize, height: 35 }}
         inputStyle={{ fontSize: textFontSize }}
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-        <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
-      </View>
+
       <ScrollView
         contentContainerStyle={{
           display: 'flex',

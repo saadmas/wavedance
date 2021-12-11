@@ -31,6 +31,7 @@ const PromptsSelector = ({
   const cardActionIconSize = 15;
   const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
+  const isDisabled = filledPrompts.size < minPromptCount;
 
   const openPromptDrawer = () => {
     navigation.openDrawer();
@@ -87,6 +88,13 @@ const PromptsSelector = ({
     return 'Answer a prompt';
   };
 
+  const renderCurrentSelectionText = () => {
+    if (minPromptCount && isDisabled) {
+      return getDescription();
+    }
+    return `${filledPrompts.size}/${maxPromptCount}`;
+  };
+
   return (
     <>
       <Title title={getTitleText()} />
@@ -95,37 +103,35 @@ const PromptsSelector = ({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-        }}
-      >
-        <Text style={{ fontSize: textFontSize }}>{getDescription()}</Text>
-        <Text style={{ fontSize: textFontSize }}>
-          {filledPrompts.size}/{maxPromptCount}
-        </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
           alignItems: 'center',
-          marginTop: 20,
         }}
       >
-        {filledPrompts.size < maxPromptCount && (
-          <Button
-            icon="plus"
-            mode="outlined"
-            onPress={openPromptDrawer}
-            theme={{ colors: { primary: '#fff' } }}
-            labelStyle={{ fontSize: 10 }}
-            style={{ width: 150 }}
-          >
-            Add prompt
-          </Button>
-        )}
-        <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < minPromptCount} />
+        <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
+        <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
       </View>
       <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}
+        >
+          {filledPrompts.size < maxPromptCount && (
+            <Button
+              icon="plus"
+              mode="outlined"
+              onPress={openPromptDrawer}
+              theme={{ colors: { primary: '#fff' } }}
+              labelStyle={{ fontSize: 10 }}
+              style={{ width: 150, borderRadius: 20 }}
+            >
+              Add prompt
+            </Button>
+          )}
+        </View>
       </ScrollView>
     </>
   );
