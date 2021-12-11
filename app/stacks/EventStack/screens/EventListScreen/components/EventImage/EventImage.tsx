@@ -85,7 +85,7 @@ const EventImage = ({ locationId, eventId, onImagePress }: EventImageProps) => {
       //   </Placeholder>
       // );
       case ResponseStatus.Error:
-        return null; ///
+        return null; //* replace with wavedance logo
         return (
           <LottieAnimation
             source={require(`../../../../../../../assets/animations/dj-mixer.json`)}
