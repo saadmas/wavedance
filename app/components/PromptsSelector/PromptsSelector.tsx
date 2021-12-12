@@ -54,14 +54,10 @@ const PromptsSelector = ({
       return (
         <Animatable.View key={prompt} animation="fadeInLeft">
           <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
-            <Card.Title
-              title={prompt}
-              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5, fontSize: 13 }}
-              titleNumberOfLines={10}
-            />
+            <Card.Title title={prompt} titleStyle={{ padding: 5, fontSize: 13 }} titleNumberOfLines={10} />
             <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
             <Card.Content>
-              <Paragraph style={{ fontSize: 12 }}>{value}</Paragraph>
+              <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 25 }}>{value}</Text>
             </Card.Content>
             <Card.Actions>
               <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
@@ -109,7 +105,7 @@ const PromptsSelector = ({
         <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
         <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
       </View>
-      <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
         <View
           style={{

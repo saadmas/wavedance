@@ -24,7 +24,7 @@ const UserProfilePrompt = ({ promptQuestion, promptAnswer }: UserProfilePromptPr
       <WebView
         scalesPageToFit={true}
         bounces={false}
-        javaScriptEnabled
+        javaScriptEnabled={true}
         style={{ height: 80, width: '100%', marginVertical }}
         source={{
           uri: 'https://open.spotify.com/embed/artist/4q3ewBCX7sLwd24euuV69X',
