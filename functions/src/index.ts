@@ -9,7 +9,7 @@ admin.initializeApp();
 
 exports.fetchAndStoreEventArtists = functions
   .runWith({ timeoutSeconds: 540 })
-  .database.ref('foo')
+  .database.ref('bar')
   .onUpdate(async (snapshot, context) => {
     const spotifyApi = new SpotifyWebApi({
       clientId: '1eda7d1f51ad4bb58e0179b33f75716e',
@@ -58,3 +58,25 @@ exports.fetchAndStoreEventArtists = functions
 
     console.info('succesfully ran fetchAndStoreEventArtist!');
   });
+
+exports.fetchSpotifyToken = functions.https.onCall(async (_, context) => {
+  if (!process.env.FUNCTIONS_EMULATOR) {
+    if (!context.app) {
+      throw new functions.https.HttpsError(
+        'failed-precondition',
+        'The function must be called from an App Check verified app.'
+      );
+    }
+  }
+
+  const spotifyApi = new SpotifyWebApi({
+    clientId: '1eda7d1f51ad4bb58e0179b33f75716e',
+    clientSecret: functions.config()['envs']['spotifyclientsecret'],
+    redirectUri: '',
+  });
+
+  const spotifyApiInitSuccess = await initializeSpotifyApi(spotifyApi);
+
+  const accessToken = spotifyApiInitSuccess ? spotifyApi.getAccessToken() : undefined;
+  return { accessToken };
+});
