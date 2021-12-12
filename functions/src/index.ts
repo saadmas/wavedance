@@ -60,13 +60,11 @@ exports.fetchAndStoreEventArtists = functions
   });
 
 exports.fetchSpotifyToken = functions.https.onCall(async (_, context) => {
-  if (!process.env.FUNCTIONS_EMULATOR) {
-    if (!context.app) {
-      throw new functions.https.HttpsError(
-        'failed-precondition',
-        'The function must be called from an App Check verified app.'
-      );
-    }
+  if (!process.env.FUNCTIONS_EMULATOR && !context.app) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.'
+    );
   }
 
   const spotifyApi = new SpotifyWebApi({
