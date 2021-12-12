@@ -3,7 +3,13 @@ import * as React from 'react';
 import { View } from 'react-native';
 import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
 import { FirebaseNode, UserAdditionalInfo, UserBasicInfo, UserPhotos } from '../../../../firebase/keys';
-import { getFirebasePath } from '../../../../firebase/utils';
+import {
+  getUseBasicInfoPath,
+  getUserAdditionalInfoPath,
+  getUserPhotosPath,
+  getUserPromptsPath,
+} from '../../../../firebase/utils';
+import { PromptSelectionType } from '../../../../state/enums/promptSelectionType';
 import { useSignUpState } from '../../../../state/signUp/SignUpProvider';
 import { getPromptsToStore } from '../../../../utils/prompts/prompt.util';
 import { SignUpStepProps } from '../../../SignUpStack/SignUpStack';
@@ -24,25 +30,22 @@ const SignUp = ({}: SignUpProps) => {
 
   const uploadUserPhoto = async (uid: string) => {
     const { profilePhotoUri } = signUpState;
-    const path = getFirebasePath(FirebaseNode.UserPhotos, uid, UserPhotos.ProfilePhoto);
+    const path = getUserPhotosPath(uid);
 
     try {
       const response = await fetch(profilePhotoUri);
       const blob = await response.blob();
-
       firebase.storage().ref(path).put(blob);
-      // var ref = firebase.storage().ref(path).put('my-image');
-      // return ref.put(blob);
     } catch (e) {
       //*
-      console.log(e);
+      console.error(e);
     }
   };
 
   const uploadUserPrompts = async (uid: string) => {
     const { prompts } = signUpState;
-    const promptsToStore = getPromptsToStore(prompts);
-    const path = getFirebasePath(FirebaseNode.UserPrompts, uid);
+    const promptsToStore = getPromptsToStore(PromptSelectionType.General, prompts);
+    const path = getUserPromptsPath(uid);
 
     try {
       await firebase.database().ref(path).set(promptsToStore);
@@ -50,8 +53,8 @@ const SignUp = ({}: SignUpProps) => {
   };
 
   const uploadUserAdditionalInfo = async (uid: string) => {
-    const { currentLocation, hometown, passions, genres, instagramHandle, occupation } = signUpState;
-    const path = getFirebasePath(FirebaseNode.UserAdditionalInfo, uid);
+    const { currentLocation, hometown, passions, genres, instagramHandle, occupation, pronouns } = signUpState;
+    const path = getUserAdditionalInfoPath(uid);
 
     try {
       await firebase
@@ -62,6 +65,7 @@ const SignUp = ({}: SignUpProps) => {
           [UserAdditionalInfo.Hometown]: hometown,
           [UserAdditionalInfo.Passions]: [...passions],
           [UserAdditionalInfo.Genres]: [...genres],
+          [UserAdditionalInfo.Pronouns]: [...pronouns],
           [UserAdditionalInfo.InstagramHandle]: instagramHandle ?? null,
           [UserAdditionalInfo.Occupation]: occupation ?? null,
         });
@@ -70,7 +74,7 @@ const SignUp = ({}: SignUpProps) => {
 
   const uploadUserBasicInfo = async (uid: string) => {
     const { birthday, name } = signUpState;
-    const path = getFirebasePath(FirebaseNode.UserBasicInfo, uid);
+    const path = getUseBasicInfoPath(uid);
 
     try {
       await firebase

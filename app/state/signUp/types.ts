@@ -7,6 +7,7 @@ export interface SignUpState {
   hometown: string;
   passions: Set<string>;
   genres: Set<string>;
+  pronouns: Set<string>;
   profilePhotoUri: string;
   prompts: Map<Prompt, string>;
   occupation?: string;
@@ -52,6 +53,11 @@ interface GenresUpdateAction {
   payload: Set<string>;
 }
 
+interface PronounsUpdateAction {
+  type: 'PRONOUNS_UPDATE';
+  payload: Set<string>;
+}
+
 interface PassionsUpdateAction {
   type: 'PASSIONS_UPDATE';
   payload: Set<string>;
@@ -75,6 +81,7 @@ export type SignUpAction =
   | CurrentLocationAsHometownAction
   | OccupationUpdateAction
   | GenresUpdateAction
+  | PronounsUpdateAction
   | PassionsUpdateAction
   | ProfilePhotoUpdateAction
   | PromptUpdateAction

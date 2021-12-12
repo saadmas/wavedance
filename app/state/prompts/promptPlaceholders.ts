@@ -1,6 +1,6 @@
 import { Prompt } from '../enums/prompt';
 
-export const promptPlaceholders: Map<Prompt, string> = new Map([
+export const promptPlaceholders: Map<Prompt | EventPrompt, string> = new Map([
   [Prompt.FavoriteArtist, 'e.g. Gesaffelstein'],
   [Prompt.FavoriteSong, 'e.g. Firefly - Bedouin'],
   [Prompt.FavoriteRemix, 'e.g. Strobe (Lane 8 remix) - deadmau5'],

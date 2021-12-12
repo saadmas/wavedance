@@ -3,22 +3,35 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button, Card, Divider, IconButton, Paragraph, Text, useTheme } from 'react-native-paper';
 import { Path } from '../../routing/paths';
-import { PromptDrawerParamList } from '../../stacks/SignUpStack/screens/PromptsManager/PromptsManager';
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 import * as Animatable from 'react-native-animatable';
+import { EventPrompt } from '../../state/enums/eventPrompt';
+import { PromptDrawerParamList } from '../PromptsManager/PromptsManager';
+import { PromptSelectionType } from '../../state/enums/promptSelectionType';
+import { textFontSize } from '../../styles/theme';
 
 interface PromptsSelectorProps {
-  filledPrompts: Map<Prompt, string>;
-  navigation: DrawerNavigationProp<PromptDrawerParamList, Path.SignUpPromptSelector>;
+  selectionType: PromptSelectionType;
+  filledPrompts: Map<Prompt | EventPrompt, string>;
+  navigation: DrawerNavigationProp<PromptDrawerParamList, Path.PromptSelector>;
   onPromptsSubmit: () => void;
-  deletePrompt: (prompt: Prompt) => void;
+  deletePrompt: (prompt: Prompt | EventPrompt) => void;
 }
 
-const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePrompt }: PromptsSelectorProps) => {
+const PromptsSelector = ({
+  filledPrompts,
+  onPromptsSubmit,
+  navigation,
+  deletePrompt,
+  selectionType,
+}: PromptsSelectorProps) => {
   const { fonts } = useTheme();
-  const cardActionIconSize = 20;
+  const cardActionIconSize = 15;
+  const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
+  const maxPromptCount = 3;
+  const isDisabled = filledPrompts.size < minPromptCount;
 
   const openPromptDrawer = () => {
     navigation.openDrawer();
@@ -29,7 +42,7 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
       const [prompt, value] = entry;
 
       const onEdit = () => {
-        navigation.navigate(Path.SignUpPromptInput, {
+        navigation.navigate(Path.PromptInput, {
           selectedPrompt: { prompt, value },
         });
       };
@@ -43,12 +56,12 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
           <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
             <Card.Title
               title={prompt}
-              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5 }}
+              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5, fontSize: 13 }}
               titleNumberOfLines={10}
             />
             <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
             <Card.Content>
-              <Paragraph>{value}</Paragraph>
+              <Paragraph style={{ fontSize: 12 }}>{value}</Paragraph>
             </Card.Content>
             <Card.Actions>
               <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
@@ -61,39 +74,65 @@ const PromptsSelector = ({ filledPrompts, onPromptsSubmit, navigation, deletePro
     return promptCards;
   };
 
+  const getTitleText = () => {
+    if (selectionType === PromptSelectionType.General) {
+      return 'Add some flair to your profile';
+    }
+    return 'Share your excitement about this event';
+  };
+
+  const getDescription = () => {
+    if (selectionType === PromptSelectionType.General) {
+      return `Answer at least ${minPromptCount} prompt`;
+    }
+    return 'Answer a prompt';
+  };
+
+  const renderCurrentSelectionText = () => {
+    if (minPromptCount && isDisabled) {
+      return getDescription();
+    }
+    return `${filledPrompts.size}/${maxPromptCount}`;
+  };
+
   return (
     <>
-      <Title title="Add some flair to your profile" />
+      <Title title={getTitleText()} />
       <View
         style={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 10,
-          marginBottom: 10,
+          alignItems: 'center',
         }}
       >
-        <Text>Answer 3 prompts</Text>
-        <Text>{filledPrompts.size}/3</Text>
-      </View>
-      <View style={{ display: 'flex', alignItems: 'center' }}>
-        {filledPrompts.size < 3 && (
-          <Button
-            icon="plus"
-            mode="outlined"
-            onPress={openPromptDrawer}
-            theme={{ colors: { primary: '#fff' } }}
-            labelStyle={{ fontSize: 10 }}
-            style={{ width: '50%', marginTop: filledPrompts.size ? 10 : 100 }}
-          >
-            Add prompt
-          </Button>
-        )}
+        <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
+        <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
       </View>
       <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
         {renderPromptCards()}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}
+        >
+          {filledPrompts.size < maxPromptCount && (
+            <Button
+              icon="plus"
+              mode="outlined"
+              onPress={openPromptDrawer}
+              theme={{ colors: { primary: '#fff' } }}
+              labelStyle={{ fontSize: 10 }}
+              style={{ width: 150, borderRadius: 20 }}
+            >
+              Add prompt
+            </Button>
+          )}
+        </View>
       </ScrollView>
-      <NextScreenButton onPress={onPromptsSubmit} isDisabled={filledPrompts.size < 3} />
     </>
   );
 };

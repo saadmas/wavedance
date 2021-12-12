@@ -10,6 +10,7 @@ export const getInitialSignUpState = (): SignUpState => {
     prompts: new Map(),
     passions: new Set(),
     genres: new Set(),
+    pronouns: new Set(),
   };
 };
 
@@ -41,6 +42,9 @@ export const signUpReducer = (state: SignUpState, action: SignUpAction): SignUpS
     case 'GENRES_UPDATE':
       const genres = action.payload;
       return { ...state, genres };
+    case 'PRONOUNS_UPDATE':
+      const pronouns = action.payload;
+      return { ...state, pronouns };
     case 'PROFILE_PHOTO_UPDATE':
       const profilePhotoUri = action.payload;
       return { ...state, profilePhotoUri };

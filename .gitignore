@@ -20,5 +20,4 @@ database.rules.json
 firebase-debug.log
 storage.rules
 ui-debug.log
-functions/
-
+functions/runtimeconfig.json

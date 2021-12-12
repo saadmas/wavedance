@@ -1,18 +1,26 @@
+import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Prompt } from '../../state/enums/prompt';
+import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 
 // Returns a map where k = full text of prompt, v = key of prompt
-const getPromptInverseMap = (): Map<Prompt, string> => {
-  const promptInverseMap: Map<Prompt, string> = new Map();
+const getPromptInverseMap = (selectionType: PromptSelectionType): Map<Prompt | EventPrompt, string> => {
+  const promptInverseMap: Map<Prompt | EventPrompt, string> = new Map();
+  const promptValues =
+    selectionType === PromptSelectionType.General ? Object.entries(Prompt) : Object.entries(EventPrompt);
 
-  Object.entries(Prompt).forEach(([fullText, promptKey]) => {
+  promptValues.forEach((entry: [string, Prompt | EventPrompt]) => {
+    const [fullText, promptKey] = entry;
     promptInverseMap.set(promptKey, fullText);
   });
 
   return promptInverseMap;
 };
 
-export const getPromptsToStore = (displayPrompts: Map<Prompt, string>): { [promptKey: string]: string } => {
-  const promptInverseMap = getPromptInverseMap();
+export const getPromptsToStore = (
+  selectionType: PromptSelectionType,
+  displayPrompts: Map<Prompt | EventPrompt, string>
+): { [promptKey: string]: string } => {
+  const promptInverseMap = getPromptInverseMap(selectionType);
   const promptsToStore: Map<string, string> = new Map();
 
   displayPrompts.forEach((answer, prompt) => {

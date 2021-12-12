@@ -15,7 +15,7 @@ export function initializeFirebase() {
   firebase.initializeApp(config as FirebaseCore.IFirebaseOptions);
 
   if (__DEV__) {
-    console.log('Switching to local Firebase instance...');
+    console.info('Switching to local Firebase instance...');
     const origin = Constants.manifest?.debuggerHost?.split(':').shift() || 'localhost';
 
     firebase.setLogLevel('debug');

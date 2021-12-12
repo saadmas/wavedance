@@ -5,6 +5,7 @@ import { SignUpStepProps } from '../../SignUpStack';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import NextScreenButton from '../../../../components/NextScreenButton/NextScreenButton';
 import { getFormattedDate } from '../../../../utils/prompts/date.util';
+import { View } from 'react-native';
 
 interface BirthdayInputProps extends SignUpStepProps {}
 
@@ -52,7 +53,9 @@ const BirthdayInput = ({ goToNextStep }: BirthdayInputProps) => {
         themeVariant="dark"
         onChange={onDateChange}
       />
-      <NextScreenButton onPress={onBirthdaySubmit} isDisabled={!birthday} />
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginRight: 20, marginTop: 10 }}>
+        <NextScreenButton onPress={onBirthdaySubmit} isDisabled={!birthday} />
+      </View>
     </>
   );
 };

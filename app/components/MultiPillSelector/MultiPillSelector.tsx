@@ -3,6 +3,7 @@ import { Button, Searchbar, Text, useTheme } from 'react-native-paper';
 import { ScrollView, View } from 'react-native';
 import Title from '../Title/Title';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
+import { textFontSize } from '../../styles/theme';
 
 interface MultiPillSelectorProps {
   titleText: string;
@@ -61,6 +62,17 @@ const MultiPillSelector = ({
     return pills;
   };
 
+  const renderCurrentSelectionText = () => {
+    if (minPillCount && isSubmitButtonDisabled) {
+      return <Text style={{ fontSize: textFontSize }}>Select at least {minPillCount}</Text>;
+    }
+    return (
+      <Text style={{ fontSize: textFontSize }}>
+        {selectedPillTexts.size}/{maxPillCount}
+      </Text>
+    );
+  };
+
   return (
     <>
       <Title title={titleText} />
@@ -69,22 +81,20 @@ const MultiPillSelector = ({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 10,
-          marginBottom: 10,
+          alignItems: 'center',
         }}
       >
-        <Text>Select at least {minPillCount}</Text>
-        <Text>
-          {selectedPillTexts.size}/{maxPillCount}
-        </Text>
+        {renderCurrentSelectionText()}
+        <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
       </View>
       <Searchbar
         placeholder="Search"
         onChangeText={setSearchText}
         value={searchText}
-        style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: 10, height: 40 }}
-        inputStyle={{ fontSize: 12 }}
+        style={{ marginTop: 10, marginBottom: 10, borderRadius: 5, fontSize: textFontSize, height: 35 }}
+        inputStyle={{ fontSize: textFontSize }}
       />
+
       <ScrollView
         contentContainerStyle={{
           display: 'flex',
@@ -96,7 +106,6 @@ const MultiPillSelector = ({
       >
         {renderPills()}
       </ScrollView>
-      <NextScreenButton onPress={onSubmit} isDisabled={isSubmitButtonDisabled} />
     </>
   );
 };

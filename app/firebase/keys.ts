@@ -2,7 +2,11 @@ export enum FirebaseNode {
   UserBasicInfo = 'userBasicInfo',
   UserAdditionalInfo = 'userAdditionalInfo',
   UserPrompts = 'userPrompts',
+  UserEventPrompts = 'userEventPrompts',
   UserPhotos = 'userPhoto',
+  UserFavoriteEvents = 'userFavoriteEvents',
+  EventMembers = 'eventMembers',
+  EventPhotos = 'eventPhotos',
 }
 
 export enum UserBasicInfo {
@@ -16,10 +20,17 @@ export enum UserAdditionalInfo {
   Hometown = 'hometown',
   Passions = 'passions',
   Genres = 'genres',
+  Pronouns = 'pronouns',
   InstagramHandle = 'instagramHandle',
   Occupation = 'occupation',
 }
 
 export enum UserPhotos {
   ProfilePhoto = 'profilePhoto',
+}
+
+export enum EventPhotos {
+  EdmTrainArtistId = 'edmTrainArtistId',
+  SpotifyArtistId = 'spotifyArtistId',
+  ImageUrl = 'imageUrl',
 }

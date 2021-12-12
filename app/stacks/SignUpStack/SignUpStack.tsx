@@ -13,7 +13,8 @@ import PassionsInput from './screens/PassionsInput/PassionsInput';
 import PhotoInput from './screens/PhotoInput/PhotoInput';
 import GenresInput from './screens/GenresInput/GenresInput';
 import InstagramHandleInputInput from './screens/InstagramHandleInput/InstagramHandleInput';
-import PromptsManager from './screens/PromptsManager/PromptsManager';
+import SignupPromptsManager from './screens/SignupPromptsManager/SignupPromptsManager';
+import PronounsInput from './screens/PronounsInput/PronounsInput';
 
 export interface SignUpStepProps {
   goToNextStep: () => void;
@@ -26,9 +27,10 @@ const StepComponents = [
   HometownInput,
   CurrentLocationInput,
   OccupationInput,
+  PronounsInput,
   GenresInput,
   PassionsInput,
-  PromptsManager,
+  SignupPromptsManager,
   InstagramHandleInputInput,
   PhotoInput,
   SignUp,
@@ -40,6 +42,7 @@ const stepIcons = [
   'home-circle',
   'map-marker',
   'briefcase-outline',
+  'account-circle-outline',
   'music-circle',
   'heart-outline',
   'thought-bubble',
@@ -50,7 +53,7 @@ const stepIcons = [
 
 const SignUpStack = () => {
   const { colors } = useTheme();
-  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0); ///
+  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0);
 
   const goToNextStep = () => {
     setCurrentStepIndex(previousIndex => ++previousIndex);
@@ -63,7 +66,7 @@ const SignUpStack = () => {
   const renderStep = () => {
     const StepComponent = StepComponents[currentStepIndex];
     return (
-      <View style={{ padding: defaultScreenPadding, height: '100%' }}>
+      <View style={{ margin: defaultScreenPadding, height: '100%' }}>
         <StepComponent goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
       </View>
     );
@@ -74,7 +77,7 @@ const SignUpStack = () => {
   return (
     <SignUpProvider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ display: 'flex', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <IconButton size={40} icon={stepIcons[currentStepIndex]} />
         </View>
       </TouchableWithoutFeedback>

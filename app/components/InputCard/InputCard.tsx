@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Controller, Noop, useForm } from 'react-hook-form';
+import { View } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { backgroundColor } from '../../styles/theme';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
@@ -108,6 +109,26 @@ const InputCard = ({
     return isDisabled;
   };
 
+  const getSubmitButton = () => {
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+        <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={isSubmitButtonDisabled()} />
+      </View>
+    );
+  };
+
+  const renderActionButtonsRow = () => {
+    const submitButton = getSubmitButton();
+    return secondaryButtonProps ? (
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        {renderSecondaryButton()}
+        {submitButton}
+      </View>
+    ) : (
+      submitButton
+    );
+  };
+
   return (
     <>
       <Title title={title} />
@@ -117,8 +138,7 @@ const InputCard = ({
         rules={{ required: true, maxLength }}
         render={({ field: { onChange, onBlur, value } }) => renderTextInput(onChange, onBlur, value)}
       />
-      {renderSecondaryButton()}
-      <NextScreenButton onPress={handleSubmit(onInputComplete)} isDisabled={isSubmitButtonDisabled()} />
+      {renderActionButtonsRow()}
     </>
   );
 };
