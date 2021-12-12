@@ -32,6 +32,10 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
   const debouncedSearchText = useDebounce(searchText, 200);
 
   React.useEffect(() => {
+    navigation?.navigate(Path.EventCarousel, { eventId: 181225 }); /// remove debugging code
+  }, []);
+
+  React.useEffect(() => {
     if (location) {
       return;
     }

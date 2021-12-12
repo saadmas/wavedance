@@ -2,9 +2,9 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
 import EmailPasswordForm from '../../../../components/EmailPasswordForm/EmailPasswordForm';
-import { FirebaseNode, UserAdditionalInfo, UserBasicInfo, UserPhotos } from '../../../../firebase/keys';
+import { UserAdditionalInfo, UserBasicInfo } from '../../../../firebase/keys';
 import {
-  getUseBasicInfoPath,
+  getUserBasicInfoPath,
   getUserAdditionalInfoPath,
   getUserPhotosPath,
   getUserPromptsPath,
@@ -19,14 +19,6 @@ interface SignUpProps extends SignUpStepProps {}
 
 const SignUp = ({}: SignUpProps) => {
   const signUpState = useSignUpState();
-
-  React.useEffect(() => {
-    const foo = async () => {
-      await uploadUserPhoto('indasind');
-    };
-
-    foo();
-  }, []);
 
   const uploadUserPhoto = async (uid: string) => {
     const { profilePhotoUri } = signUpState;
@@ -74,7 +66,7 @@ const SignUp = ({}: SignUpProps) => {
 
   const uploadUserBasicInfo = async (uid: string) => {
     const { birthday, name } = signUpState;
-    const path = getUseBasicInfoPath(uid);
+    const path = getUserBasicInfoPath(uid);
 
     try {
       await firebase

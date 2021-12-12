@@ -30,3 +30,9 @@ export const getPromptsToStore = (
 
   return Object.fromEntries(promptsToStore);
 };
+
+export const getFullTextFromPromptKey = (key: string): string => {
+  const prompt = Object.entries(Prompt).find(entry => entry[0] === key);
+  const fullText = prompt?.[1];
+  return fullText ?? key;
+};
