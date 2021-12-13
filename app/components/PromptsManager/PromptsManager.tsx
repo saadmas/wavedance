@@ -8,27 +8,34 @@ import PromptList from '../PromptList/PromptList';
 import PromptsSelector from '../PromptsSelector/PromptsSelector';
 import PromptInput from '../PromptInput/PromptInput';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
+import SpotifySearch from '../SpotifySearch/SpotifySearch';
 
 interface PromptsManagerProps {
   selectionType: PromptSelectionType;
-  previouslyFilledPrompts?: Map<EventPrompt, string>;
-  onSubmit: (filledPrompts: Map<Prompt | EventPrompt, string>) => void;
+  previouslyFilledPrompts?: Map<EventPrompt, PromptAnswer>;
+  onSubmit: (filledPrompts: Map<Prompt | EventPrompt, PromptAnswer>) => void;
 }
 
 export interface SelectedPrompt {
   prompt: Prompt | EventPrompt;
-  value: string;
+  answer: PromptAnswer;
+}
+
+export interface PromptAnswer {
+  answer: string;
+  spotifyUri?: string;
 }
 
 export type PromptDrawerParamList = {
   [Path.PromptInput]: { selectedPrompt: SelectedPrompt };
   [Path.PromptSelector]: undefined;
+  [Path.SpotifySearch]: { selectedPrompt: SelectedPrompt; searchText?: string };
 };
 
 const DrawerNavigator = createDrawerNavigator<PromptDrawerParamList>();
 
 const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: PromptsManagerProps) => {
-  const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt | EventPrompt, string>>(
+  const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt | EventPrompt, PromptAnswer>>(
     previouslyFilledPrompts ?? new Map()
   );
 
@@ -46,7 +53,7 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
 
   const addPrompt = (selectedPrompt: SelectedPrompt) => {
     setFilledPrompts(prevPrompts => {
-      prevPrompts.set(selectedPrompt.prompt, selectedPrompt.value);
+      prevPrompts.set(selectedPrompt.prompt, selectedPrompt.answer);
       return new Map(prevPrompts);
     });
   };
@@ -81,6 +88,7 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
       <DrawerNavigator.Screen name={Path.PromptInput}>
         {props => <PromptInput addPrompt={addPrompt} {...props} />}
       </DrawerNavigator.Screen>
+      <DrawerNavigator.Screen name={Path.SpotifySearch} component={SpotifySearch} />
     </DrawerNavigator.Navigator>
   );
 };

@@ -1,3 +1,4 @@
+import { PromptAnswer } from '../../components/PromptsManager/PromptsManager';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Prompt } from '../../state/enums/prompt';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
@@ -18,10 +19,10 @@ const getPromptInverseMap = (selectionType: PromptSelectionType): Map<Prompt | E
 
 export const getPromptsToStore = (
   selectionType: PromptSelectionType,
-  displayPrompts: Map<Prompt | EventPrompt, string>
-): { [promptKey: string]: string } => {
+  displayPrompts: Map<Prompt | EventPrompt, PromptAnswer>
+): { [promptKey: string]: PromptAnswer } => {
   const promptInverseMap = getPromptInverseMap(selectionType);
-  const promptsToStore: Map<string, string> = new Map();
+  const promptsToStore: Map<string, PromptAnswer> = new Map();
 
   displayPrompts.forEach((answer, prompt) => {
     const promptKey = promptInverseMap.get(prompt) ?? prompt;

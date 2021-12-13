@@ -18,8 +18,8 @@ const EventCarousel = ({ eventMemberIds, eventId }: EventCarouselProps) => {
     return <ErrorDisplay errorText="No one is interested in this event yet" />;
   }
 
-  if (eventMemberIds.length === currentMemberIndex) {
-    /// handle this case
+  const hasViewedAllMembers = eventMemberIds.length === currentMemberIndex;
+  if (hasViewedAllMembers) {
   }
 
   return <UserProfileQuery userId={eventMemberIds[2]} eventId={eventId} />;

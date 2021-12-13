@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import firebase from 'firebase';
 import * as React from 'react';
-import PromptsManager from '../../../../components/PromptsManager/PromptsManager';
+import PromptsManager, { PromptAnswer } from '../../../../components/PromptsManager/PromptsManager';
 import { EdmTrainEvent } from '../../../../edmTrain/types';
 import { Path } from '../../../../routing/paths';
 import { EventPrompt } from '../../../../state/enums/eventPrompt';
@@ -21,10 +21,10 @@ type EventPromptScreenProps = NativeStackScreenProps<EventStackParamList, Path.E
 const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
   const { event, previouslyFilledPrompts, isEditMode } = route.params;
 
-  const onPromptsSubmit = async (filledPrompts: Map<EventPrompt | Prompt, string>) => {
+  const onPromptsSubmit = async (filledPrompts: Map<EventPrompt | Prompt, PromptAnswer>) => {
     //f remove foo
     const uid = firebase.auth().currentUser?.uid ?? 'foo';
-    await saveUserEventPrompts(uid, event.id, filledPrompts as Map<EventPrompt, string>);
+    await saveUserEventPrompts(uid, event.id, filledPrompts as Map<EventPrompt, PromptAnswer>);
 
     if (isEditMode) {
       navigation.goBack();

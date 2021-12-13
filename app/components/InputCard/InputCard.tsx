@@ -7,9 +7,11 @@ import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 
 interface SecondaryButtonProps {
-  onPress: () => void;
+  onPress: (inputValue?: string) => void;
   text: string;
   width?: number;
+  color?: string;
+  icon?: string;
 }
 
 interface InputCardProps {
@@ -87,16 +89,17 @@ const InputCard = ({
       return;
     }
 
-    const { onPress, text, width } = secondaryButtonProps;
+    const { onPress, text, width, icon, color } = secondaryButtonProps;
 
     return (
       <Button
         mode="outlined"
-        style={{ width: width ?? 150, borderRadius: 40, marginTop: 20, borderColor: colors.text }}
-        labelStyle={{ fontSize: 10 }}
+        icon={icon}
+        style={{ width: width ?? 150, borderRadius: 40, marginTop: 20, borderColor: color ?? colors.text }}
+        labelStyle={{ fontSize: 10, color: color ?? colors.text }}
         compact={true}
         uppercase={false}
-        onPress={onPress}
+        onPress={() => onPress(watch().primaryInput)}
         theme={{ colors: { primary: colors.text } }}
       >
         {text}

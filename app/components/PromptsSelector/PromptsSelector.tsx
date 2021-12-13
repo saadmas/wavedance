@@ -8,13 +8,13 @@ import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 import * as Animatable from 'react-native-animatable';
 import { EventPrompt } from '../../state/enums/eventPrompt';
-import { PromptDrawerParamList } from '../PromptsManager/PromptsManager';
+import { PromptAnswer, PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import { textFontSize } from '../../styles/theme';
 
 interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
-  filledPrompts: Map<Prompt | EventPrompt, string>;
+  filledPrompts: Map<Prompt | EventPrompt, PromptAnswer>;
   navigation: DrawerNavigationProp<PromptDrawerParamList, Path.PromptSelector>;
   onPromptsSubmit: () => void;
   deletePrompt: (prompt: Prompt | EventPrompt) => void;
@@ -39,11 +39,11 @@ const PromptsSelector = ({
 
   const renderPromptCards = () => {
     const promptCards = [...filledPrompts.entries()].reverse().map(entry => {
-      const [prompt, value] = entry;
+      const [prompt, answer] = entry;
 
       const onEdit = () => {
         navigation.navigate(Path.PromptInput, {
-          selectedPrompt: { prompt, value },
+          selectedPrompt: { prompt, answer },
         });
       };
 
@@ -57,7 +57,7 @@ const PromptsSelector = ({
             <Card.Title title={prompt} titleStyle={{ padding: 5, fontSize: 13 }} titleNumberOfLines={10} />
             <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
             <Card.Content>
-              <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 25 }}>{value}</Text>
+              <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 25 }}>{answer.answer}</Text>
             </Card.Content>
             <Card.Actions>
               <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />

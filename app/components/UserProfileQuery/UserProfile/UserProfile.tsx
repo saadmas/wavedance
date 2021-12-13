@@ -28,7 +28,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ paddingHorizontal: 10, marginTop: 20 }} contentInset={{ bottom: 100 }}>
+    <ScrollView contentContainerStyle={{ paddingHorizontal: 10, marginTop: 40 }} contentInset={{ bottom: 100 }}>
       <UserProfileHeader name={name} pronouns={pronouns} />
       <UserProfileImage userPhotoUri={photoUri} />
       {renderFirstEventPrompt()}

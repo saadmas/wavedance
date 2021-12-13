@@ -1,3 +1,4 @@
+import { PromptAnswer } from '../../components/PromptsManager/PromptsManager';
 import { Prompt } from '../enums/prompt';
 
 export interface SignUpState {
@@ -9,7 +10,7 @@ export interface SignUpState {
   genres: Set<string>;
   pronouns: Set<string>;
   profilePhotoUri: string;
-  prompts: Map<Prompt, string>;
+  prompts: Map<Prompt, PromptAnswer>;
   occupation?: string;
   instagramHandle?: string;
 }
@@ -70,7 +71,7 @@ interface ProfilePhotoUpdateAction {
 
 interface PromptUpdateAction {
   type: 'PROMPT_UPDATE';
-  payload: Map<Prompt, string>;
+  payload: Map<Prompt, PromptAnswer>;
 }
 
 export type SignUpAction =

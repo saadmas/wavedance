@@ -7,10 +7,11 @@ import { Path } from '../../routing/paths';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { textFontSize } from '../../styles/theme';
+import { PromptAnswer } from '../PromptsManager/PromptsManager';
 
 interface PromptListProps {
   selectionType: PromptSelectionType;
-  filledPrompts: Map<Prompt | EventPrompt, string>;
+  filledPrompts: Map<Prompt | EventPrompt, PromptAnswer>;
   navigate: (path: Path, params: object) => void;
 }
 
@@ -27,7 +28,7 @@ const PromptList = ({ filledPrompts, navigate, selectionType }: PromptListProps)
 
       const onPromptSelect = () => {
         navigate(Path.PromptInput, {
-          selectedPrompt: { prompt, value: '' },
+          selectedPrompt: { prompt, answer: { answer: '' } },
         });
       };
 
