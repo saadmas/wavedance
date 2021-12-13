@@ -9,6 +9,7 @@ import { PromptDrawerParamList, SelectedPrompt } from '../PromptsManager/Prompts
 import { ResponseStatus } from '../../state/enums/responseStatus';
 import { fetchSpotifyItems } from '../../spotify/utils';
 import { SpotifyItem } from '../../spotify/types';
+import SpotifyList from '../SpotifyList/SpotifyList';
 
 interface SpotifySearchProps extends DrawerScreenProps<PromptDrawerParamList, Path.SpotifySearch> {}
 
@@ -30,10 +31,6 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
   }, [route.params.searchText]);
 
   React.useEffect(() => {
-    console.log(listItems);
-  }, [listItems]);
-
-  React.useEffect(() => {
     if (!debouncedSearchText) {
       setListItems([]);
       setResponseStatus(ResponseStatus.Success);
@@ -43,6 +40,7 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
     const performSpotifySearch = async () => {
       const matchedItems = await fetchSpotifyItems(debouncedSearchText, prompt, handleError);
       setListItems(matchedItems);
+      setResponseStatus(ResponseStatus.Success);
     };
 
     performSpotifySearch();
@@ -62,6 +60,10 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
     navigation.navigate(Path.PromptInput, { selectedPrompt: selectedPromptWithSpotifyUri });
   };
 
+  const onItemSelect = (item: SpotifyItem) => {
+    setSelectedSpotifyUri('///');
+  };
+
   return (
     <>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -73,6 +75,9 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
         />
         <NextScreenButton onPress={onSubmit} isDisabled={false} />
       </View>
+      {searchText ? (
+        <SpotifyList listItems={listItems} responseStatus={responseStatus} onItemSelect={onItemSelect} />
+      ) : null}
     </>
   );
 };
