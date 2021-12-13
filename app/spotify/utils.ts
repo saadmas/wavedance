@@ -24,18 +24,23 @@ export const spotifyEmbeddablePrompts: Map<Prompt | EventPrompt, SpotifyItemType
   [Prompt.RemixBetterThanOriginal, 'track'],
 ]);
 
+const tryGetRetryAfter = (error: any): number => {
+  return error?.['headers']?.['retry-after'] ?? NaN;
+};
+
 export const fetchSpotifyItems = async (
   searchText: string,
   prompt: EventPrompt | Prompt,
   errorHandler: () => void
 ): Promise<SpotifyItem[]> => {
   const type = spotifyEmbeddablePrompts.get(prompt);
+  const limit = 10;
   let spotifyItems: SpotifyItem[] = [];
 
   try {
     switch (type) {
       case 'artist':
-        const artistResponse = await spotifyWebApi.searchArtists(searchText);
+        const artistResponse = await spotifyWebApi.searchArtists(searchText, { limit });
         spotifyItems = artistResponse.artists.items.map(({ id, name, images }) => ({
           type,
           id,
@@ -44,7 +49,7 @@ export const fetchSpotifyItems = async (
         }));
         break;
       case 'album':
-        const albumResponse = await spotifyWebApi.searchAlbums(searchText);
+        const albumResponse = await spotifyWebApi.searchAlbums(searchText, { limit });
         spotifyItems = albumResponse.albums.items.map(({ id, name, images }) => ({
           type,
           id,
@@ -53,7 +58,7 @@ export const fetchSpotifyItems = async (
         }));
         break;
       case 'track':
-        const trackResponse = await spotifyWebApi.searchTracks(searchText);
+        const trackResponse = await spotifyWebApi.searchTracks(searchText, { limit });
         spotifyItems = trackResponse.tracks.items.map(({ id, name, artists }) => ({
           type,
           id,
@@ -65,16 +70,21 @@ export const fetchSpotifyItems = async (
         break;
     }
   } catch (e) {
-    switch (e.status) {
-      case 401:
-        const token = await fetchSpotifyAccessToken(errorHandler);
-        if (token) {
-          spotifyWebApi.setAccessToken(token);
-          return await fetchSpotifyItems(searchText, prompt, errorHandler);
-        }
-      default:
-        errorHandler();
+    if (e.status === 401) {
+      const token = await fetchSpotifyAccessToken(errorHandler);
+      if (token) {
+        spotifyWebApi.setAccessToken(token);
+        return await fetchSpotifyItems(searchText, prompt, errorHandler);
+      }
     }
+
+    const retryAfter = tryGetRetryAfter(e);
+    if (retryAfter) {
+      await new Promise(r => setTimeout(r, retryAfter * 1000 + 1000));
+      return await fetchSpotifyItems(searchText, prompt, errorHandler);
+    }
+
+    errorHandler();
   }
 
   return spotifyItems;

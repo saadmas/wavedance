@@ -8,6 +8,7 @@ import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import { PromptDrawerParamList, SelectedPrompt } from '../PromptsManager/PromptsManager';
 import { ResponseStatus } from '../../state/enums/responseStatus';
 import { fetchSpotifyItems } from '../../spotify/utils';
+import { SpotifyItem } from '../../spotify/types';
 
 interface SpotifySearchProps extends DrawerScreenProps<PromptDrawerParamList, Path.SpotifySearch> {}
 
@@ -16,7 +17,7 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
   const [searchText, setSearchText] = React.useState<string>(route.params.searchText ?? '');
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [selectedSpotifyUri, setSelectedSpotifyUri] = React.useState<string | undefined>(undefined);
-  const [listItems, setListItems] = React.useState<any[]>([]);
+  const [listItems, setListItems] = React.useState<SpotifyItem[]>([]);
 
   const debouncedSearchText = useDebounce(searchText, 200);
 
@@ -29,13 +30,22 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
   }, [route.params.searchText]);
 
   React.useEffect(() => {
+    console.log(listItems);
+  }, [listItems]);
+
+  React.useEffect(() => {
     if (!debouncedSearchText) {
       setListItems([]);
       setResponseStatus(ResponseStatus.Success);
       return;
     }
 
-    fetchSpotifyItems(debouncedSearchText, prompt, handleError);
+    const performSpotifySearch = async () => {
+      const matchedItems = await fetchSpotifyItems(debouncedSearchText, prompt, handleError);
+      setListItems(matchedItems);
+    };
+
+    performSpotifySearch();
   }, [debouncedSearchText]);
 
   const onSubmit = () => {
