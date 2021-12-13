@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { WebView } from 'react-native-webview';
 import { Card, Divider, Text, useTheme } from 'react-native-paper';
 
 interface UserProfilePromptProps {
@@ -21,15 +20,6 @@ const UserProfilePrompt = ({ promptQuestion, promptAnswer }: UserProfilePromptPr
           <Text style={{ fontSize: 25, fontFamily }}>{promptAnswer}</Text>
         </Card.Content>
       </Card>
-      <WebView
-        scalesPageToFit={true}
-        bounces={false}
-        javaScriptEnabled={true}
-        style={{ height: 80, width: '100%', marginVertical }}
-        source={{
-          uri: 'https://open.spotify.com/embed/artist/4q3ewBCX7sLwd24euuV69X',
-        }}
-      />
     </>
   );
 };

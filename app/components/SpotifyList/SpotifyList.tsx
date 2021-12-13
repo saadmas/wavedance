@@ -23,8 +23,10 @@ const SpotifyList = ({ responseStatus, listItems }: SpotifyListProps) => {
           style={{ width: imageSize, height: imageSize, marginRight: 10 }}
           resizeMode="cover"
         />
-        <Text>{item.title}</Text>
-        <Text>{item.subtitle}</Text>
+        <View>
+          <Text>{item.title}</Text>
+          {item.subtitle ? <Text style={{ fontSize: 10 }}>{item.subtitle}</Text> : null}
+        </View>
       </View>
     );
   };

@@ -63,7 +63,7 @@ export const fetchSpotifyItems = async (
           type,
           id,
           title: name,
-          subtitle: artists.map(a => a.name).join(','),
+          subtitle: artists.map(a => a.name).join(', '),
         }));
         break;
       default:

@@ -17,7 +17,6 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
   const { prompt } = route.params.selectedPrompt;
   const [searchText, setSearchText] = React.useState<string>(route.params.searchText ?? '');
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
-  const [selectedSpotifyUri, setSelectedSpotifyUri] = React.useState<string | undefined>(undefined);
   const [listItems, setListItems] = React.useState<SpotifyItem[]>([]);
 
   const debouncedSearchText = useDebounce(searchText, 200);
@@ -45,22 +44,19 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
     performSpotifySearch();
   }, [debouncedSearchText]);
 
-  const onSubmit = () => {
+  const onItemSelect = ({ id, type }: SpotifyItem) => {
+    const spotifyUri = `https://open.spotify.com/embed/${type}/${id}`;
     const { selectedPrompt } = route.params;
 
     const selectedPromptWithSpotifyUri: SelectedPrompt = {
       ...selectedPrompt,
       answer: {
         answer: selectedPrompt.answer?.answer ?? '',
-        spotifyUri: selectedSpotifyUri,
+        spotifyUri,
       },
     };
 
     navigation.navigate(Path.PromptInput, { selectedPrompt: selectedPromptWithSpotifyUri });
-  };
-
-  const onItemSelect = (item: SpotifyItem) => {
-    setSelectedSpotifyUri('///');
   };
 
   return (
@@ -72,7 +68,6 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
           style={{ marginRight: 10, borderRadius: 5, fontSize: 10, height: 35, flex: 1 }}
           inputStyle={{ fontSize: 12 }}
         />
-        <NextScreenButton onPress={onSubmit} isDisabled={false} />
       </View>
       {searchText ? (
         <SpotifyList listItems={listItems} responseStatus={responseStatus} onItemSelect={onItemSelect} />
