@@ -1,22 +1,24 @@
 import * as React from 'react';
+import { ScrollView } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 interface SpotifyEmbedProps {
-  uri: string;
+  uri?: string;
 }
 
 const SpotifyEmbed = ({ uri }: SpotifyEmbedProps) => {
   const marginVertical = 20;
 
-  return (
-    <WebView
-      scalesPageToFit={true}
-      bounces={false}
-      javaScriptEnabled={true}
-      style={{ height: 80, width: '100%', marginVertical }}
-      source={{ uri }}
-    />
-  );
+  return uri ? (
+    <ScrollView>
+      <WebView
+        bounces={false}
+        javaScriptEnabled={true}
+        style={{ height: 80, width: '100%', marginVertical }}
+        source={{ uri }}
+      />
+    </ScrollView>
+  ) : null;
 };
 
 export default SpotifyEmbed;

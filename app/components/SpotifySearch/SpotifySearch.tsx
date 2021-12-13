@@ -1,7 +1,7 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import * as React from 'react';
 import { View } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { IconButton, Searchbar } from 'react-native-paper';
 import useDebounce from '../../hooks/useDebounce';
 import { Path } from '../../routing/paths';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
@@ -59,9 +59,15 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
     navigation.navigate(Path.PromptInput, { selectedPrompt: selectedPromptWithSpotifyUri });
   };
 
+  const goBack = () => {
+    const { selectedPrompt } = route.params;
+    navigation.navigate(Path.PromptInput, { selectedPrompt });
+  };
+
   return (
     <>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <IconButton icon="arrow-left" onPress={goBack} />
         <Searchbar
           onChangeText={setSearchText}
           value={searchText}

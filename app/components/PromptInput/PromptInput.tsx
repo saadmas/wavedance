@@ -6,6 +6,7 @@ import { promptPlaceholders } from '../../state/prompts/promptPlaceholders';
 import { spotifyEmbeddablePrompts } from '../../spotify/utils';
 import InputCard from '../InputCard/InputCard';
 import { PromptDrawerParamList, SelectedPrompt } from '../PromptsManager/PromptsManager';
+import SpotifyEmbed from '../SpotifyEmbed/SpotifyEmbed';
 
 interface PromptInputProps extends DrawerScreenProps<PromptDrawerParamList, Path.PromptInput> {
   addPrompt: (selectedPrompt: SelectedPrompt) => void;
@@ -48,6 +49,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
           placeholder={promptPlaceholders.get(selectedPrompt.prompt)}
           secondaryButtonProps={getSpotifyEmbedButtonProps()}
         />
+        <SpotifyEmbed uri={selectedPrompt.answer.spotifyUri} />
       </View>
     </TouchableWithoutFeedback>
   );
