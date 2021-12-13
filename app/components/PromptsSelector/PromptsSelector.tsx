@@ -11,6 +11,7 @@ import { EventPrompt } from '../../state/enums/eventPrompt';
 import { PromptAnswer, PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import { textFontSize } from '../../styles/theme';
+import SpotifyEmbed from '../SpotifyEmbed/SpotifyEmbed';
 
 interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
@@ -64,6 +65,7 @@ const PromptsSelector = ({
               <IconButton icon="trash-can-outline" size={cardActionIconSize} onPress={onDelete} />
             </Card.Actions>
           </Card>
+          <SpotifyEmbed uri={answer.spotifyUri} />
         </Animatable.View>
       );
     });

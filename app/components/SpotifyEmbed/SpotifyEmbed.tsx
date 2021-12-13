@@ -7,7 +7,7 @@ interface SpotifyEmbedProps {
 }
 
 const SpotifyEmbed = ({ uri }: SpotifyEmbedProps) => {
-  const marginVertical = 20;
+  const marginVertical = 10;
 
   return uri ? (
     <ScrollView>

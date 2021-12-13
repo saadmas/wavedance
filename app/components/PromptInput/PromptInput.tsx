@@ -16,7 +16,10 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   const { selectedPrompt } = route.params;
 
   const onSubmit = (answer: string) => {
-    addPrompt({ prompt: selectedPrompt.prompt, answer: { answer: answer.trim() } });
+    addPrompt({
+      prompt: selectedPrompt.prompt,
+      answer: { answer: answer.trim(), spotifyUri: selectedPrompt.answer.spotifyUri },
+    });
     navigation.navigate(Path.PromptSelector);
   };
 
