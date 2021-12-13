@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { FlatList, Image, ListRenderItemInfo, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { SpotifyItem } from '../../spotify/types';
 import { ResponseStatus } from '../../state/enums/responseStatus';
@@ -13,9 +13,16 @@ interface SpotifyListProps {
 }
 
 const SpotifyList = ({ responseStatus, listItems }: SpotifyListProps) => {
+  const imageSize = 50;
+
   const renderItem = ({ item }: ListRenderItemInfo<SpotifyItem>) => {
     return (
-      <View>
+      <View style={{ flexDirection: 'row', padding: 10, alignItems: 'center' }}>
+        <Image
+          source={item.photoUri ? { uri: item.photoUri } : require('../../../assets/icons/spotify-icon.png')}
+          style={{ width: imageSize, height: imageSize, marginRight: 10 }}
+          resizeMode="cover"
+        />
         <Text>{item.title}</Text>
         <Text>{item.subtitle}</Text>
       </View>
@@ -37,6 +44,7 @@ const SpotifyList = ({ responseStatus, listItems }: SpotifyListProps) => {
   return (
     <FlatList
       data={listItems}
+      contentInset={{ bottom: 150 }}
       keyExtractor={item => item.id}
       renderItem={renderItem}
       ListEmptyComponent={renderNoData}

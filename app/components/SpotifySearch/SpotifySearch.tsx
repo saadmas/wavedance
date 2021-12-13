@@ -32,7 +32,6 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
 
   React.useEffect(() => {
     if (!debouncedSearchText) {
-      setListItems([]);
       setResponseStatus(ResponseStatus.Success);
       return;
     }
