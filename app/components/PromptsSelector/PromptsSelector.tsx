@@ -1,7 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Button, Card, Divider, IconButton, Paragraph, Text, useTheme } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { Path } from '../../routing/paths';
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
@@ -11,7 +11,7 @@ import { EventPrompt } from '../../state/enums/eventPrompt';
 import { PromptAnswer, PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import { textFontSize } from '../../styles/theme';
-import SpotifyEmbed from '../SpotifyEmbed/SpotifyEmbed';
+import PromptCard from '../PromptCard/PromptCard';
 
 interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
@@ -28,8 +28,6 @@ const PromptsSelector = ({
   deletePrompt,
   selectionType,
 }: PromptsSelectorProps) => {
-  const { fonts } = useTheme();
-  const cardActionIconSize = 15;
   const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
   const isDisabled = filledPrompts.size < minPromptCount;
@@ -52,20 +50,15 @@ const PromptsSelector = ({
         deletePrompt(prompt);
       };
 
+      /// marginTop: 20
       return (
-        <Animatable.View key={prompt} animation="fadeInLeft">
-          <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
-            <Card.Title title={prompt} titleStyle={{ padding: 5, fontSize: 13 }} titleNumberOfLines={10} />
-            <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
-            <Card.Content>
-              <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 25 }}>{answer.answer}</Text>
-            </Card.Content>
-            <Card.Actions>
-              <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
-              <IconButton icon="trash-can-outline" size={cardActionIconSize} onPress={onDelete} />
-            </Card.Actions>
-          </Card>
-          <SpotifyEmbed uri={answer.spotifyUri} />
+        <Animatable.View key={prompt} animation="fadeInLeft" style={{ marginTop: 10 }}>
+          <PromptCard
+            question={prompt}
+            answer={answer.answer}
+            spotifyUri={answer.spotifyUri}
+            cardActionHandlers={{ onEdit, onDelete }}
+          />
         </Animatable.View>
       );
     });

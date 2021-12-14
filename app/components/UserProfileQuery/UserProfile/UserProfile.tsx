@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { UserProfileType } from '../UserProfileQuery';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
@@ -12,16 +13,15 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({ userProfile }: UserProfileProps) => {
-  const { photoUri, name, pronouns, prompts } = userProfile;
+  const { photoUri, name, pronouns, eventPrompts } = userProfile;
 
   const renderFirstEventPrompt = () => {
-    /// use event prompts!
-    if (!prompts?.size) {
+    if (!eventPrompts?.size) {
       return;
     }
 
-    const firstEventPrompt = [...prompts.entries()][0];
-    const promptQuestion = getFullTextFromPromptKey(firstEventPrompt[0]);
+    const firstEventPrompt = [...eventPrompts.entries()][0];
+    const promptQuestion = getFullTextFromPromptKey(firstEventPrompt[0], PromptSelectionType.Event);
     const promptAnswer = firstEventPrompt[1];
 
     return <UserProfilePrompt promptQuestion={promptQuestion} promptAnswer={promptAnswer} />;

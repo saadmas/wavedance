@@ -9,6 +9,8 @@ interface UserProfileImageProps {
 
 const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
+
+  const borderRadius = 10;
   const height = 350;
   const width = '100%';
 
@@ -33,7 +35,8 @@ const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
         onError={onError}
         onLoad={onLoad}
         source={{ uri: userPhotoUri || undefined }}
-        style={{ height, width, backgroundColor: '#333', borderRadius: 10 }}
+        style={{ height, width, backgroundColor: '#333', borderRadius }}
+        borderRadius={borderRadius}
         resizeMode="cover"
       >
         {renderLoader()}
