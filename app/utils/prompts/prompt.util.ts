@@ -32,8 +32,22 @@ export const getPromptsToStore = (
   return Object.fromEntries(promptsToStore);
 };
 
-export const getFullTextFromPromptKey = (key: string): string => {
-  const prompt = Object.entries(Prompt).find(entry => entry[0] === key);
+export const getPromptsToDisplay = (storedPrompts: Object): Map<EventPrompt, PromptAnswer> => {
+  const displayPrompts: Map<EventPrompt, PromptAnswer> = new Map();
+
+  Object.entries(storedPrompts).forEach(([key, answer]) => {
+    const promptfullText = getFullTextFromPromptKey(key, PromptSelectionType.Event);
+    if (promptfullText) {
+      displayPrompts.set(promptfullText as EventPrompt, answer);
+    }
+  });
+
+  return displayPrompts;
+};
+
+export const getFullTextFromPromptKey = (key: string, type?: PromptSelectionType): string => {
+  const promptEntries = type === PromptSelectionType.Event ? Object.entries(EventPrompt) : Object.entries(Prompt);
+  const prompt = promptEntries.find(entry => entry[0] === key);
   const fullText = prompt?.[1];
   return fullText ?? key;
 };

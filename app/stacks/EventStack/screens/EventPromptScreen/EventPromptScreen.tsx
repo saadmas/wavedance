@@ -7,6 +7,7 @@ import { Path } from '../../../../routing/paths';
 import { EventPrompt } from '../../../../state/enums/eventPrompt';
 import { Prompt } from '../../../../state/enums/prompt';
 import { PromptSelectionType } from '../../../../state/enums/promptSelectionType';
+import { getPromptsToDisplay } from '../../../../utils/prompts/prompt.util';
 import { EventStackParamList } from '../../EventStack';
 import { saveUserEventPrompts } from '../../utils';
 
@@ -38,7 +39,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
     <PromptsManager
       onSubmit={onPromptsSubmit}
       selectionType={PromptSelectionType.Event}
-      previouslyFilledPrompts={previouslyFilledPrompts ? new Map(Object.entries(previouslyFilledPrompts)) : undefined}
+      previouslyFilledPrompts={previouslyFilledPrompts ? getPromptsToDisplay(previouslyFilledPrompts) : undefined}
     />
   );
 };

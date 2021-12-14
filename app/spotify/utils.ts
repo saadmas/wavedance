@@ -6,7 +6,7 @@ import { SpotifyItem, SpotifyItemType } from './types';
 
 const spotifyWebApi = new SpotifyWebApi();
 
-export const spotifyEmbeddablePrompts: Map<Prompt | EventPrompt, SpotifyItemType> = new Map([
+export const spotifyEmbeddablePrompts = new Map<Prompt | EventPrompt, SpotifyItemType>([
   [Prompt.FavoriteAlbum, 'album'],
   [Prompt.FavoriteEP, 'album'],
   [Prompt.FavoriteArtist, 'artist'],
@@ -22,6 +22,8 @@ export const spotifyEmbeddablePrompts: Map<Prompt | EventPrompt, SpotifyItemType
   [Prompt.PerfectSunsetTrack, 'track'],
   [Prompt.SongToCheerUp, 'track'],
   [Prompt.RemixBetterThanOriginal, 'track'],
+  [EventPrompt.FavSongByArtist, 'track'],
+  [EventPrompt.OneSongLive, 'track'],
 ]);
 
 const tryGetRetryAfter = (error: any): number => {

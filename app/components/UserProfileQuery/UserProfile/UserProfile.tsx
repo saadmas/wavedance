@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Prompt } from '../../../state/enums/prompt';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { UserProfileType } from '../UserProfileQuery';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
