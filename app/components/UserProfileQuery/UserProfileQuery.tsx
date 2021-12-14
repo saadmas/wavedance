@@ -11,6 +11,7 @@ import {
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Prompt } from '../../state/enums/prompt';
 import { ResponseStatus } from '../../state/enums/responseStatus';
+import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
 
 interface UserProfileQueryProps {
@@ -30,8 +31,8 @@ export interface UserProfileType {
   currentLocation: string;
   passions: string[];
   genres: string[];
-  prompts: Map<Prompt, string>;
-  eventPrompts?: Map<EventPrompt, string>;
+  prompts: Map<Prompt, PromptAnswer>;
+  eventPrompts?: Map<EventPrompt, PromptAnswer>;
   pronouns: string[];
   instagramHandle?: string;
   occupation?: string;
@@ -103,7 +104,7 @@ const UserProfileQuery = ({ userId, eventId }: UserProfileQueryProps) => {
         const snapshot = await firebase.database().ref(path).get();
         const value = snapshot.val();
         if (value) {
-          const prompts = new Map(Object.entries(value)) as Map<Prompt, string>;
+          const prompts = new Map(Object.entries(value)) as Map<Prompt, PromptAnswer>;
           setUserProfile(prevProfile => ({ ...prevProfile, prompts }));
         }
         setResponseStatus(ResponseStatus.Success);
@@ -124,7 +125,7 @@ const UserProfileQuery = ({ userId, eventId }: UserProfileQueryProps) => {
         const snapshot = await firebase.database().ref(path).get();
         const value = snapshot.val();
         if (value) {
-          const eventPrompts = new Map(Object.entries(value)) as Map<EventPrompt, string>;
+          const eventPrompts = new Map(Object.entries(value)) as Map<EventPrompt, PromptAnswer>;
           setUserProfile(prevProfile => ({ ...prevProfile, eventPrompts }));
         }
       } catch (e) {

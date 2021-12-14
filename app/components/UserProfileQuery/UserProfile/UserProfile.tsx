@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { UserProfileType } from '../UserProfileQuery';
@@ -27,7 +28,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ paddingHorizontal: 10, marginTop: 40 }} contentInset={{ bottom: 100 }}>
+    <ScrollView contentInset={{ bottom: 100 }}>
       <UserProfileHeader name={name} pronouns={pronouns} />
       <UserProfileImage userPhotoUri={photoUri} />
       {renderFirstEventPrompt()}

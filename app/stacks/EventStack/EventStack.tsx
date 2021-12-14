@@ -33,7 +33,11 @@ const EventStack = () => {
     >
       <Stack.Screen name={Path.EventList} component={EventListScreen} />
       <Stack.Screen name={Path.LocationSelect} component={LocationSelectScreen} options={{ headerShown: true }} />
-      <Stack.Screen name={Path.EventCarousel} component={EventCarouselScreen} options={{ headerShown: true }} />
+      <Stack.Screen
+        name={Path.EventCarousel}
+        component={EventCarouselScreen}
+        options={{ headerShown: true, contentStyle: { paddingTop: 45, paddingHorizontal: defaultScreenPadding } }}
+      />
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
