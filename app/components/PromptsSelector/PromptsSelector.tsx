@@ -50,7 +50,6 @@ const PromptsSelector = ({
         deletePrompt(prompt);
       };
 
-      /// marginTop: 20
       return (
         <Animatable.View key={prompt} animation="fadeInLeft" style={{ marginTop: 10 }}>
           <PromptCard

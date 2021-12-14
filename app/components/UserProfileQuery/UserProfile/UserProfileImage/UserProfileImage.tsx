@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, ImageBackground, View } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
 
@@ -9,6 +9,7 @@ interface UserProfileImageProps {
 
 const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
+  const { colors } = useTheme();
 
   const borderRadius = 10;
   const height = 350;
@@ -35,7 +36,7 @@ const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
         onError={onError}
         onLoad={onLoad}
         source={{ uri: userPhotoUri || undefined }}
-        style={{ height, width, backgroundColor: '#333', borderRadius }}
+        style={{ height, width, backgroundColor: colors.onSurface, borderRadius }}
         borderRadius={borderRadius}
         resizeMode="cover"
       >
