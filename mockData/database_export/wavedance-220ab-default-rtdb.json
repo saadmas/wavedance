@@ -14617,15 +14617,15 @@
       "birthday": "1-12-2000",
       "name": "Saad Masood"
     },
-     "anu": {
+    "anu": {
       "birthday": "7-7-1997",
       "name": "Anushe Uzair"
     },
-     "musti": {
+    "musti": {
       "birthday": "10-31-1996",
       "name": "Mustafa Hafeez"
     },
-     "umi": {
+    "umi": {
       "birthday": "11-12-1999",
       "name": "Umaima Abbasi"
     }
@@ -14634,29 +14634,67 @@
     "foo": {
       "FavoriteArtist": "Lane 8"
     },
-    "anu": {
-      "FavoriteArtist": "Rufus"
+    "umi": {
+      "FavoriteArtist": {
+        "answer": "Rufus",
+        "spotifyUri": "https://open.spotify.com/embed/artist/5Pb27ujIyYb33zBqVysBkj"
+      },
+      "FavoriteSong": {
+        "answer": "Home",
+        "spotifyUri": "https://open.spotify.com/embed/track/6jYXP1jrYIHkEYglFgeL2Q"
+      }
     },
     "musti": {
-      "FavoriteArtist": "Michael Bibi"
+      "FavoriteArtist": {
+        "answer": "Michael Bibi",
+        "spotifyUri": "https://open.spotify.com/embed/artist/4q3ewBCX7sLwd24euuV69X"
+      }
+    },
+    "anu": {
+      "FavoriteArtist": {
+        "answer": "Bad Bunny",
+        "spotifyUri": "https://open.spotify.com/embed/artist/5Pb27ujIyYb33zBqVysBkj"
+      }
+    }
+  },
+  "userEventPrompts": {
+    "foo": {
+      "FavoriteArtist": "Lane 8"
     },
     "umi": {
-      "FavoriteArtist": "Bad Bunny"
+     "181225": {
+        "FavSongByArtist": {
+        "answer": "Home - Solomun",
+        "spotifyUri": "https://open.spotify.com/embed/track/1IbNYr8ByXsgwGbmOxLBXP"
+      },
+      "OneSongLive": {
+        "answer": "Innberbloom!",
+        "spotifyUri": "https://open.spotify.com/embed/track/5GXeNbxOEbd7sKrbsVLVVx"
+      }
+     }
+    },
+    "musti": {
+     "181225": {
+        "FavSongByArtist": {
+        "answer": "Home - Solomun",
+        "spotifyUri": "https://open.spotify.com/embed/track/1IbNYr8ByXsgwGbmOxLBXP"
+      }
+     }
     }
   },
   "eventMembers": {
     "181225": {
-    "foo": "true",
-    "umi": "true",
-    "musti": "true",
-    "anu": "true"
+      "foo": "true",
+      "umi": "true",
+      "musti": "true",
+      "anu": "true"
     }
   },
   "userFavoriteEvents": {
     "foo": {
-"181225": {
-  "createdDate": "2021-10-14T15:23:05Z"
-}
+      "181225": {
+        "createdDate": "2021-10-14T15:23:05Z"
+      }
     }
   }
 }
