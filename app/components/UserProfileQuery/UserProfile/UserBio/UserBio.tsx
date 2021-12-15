@@ -27,6 +27,7 @@ const UserBio = ({ birthday, hometown, currentLocation, instagramHandle, occupat
 
     return (
       <View
+        //* put in common stylesheet
         style={{
           minWidth: 80,
           borderRadius: 40,
@@ -60,7 +61,8 @@ const UserBio = ({ birthday, hometown, currentLocation, instagramHandle, occupat
   };
 
   return (
-    <View>
+    <View style={{ marginBottom: 20 }}>
+      {/* //* put in common style */}
       <Text style={{ fontSize: 18, marginBottom: 10 }}>About Me</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{renderBio()}</View>
     </View>

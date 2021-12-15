@@ -7,6 +7,7 @@ import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { PromptAnswer } from '../../PromptsManager/PromptsManager';
 import { UserProfileType } from '../UserProfileQuery';
 import UserBio from './UserBio/UserBio';
+import UserPassions from './UserPassions/UserPassions';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
 import UserProfileImage from './UserProfileImage/UserProfileImage';
 import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
@@ -18,8 +19,18 @@ interface UserProfileProps {
 type PromptEntry = [EventPrompt | Prompt, PromptAnswer];
 
 const UserProfile = ({ userProfile }: UserProfileProps) => {
-  const { photoUri, name, pronouns, eventPrompts, birthday, currentLocation, hometown, instagramHandle, occupation } =
-    userProfile;
+  const {
+    photoUri,
+    name,
+    pronouns,
+    eventPrompts,
+    birthday,
+    currentLocation,
+    hometown,
+    instagramHandle,
+    occupation,
+    passions,
+  } = userProfile;
 
   const renderPrompts = (promptList: PromptEntry[]) => {
     if (!promptList?.length) {
@@ -43,6 +54,14 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
     return renderPrompts([firstEventPrompt]);
   };
 
+  const renderEventPrompts = () => {
+    if (!eventPrompts || eventPrompts.size <= 1) {
+      return;
+    }
+    const eventPromptsToDisplay = [...eventPrompts.entries()].slice(1);
+    return renderPrompts(eventPromptsToDisplay);
+  };
+
   return (
     <ScrollView contentInset={{ bottom: 100 }}>
       <UserProfileHeader name={name} pronouns={pronouns} />
@@ -55,6 +74,8 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
         instagramHandle={instagramHandle}
         occupation={occupation}
       />
+      {renderEventPrompts()}
+      <UserPassions passions={passions} />
     </ScrollView>
   );
 };

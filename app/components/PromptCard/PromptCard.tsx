@@ -38,7 +38,6 @@ const PromptCard = ({ question, answer, spotifyUri, cardActionHandlers }: Prompt
     <>
       <Card style={{ width: '100%', borderRadius: 5, paddingBottom: 10 }}>
         <Card.Title title={question} titleStyle={{ fontSize: 10 }} titleNumberOfLines={10} />
-        <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
         <Card.Content>
           <Text style={{ fontSize: 25, fontFamily }}>{answer}</Text>
         </Card.Content>
