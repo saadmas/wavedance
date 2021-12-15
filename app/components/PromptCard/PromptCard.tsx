@@ -43,7 +43,7 @@ const PromptCard = ({ question, answer, spotifyUri, cardActionHandlers }: Prompt
         </Card.Content>
         {renderCardActions()}
       </Card>
-      <SpotifyEmbed uri={spotifyUri} />
+      {/* <SpotifyEmbed uri={spotifyUri} /> */}
     </>
   );
 };

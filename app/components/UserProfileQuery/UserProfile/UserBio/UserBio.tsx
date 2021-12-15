@@ -19,10 +19,13 @@ const UserBio = ({ birthday, hometown, currentLocation, instagramHandle, occupat
       return;
     }
 
-    const emojiDisplay = isIcon ? (
-      <IconButton icon={emoji} size={15} style={{ margin: 0 }} />
+    const content = isIcon ? (
+      <>
+        <IconButton icon={emoji} size={15} style={{ margin: 0 }} />
+        <Text>{text}</Text>
+      </>
     ) : (
-      <Text style={{ marginRight: 2 }}>{emoji}</Text>
+      <Text style={{ fontSize: 12 }}>{`${emoji} ${text}`}</Text>
     );
 
     return (
@@ -42,8 +45,7 @@ const UserBio = ({ birthday, hometown, currentLocation, instagramHandle, occupat
           marginTop: 10,
         }}
       >
-        {emojiDisplay}
-        <Text>{text}</Text>
+        {content}
       </View>
     );
   };
@@ -63,7 +65,7 @@ const UserBio = ({ birthday, hometown, currentLocation, instagramHandle, occupat
   return (
     <View style={{ marginBottom: 20 }}>
       {/* //* put in common style */}
-      <Text style={{ fontSize: 18, marginBottom: 10 }}>About Me</Text>
+      <Text style={{ fontSize: 18 }}>About Me</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{renderBio()}</View>
     </View>
   );

@@ -6,4 +6,5 @@ export interface SpotifyItem {
   title: string;
   subtitle?: string;
   photoUri?: string;
+  contentUri: string;
 }

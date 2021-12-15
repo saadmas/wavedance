@@ -1,22 +1,21 @@
 import * as React from 'react';
 import { View } from 'react-native-animatable';
 import { Text, useTheme } from 'react-native-paper';
-import { Passion } from '../../../../state/enums/passion';
 
-interface UserPassionsProps {
-  passions: string[];
+interface UserBioPillsProps {
+  pillTexts: string[];
+  titleText: string;
 }
 
-const UserPassions = ({ passions }: UserPassionsProps) => {
+const UserBioPills = ({ pillTexts, titleText }: UserBioPillsProps) => {
   const { colors } = useTheme();
 
-  const renderPassions = () => {
-    /// passions
-    const passionPills = Object.values(Passion).map(passion => (
+  const renderPills = () => {
+    const pills = pillTexts.map(pillText => (
       <View
+        key={pillText}
         //* put in common stylesheet
         style={{
-          minWidth: 80,
           borderRadius: 40,
           borderColor: colors.text,
           borderWidth: 1,
@@ -29,19 +28,19 @@ const UserPassions = ({ passions }: UserPassionsProps) => {
           marginTop: 10,
         }}
       >
-        <Text>{passion}</Text>
+        <Text style={{ fontSize: 12 }}>{pillText}</Text>
       </View>
     ));
-    return passionPills;
+    return pills;
   };
 
   return (
     <View style={{ marginBottom: 20 }}>
       {/* //* put in common style */}
-      <Text style={{ fontSize: 18, marginBottom: 10 }}>My Passions</Text>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{renderPassions()}</View>
+      <Text style={{ fontSize: 18 }}>{titleText}</Text>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{renderPills()}</View>
     </View>
   );
 };
 
-export default UserPassions;
+export default UserBioPills;

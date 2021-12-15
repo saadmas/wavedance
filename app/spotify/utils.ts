@@ -43,29 +43,33 @@ export const fetchSpotifyItems = async (
     switch (type) {
       case 'artist':
         const artistResponse = await spotifyWebApi.searchArtists(searchText, { limit });
-        spotifyItems = artistResponse.artists.items.map(({ id, name, images }) => ({
+        spotifyItems = artistResponse.artists.items.map(({ id, name, images, external_urls }) => ({
           type,
           id,
           title: name,
           photoUri: images[0]?.url,
+          contentUri: external_urls.spotify,
         }));
         break;
       case 'album':
         const albumResponse = await spotifyWebApi.searchAlbums(searchText, { limit });
-        spotifyItems = albumResponse.albums.items.map(({ id, name, images }) => ({
+        spotifyItems = albumResponse.albums.items.map(({ id, name, images, external_urls }) => ({
           type,
           id,
           title: name,
           photoUri: images[0]?.url,
+          contentUri: external_urls.spotify,
         }));
         break;
       case 'track':
         const trackResponse = await spotifyWebApi.searchTracks(searchText, { limit });
-        spotifyItems = trackResponse.tracks.items.map(({ id, name, artists }) => ({
+        spotifyItems = trackResponse.tracks.items.map(({ id, name, artists, album, external_urls }) => ({
           type,
           id,
           title: name,
           subtitle: artists.map(a => a.name).join(', '),
+          photoUri: album.images[0]?.url,
+          contentUri: external_urls.spotify,
         }));
         break;
       default:

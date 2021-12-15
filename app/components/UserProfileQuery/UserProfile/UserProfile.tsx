@@ -7,7 +7,8 @@ import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { PromptAnswer } from '../../PromptsManager/PromptsManager';
 import { UserProfileType } from '../UserProfileQuery';
 import UserBio from './UserBio/UserBio';
-import UserPassions from './UserPassions/UserPassions';
+import UserBioPills from './UserBioPills/UserBioPills';
+import UserPassions from './UserBioPills/UserBioPills';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
 import UserProfileImage from './UserProfileImage/UserProfileImage';
 import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
@@ -16,7 +17,7 @@ interface UserProfileProps {
   userProfile: UserProfileType;
 }
 
-type PromptEntry = [EventPrompt | Prompt, PromptAnswer];
+type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
 const UserProfile = ({ userProfile }: UserProfileProps) => {
   const {
@@ -30,15 +31,17 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
     instagramHandle,
     occupation,
     passions,
+    prompts,
+    genres,
   } = userProfile;
 
-  const renderPrompts = (promptList: PromptEntry[]) => {
+  const renderPrompts = (promptList: PromptEntry[], promptSelectionType: PromptSelectionType) => {
     if (!promptList?.length) {
       return;
     }
 
     const displayPrompts = promptList.map(p => {
-      const promptQuestion = getFullTextFromPromptKey(p[0], PromptSelectionType.Event);
+      const promptQuestion = getFullTextFromPromptKey(p[0], promptSelectionType);
       const promptAnswer = p[1];
       return <UserProfilePrompt promptQuestion={promptQuestion} promptAnswer={promptAnswer} key={promptQuestion} />;
     });
@@ -51,7 +54,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
       return;
     }
     const firstEventPrompt = [...eventPrompts.entries()][0];
-    return renderPrompts([firstEventPrompt]);
+    return renderPrompts([firstEventPrompt], PromptSelectionType.Event);
   };
 
   const renderEventPrompts = () => {
@@ -59,11 +62,24 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
       return;
     }
     const eventPromptsToDisplay = [...eventPrompts.entries()].slice(1);
-    return renderPrompts(eventPromptsToDisplay);
+    return renderPrompts(eventPromptsToDisplay, PromptSelectionType.Event);
+  };
+
+  const renderFirstUserPrompt = () => {
+    const firstPrompt = [...prompts.entries()][0];
+    return renderPrompts([firstPrompt], PromptSelectionType.General);
+  };
+
+  const renderUserPrompts = () => {
+    if (prompts.size <= 1) {
+      return;
+    }
+    const userPromptsToDisplay = [...prompts.entries()].slice(1);
+    return renderPrompts(userPromptsToDisplay, PromptSelectionType.General);
   };
 
   return (
-    <ScrollView contentInset={{ bottom: 100 }}>
+    <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
       <UserProfileHeader name={name} pronouns={pronouns} />
       <UserProfileImage userPhotoUri={photoUri} />
       {renderFirstEventPrompt()}
@@ -75,7 +91,10 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
         occupation={occupation}
       />
       {renderEventPrompts()}
-      <UserPassions passions={passions} />
+      <UserBioPills pillTexts={passions} titleText="My Passions" />
+      {renderFirstUserPrompt()}
+      <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
+      {renderUserPrompts()}
     </ScrollView>
   );
 };
