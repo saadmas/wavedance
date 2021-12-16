@@ -44,15 +44,15 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
     performSpotifySearch();
   }, [debouncedSearchText]);
 
-  const onItemSelect = ({ id, type }: SpotifyItem) => {
-    const spotifyUri = `https://open.spotify.com/embed/${type}/${id}`;
+  const onItemSelect = ({ contentUri, photoUri }: SpotifyItem) => {
     const { selectedPrompt } = route.params;
 
     const selectedPromptWithSpotifyUri: SelectedPrompt = {
       ...selectedPrompt,
       answer: {
         answer: selectedPrompt.answer?.answer ?? '',
-        spotifyUri,
+        spotifyUri: contentUri,
+        photoUri,
       },
     };
 

@@ -9,7 +9,7 @@ export const getEventDateDisplay = (eventDate: string) => {
 
 export const getAge = (birthdayString: string) => {
   const today = new Date();
-  const birthDate = new Date(1996, 11, 7); /// birthdayString : store .toDateString() instead of - split in FB mock
+  const birthDate = new Date(birthdayString);
 
   const monthDifference = today.getMonth() - birthDate.getMonth();
   const isTodayLessThanDayOfBirth = today.getDate() < birthDate.getDate();

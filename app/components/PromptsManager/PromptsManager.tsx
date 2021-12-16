@@ -24,6 +24,7 @@ export interface SelectedPrompt {
 export interface PromptAnswer {
   answer: string;
   spotifyUri?: string;
+  photoUri?: string;
 }
 
 export type PromptDrawerParamList = {

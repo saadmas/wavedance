@@ -4,10 +4,10 @@ import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
 
 interface UserProfileImageProps {
-  userPhotoUri: string;
+  photoUri: string;
 }
 
-const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
+const UserProfileImage = ({ photoUri }: UserProfileImageProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const { colors } = useTheme();
 
@@ -35,7 +35,7 @@ const UserProfileImage = ({ userPhotoUri }: UserProfileImageProps) => {
       <ImageBackground
         onError={onError}
         onLoad={onLoad}
-        source={{ uri: userPhotoUri || undefined }}
+        source={{ uri: photoUri || undefined }}
         style={{ height, width, backgroundColor: colors.onSurface, borderRadius }}
         borderRadius={borderRadius}
         resizeMode="cover"

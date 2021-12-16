@@ -101,7 +101,7 @@ const MultiPillSelector = ({
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}
-        contentInset={{ bottom: 50 }}
+        contentInset={{ bottom: 150 }}
         showsVerticalScrollIndicator={false}
       >
         {renderPills()}

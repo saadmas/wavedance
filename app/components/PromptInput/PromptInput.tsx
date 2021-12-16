@@ -15,10 +15,10 @@ interface PromptInputProps extends DrawerScreenProps<PromptDrawerParamList, Path
 const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   const { selectedPrompt } = route.params;
 
-  const onSubmit = (answer: string) => {
+  const onSubmit = (answerText: string) => {
     addPrompt({
       prompt: selectedPrompt.prompt,
-      answer: { answer: answer.trim(), spotifyUri: selectedPrompt.answer.spotifyUri },
+      answer: { ...selectedPrompt.answer, answer: answerText.trim() },
     });
     navigation.navigate(Path.PromptSelector);
   };
