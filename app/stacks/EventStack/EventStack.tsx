@@ -42,12 +42,7 @@ const EventStack = () => {
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
-        options={({ route }) => {
-          return {
-            headerShown: getFocusedRouteNameFromRoute(route) !== Path.SpotifySearch, ///
-            contentStyle: { paddingTop: 45, paddingHorizontal: defaultScreenPadding },
-          };
-        }}
+        options={{ contentStyle: { paddingTop: 0, paddingHorizontal: defaultScreenPadding } }}
       />
     </Stack.Navigator>
   );

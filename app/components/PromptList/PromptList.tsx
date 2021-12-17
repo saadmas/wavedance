@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Title from '../Title/Title';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Divider, Text } from 'react-native-paper';
 import { Prompt } from '../../state/enums/prompt';
@@ -34,10 +33,10 @@ const PromptList = ({ filledPrompts, navigate, selectionType }: PromptListProps)
 
       listItems.push(
         <React.Fragment key={prompt}>
-          <Text onPress={onPromptSelect} style={{ padding: 20, fontSize: textFontSize + 2 }}>
+          <Text onPress={onPromptSelect} style={{ padding: 15, fontSize: textFontSize + 2 }}>
             {prompt}
           </Text>
-          <Divider style={{ width: '95%' }} />
+          <Divider />
         </React.Fragment>
       );
     });
@@ -46,12 +45,9 @@ const PromptList = ({ filledPrompts, navigate, selectionType }: PromptListProps)
   };
 
   return (
-    <>
-      <Title title="Select a prompt" />
-      <DrawerContentScrollView contentContainerStyle={{ paddingBottom: 50 }}>
-        {renderListItems()}
-      </DrawerContentScrollView>
-    </>
+    <DrawerContentScrollView contentContainerStyle={{ paddingBottom: 50, paddingTop: 10 }}>
+      {renderListItems()}
+    </DrawerContentScrollView>
   );
 };
 

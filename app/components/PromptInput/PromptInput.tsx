@@ -7,6 +7,8 @@ import { spotifyEmbeddablePrompts } from '../../spotify/utils';
 import InputCard from '../InputCard/InputCard';
 import { PromptDrawerParamList, SelectedPrompt } from '../PromptsManager/PromptsManager';
 import SpotifyEmbed from '../SpotifyEmbed/SpotifyEmbed';
+import { defaultScreenPadding } from '../../styles/theme';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface PromptInputProps extends DrawerScreenProps<PromptDrawerParamList, Path.PromptInput> {
   addPrompt: (selectedPrompt: SelectedPrompt) => void;
@@ -24,6 +26,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   };
 
   const openSpotifySearchInput = (searchText?: string) => {
+    Keyboard.dismiss();
     navigation.navigate(Path.SpotifySearch, { searchText, selectedPrompt });
   };
 
@@ -42,7 +45,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={{ height: '100%' }}>
+      <View style={{ padding: defaultScreenPadding }}>
         <InputCard
           title={selectedPrompt.prompt}
           onSubmit={onSubmit}
@@ -53,6 +56,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
           secondaryButtonProps={getSpotifyEmbedButtonProps()}
         />
         <SpotifyEmbed photoUri={selectedPrompt.answer.photoUri} contentUri={selectedPrompt.answer.spotifyUri} />
+        <View style={{ paddingBottom: 100 }} />
       </View>
     </TouchableWithoutFeedback>
   );

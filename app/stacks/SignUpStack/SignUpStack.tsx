@@ -53,7 +53,7 @@ const stepIcons = [
 
 const SignUpStack = () => {
   const { colors } = useTheme();
-  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(0);
+  const [currentStepIndex, setCurrentStepIndex] = React.useState<number>(8);
 
   const goToNextStep = () => {
     setCurrentStepIndex(previousIndex => ++previousIndex);
@@ -65,8 +65,9 @@ const SignUpStack = () => {
 
   const renderStep = () => {
     const StepComponent = StepComponents[currentStepIndex];
+    const promptIndex = 8;
     return (
-      <View style={{ margin: defaultScreenPadding, height: '100%' }}>
+      <View style={{ margin: currentStepIndex === promptIndex ? 0 : defaultScreenPadding, height: '100%' }}>
         <StepComponent goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
       </View>
     );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
-import { useTheme } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { Prompt } from '../../state/enums/prompt';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Path } from '../../routing/paths';
@@ -42,8 +42,6 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
     previouslyFilledPrompts ?? new Map()
   );
 
-  const { colors } = useTheme();
-
   const onPromptsSubmit = () => {
     onSubmit(filledPrompts);
   };
@@ -73,11 +71,14 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
   return (
     <DrawerNavigator.Navigator
       initialRouteName={Path.PromptSelector}
-      backBehavior="initialRoute"
+      backBehavior="order"
       drawerType="front"
-      overlayColor="transparent"
-      drawerStyle={{ width: '100%', backgroundColor: colors.background }}
       drawerContent={renderDrawerContent}
+      screenOptions={({ navigation }) => ({
+        animation: 'slide_from_bottom',
+        headerShown: selectionType === PromptSelectionType.Event,
+        header: () => <IconButton icon="arrow-left" onPress={() => navigation.goBack()} style={{ height: 20 }} />,
+      })}
     >
       <DrawerNavigator.Screen name={Path.PromptSelector}>
         {({ navigation }) => (

@@ -10,7 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { PromptAnswer, PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
-import { textFontSize } from '../../styles/theme';
+import { defaultScreenPadding, textFontSize } from '../../styles/theme';
 import PromptCard from '../PromptCard/PromptCard';
 
 interface PromptsSelectorProps {
@@ -89,7 +89,7 @@ const PromptsSelector = ({
   };
 
   return (
-    <>
+    <View style={{ padding: defaultScreenPadding, height: '100%' }}>
       <Title title={getTitleText()} />
       <View
         style={{
@@ -104,31 +104,33 @@ const PromptsSelector = ({
         <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
         <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
       </View>
-      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false} ref={scrollViewRef}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: filledPrompts.size ? 0 : 30,
+          marginBottom: 10,
+        }}
+      >
+        {filledPrompts.size < maxPromptCount && (
+          <Button
+            icon="plus"
+            mode="outlined"
+            onPress={openPromptDrawer}
+            theme={{ colors: { primary: '#fff' } }}
+            labelStyle={{ fontSize: 10 }}
+            style={{ width: 150, borderRadius: 20 }}
+          >
+            Add prompt
+          </Button>
+        )}
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} ref={scrollViewRef}>
         {renderPromptCards()}
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}
-        >
-          {filledPrompts.size < maxPromptCount && (
-            <Button
-              icon="plus"
-              mode="outlined"
-              onPress={openPromptDrawer}
-              theme={{ colors: { primary: '#fff' } }}
-              labelStyle={{ fontSize: 10 }}
-              style={{ width: 150, borderRadius: 20 }}
-            >
-              Add prompt
-            </Button>
-          )}
-        </View>
+        <View style={{ height: 100 }} />
       </ScrollView>
-    </>
+    </View>
   );
 };
 3;

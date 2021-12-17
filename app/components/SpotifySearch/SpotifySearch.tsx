@@ -4,17 +4,19 @@ import { View } from 'react-native';
 import { IconButton, Searchbar } from 'react-native-paper';
 import useDebounce from '../../hooks/useDebounce';
 import { Path } from '../../routing/paths';
-import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import { PromptDrawerParamList, SelectedPrompt } from '../PromptsManager/PromptsManager';
 import { ResponseStatus } from '../../state/enums/responseStatus';
 import { fetchSpotifyItems } from '../../spotify/utils';
 import { SpotifyItem } from '../../spotify/types';
 import SpotifyList from '../SpotifyList/SpotifyList';
+import { EventPrompt } from '../../state/enums/eventPrompt';
 
 interface SpotifySearchProps extends DrawerScreenProps<PromptDrawerParamList, Path.SpotifySearch> {}
 
 const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
   const { prompt } = route.params.selectedPrompt;
+  const isEventPrompt = Object.values(EventPrompt).includes(prompt);
+
   const [searchText, setSearchText] = React.useState<string>(route.params.searchText ?? '');
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [listItems, setListItems] = React.useState<SpotifyItem[]>([]);
@@ -66,8 +68,8 @@ const SpotifySearch = ({ route, navigation }: SpotifySearchProps) => {
 
   return (
     <>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <IconButton icon="arrow-left" onPress={goBack} />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+        {!isEventPrompt && <IconButton icon="arrow-left" onPress={goBack} />}
         <Searchbar
           onChangeText={setSearchText}
           value={searchText}
