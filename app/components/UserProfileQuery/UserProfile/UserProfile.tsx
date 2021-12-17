@@ -81,7 +81,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
   return (
     <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
       <UserProfileHeader name={name} pronouns={pronouns} />
-      <UserProfileImage userPhotoUri={photoUri} />
+      <UserProfileImage photoUri={photoUri} />
       {renderFirstEventPrompt()}
       <UserBio
         birthday={birthday}

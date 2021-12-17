@@ -1,3 +1,4 @@
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
@@ -41,7 +42,12 @@ const EventStack = () => {
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
-        options={{ headerShown: true, contentStyle: { paddingTop: 30, paddingHorizontal: defaultScreenPadding } }}
+        options={({ route }) => {
+          return {
+            headerShown: getFocusedRouteNameFromRoute(route) !== Path.SpotifySearch, ///
+            contentStyle: { paddingTop: 45, paddingHorizontal: defaultScreenPadding },
+          };
+        }}
       />
     </Stack.Navigator>
   );

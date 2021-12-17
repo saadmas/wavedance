@@ -30,7 +30,7 @@ const SpotifyEmbed = ({ photoUri, contentUri }: SpotifyEmbedProps) => {
       <Image
         source={{ uri: photoUri }}
         onError={onError}
-        style={{ height: 400, width: '100%', marginTop: 10 }}
+        style={{ height: 350, width: '100%', marginTop: 10 }}
         borderRadius={10}
         resizeMode="cover"
       />

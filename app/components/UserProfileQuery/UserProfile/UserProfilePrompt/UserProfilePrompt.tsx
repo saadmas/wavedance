@@ -9,11 +9,11 @@ interface UserProfilePromptProps {
 }
 
 const UserProfilePrompt = ({ promptQuestion, promptAnswer }: UserProfilePromptProps) => {
-  const { answer, spotifyUri } = promptAnswer;
+  const { answer, spotifyUri, photoUri } = promptAnswer;
 
   return (
     <View style={{ marginVertical: 20 }}>
-      <PromptCard question={promptQuestion} answer={answer} spotifyUri={spotifyUri} />
+      <PromptCard question={promptQuestion} answer={answer} spotifyUri={spotifyUri} photoUri={photoUri} />
     </View>
   );
 };
