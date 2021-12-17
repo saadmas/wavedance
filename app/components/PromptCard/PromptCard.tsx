@@ -10,11 +10,12 @@ interface PromptCardActionHandlers {
 interface PromptCardProps {
   question: string;
   answer: string;
+  photoUri?: string;
   spotifyUri?: string;
   cardActionHandlers?: PromptCardActionHandlers;
 }
 
-const PromptCard = ({ question, answer, spotifyUri, cardActionHandlers }: PromptCardProps) => {
+const PromptCard = ({ question, answer, spotifyUri, cardActionHandlers, photoUri }: PromptCardProps) => {
   const { fonts } = useTheme();
   const fontFamily = fonts.thin.fontFamily;
   const cardActionIconSize = 15;
@@ -43,7 +44,7 @@ const PromptCard = ({ question, answer, spotifyUri, cardActionHandlers }: Prompt
         </Card.Content>
         {renderCardActions()}
       </Card>
-      {/* <SpotifyEmbed uri={spotifyUri} /> */}
+      <SpotifyEmbed photoUri={photoUri} contentUri={spotifyUri} />
     </>
   );
 };

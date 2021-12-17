@@ -52,7 +52,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
           placeholder={promptPlaceholders.get(selectedPrompt.prompt)}
           secondaryButtonProps={getSpotifyEmbedButtonProps()}
         />
-        <SpotifyEmbed uri={selectedPrompt.answer.spotifyUri} />
+        <SpotifyEmbed photoUri={selectedPrompt.answer.photoUri} contentUri={selectedPrompt.answer.spotifyUri} />
       </View>
     </TouchableWithoutFeedback>
   );

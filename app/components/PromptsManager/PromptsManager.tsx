@@ -9,6 +9,7 @@ import PromptsSelector from '../PromptsSelector/PromptsSelector';
 import PromptInput from '../PromptInput/PromptInput';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
 import SpotifySearch from '../SpotifySearch/SpotifySearch';
+import { ScrollView } from 'react-native';
 
 interface PromptsManagerProps {
   selectionType: PromptSelectionType;
@@ -36,6 +37,7 @@ export type PromptDrawerParamList = {
 const DrawerNavigator = createDrawerNavigator<PromptDrawerParamList>();
 
 const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: PromptsManagerProps) => {
+  const scrollViewRef = React.useRef<ScrollView>(null);
   const [filledPrompts, setFilledPrompts] = React.useState<Map<Prompt | EventPrompt, PromptAnswer>>(
     previouslyFilledPrompts ?? new Map()
   );
@@ -57,6 +59,8 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
       prevPrompts.set(selectedPrompt.prompt, selectedPrompt.answer);
       return new Map(prevPrompts);
     });
+
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
   };
 
   const deletePrompt = (prompt: Prompt | EventPrompt) => {
@@ -83,6 +87,7 @@ const PromptsManager = ({ onSubmit, selectionType, previouslyFilledPrompts }: Pr
             navigation={navigation}
             deletePrompt={deletePrompt}
             selectionType={selectionType}
+            scrollViewRef={scrollViewRef}
           />
         )}
       </DrawerNavigator.Screen>

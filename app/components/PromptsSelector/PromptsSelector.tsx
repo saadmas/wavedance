@@ -17,6 +17,7 @@ interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
   filledPrompts: Map<Prompt | EventPrompt, PromptAnswer>;
   navigation: DrawerNavigationProp<PromptDrawerParamList, Path.PromptSelector>;
+  scrollViewRef: React.RefObject<ScrollView>;
   onPromptsSubmit: () => void;
   deletePrompt: (prompt: Prompt | EventPrompt) => void;
 }
@@ -27,6 +28,7 @@ const PromptsSelector = ({
   navigation,
   deletePrompt,
   selectionType,
+  scrollViewRef,
 }: PromptsSelectorProps) => {
   const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
@@ -51,10 +53,11 @@ const PromptsSelector = ({
       };
 
       return (
-        <Animatable.View key={prompt} animation="fadeInLeft" style={{ marginTop: 10 }}>
+        <Animatable.View key={prompt} animation="fadeInLeft" style={{ marginBottom: 10 }}>
           <PromptCard
             question={prompt}
             answer={answer.answer}
+            photoUri={answer.photoUri}
             spotifyUri={answer.spotifyUri}
             cardActionHandlers={{ onEdit, onDelete }}
           />
@@ -99,7 +102,7 @@ const PromptsSelector = ({
         <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
         <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
       </View>
-      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false} ref={scrollViewRef}>
         {renderPromptCards()}
         <View
           style={{

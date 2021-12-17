@@ -1,35 +1,40 @@
-import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { Image } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import * as WebBrowser from 'expo-web-browser';
 
 interface SpotifyEmbedProps {
-  uri?: string;
+  photoUri?: string;
+  contentUri?: string;
 }
 
-const SpotifyEmbed = ({ uri }: SpotifyEmbedProps) => {
-  const { colors } = useTheme();
-  const [isError, setIsError] = React.useState<boolean>(!uri);
-  const marginVertical = 10;
+const SpotifyEmbed = ({ photoUri, contentUri }: SpotifyEmbedProps) => {
+  const [isError, setIsError] = React.useState<boolean>(!photoUri);
 
   React.useEffect(() => {
-    setIsError(!uri);
-  }, [uri]);
+    setIsError(!photoUri);
+  }, [photoUri]);
 
-  const onEmbedError = () => {
+  const onError = () => {
     setIsError(true);
   };
 
-  return uri ? (
-    <ScrollView>
-      <WebView
-        bounces={false}
-        onError={onEmbedError}
-        javaScriptEnabled={true}
-        style={{ height: 80, width: '100%', marginVertical, backgroundColor: colors.background }}
-        source={{ uri }}
+  const openSpotifyWebpage = () => {
+    if (contentUri) {
+      WebBrowser.openBrowserAsync(contentUri);
+    }
+  };
+
+  return photoUri && !isError ? (
+    <TouchableWithoutFeedback onPress={openSpotifyWebpage}>
+      <Image
+        source={{ uri: photoUri }}
+        onError={onError}
+        style={{ height: 400, width: '100%', marginTop: 10 }}
+        borderRadius={10}
+        resizeMode="cover"
       />
-    </ScrollView>
+    </TouchableWithoutFeedback>
   ) : null;
 };
 
