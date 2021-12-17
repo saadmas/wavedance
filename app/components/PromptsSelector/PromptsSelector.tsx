@@ -97,6 +97,8 @@ const PromptsSelector = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          marginBottom: 5,
+          marginTop: 5,
         }}
       >
         <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>

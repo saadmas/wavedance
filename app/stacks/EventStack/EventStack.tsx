@@ -41,7 +41,7 @@ const EventStack = () => {
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
-        options={{ headerShown: true, contentStyle: { paddingTop: 50, paddingHorizontal: defaultScreenPadding } }}
+        options={{ headerShown: true, contentStyle: { paddingTop: 30, paddingHorizontal: defaultScreenPadding } }}
       />
     </Stack.Navigator>
   );
