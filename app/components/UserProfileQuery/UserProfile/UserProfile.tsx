@@ -1,10 +1,12 @@
 import { Prompt } from 'expo-auth-session';
 import * as React from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { EventPrompt } from '../../../state/enums/eventPrompt';
 import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import { PromptAnswer } from '../../PromptsManager/PromptsManager';
+import WaveButton from '../../WaveButton/WaveButton';
 import { UserProfileType } from '../UserProfileQuery';
 import UserBio from './UserBio/UserBio';
 import UserBioPills from './UserBioPills/UserBioPills';
@@ -79,23 +81,27 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
   };
 
   return (
-    <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
-      <UserProfileHeader name={name} pronouns={pronouns} />
-      <UserProfileImage photoUri={photoUri} />
-      {renderFirstEventPrompt()}
-      <UserBio
-        birthday={birthday}
-        currentLocation={currentLocation}
-        hometown={hometown}
-        instagramHandle={instagramHandle}
-        occupation={occupation}
-      />
-      {renderEventPrompts()}
-      <UserBioPills pillTexts={passions} titleText="My Passions" />
-      {renderFirstUserPrompt()}
-      <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
-      {renderUserPrompts()}
-    </ScrollView>
+    <View>
+      <WaveButton />
+
+      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
+        <UserProfileHeader name={name} pronouns={pronouns} />
+        <UserProfileImage photoUri={photoUri} />
+        {renderFirstEventPrompt()}
+        <UserBio
+          birthday={birthday}
+          currentLocation={currentLocation}
+          hometown={hometown}
+          instagramHandle={instagramHandle}
+          occupation={occupation}
+        />
+        {renderEventPrompts()}
+        <UserBioPills pillTexts={passions} titleText="My Passions" />
+        {renderFirstUserPrompt()}
+        <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
+        {renderUserPrompts()}
+      </ScrollView>
+    </View>
   );
 };
 
