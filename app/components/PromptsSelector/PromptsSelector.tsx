@@ -90,43 +90,43 @@ const PromptsSelector = ({
 
   return (
     <View style={{ padding: defaultScreenPadding, height: '100%' }}>
-      <Title title={getTitleText()} />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 5,
-          marginTop: 5,
-        }}
-      >
-        <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
-        <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: filledPrompts.size ? 0 : 30,
-          marginBottom: 10,
-        }}
-      >
-        {filledPrompts.size < maxPromptCount && (
-          <Button
-            icon="plus"
-            mode="outlined"
-            onPress={openPromptDrawer}
-            theme={{ colors: { primary: '#fff' } }}
-            labelStyle={{ fontSize: 10 }}
-            style={{ width: 150, borderRadius: 20 }}
-          >
-            Add prompt
-          </Button>
-        )}
-      </View>
       <ScrollView showsVerticalScrollIndicator={false} ref={scrollViewRef}>
+        <Title title={getTitleText()} />
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 5,
+            marginTop: 5,
+          }}
+        >
+          <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
+          <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: filledPrompts.size ? 0 : 30,
+            marginBottom: 10,
+          }}
+        >
+          {filledPrompts.size < maxPromptCount && (
+            <Button
+              icon="plus"
+              mode="outlined"
+              onPress={openPromptDrawer}
+              theme={{ colors: { primary: '#fff' } }}
+              labelStyle={{ fontSize: 10 }}
+              style={{ width: 150, borderRadius: 20 }}
+            >
+              Add prompt
+            </Button>
+          )}
+        </View>
         {renderPromptCards()}
         <View style={{ height: 100 }} />
       </ScrollView>
