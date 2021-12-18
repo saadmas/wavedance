@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { EventPrompt } from '../../../state/enums/eventPrompt';
 import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
+import IgnoreButton from '../../IgnoreButton/IgnoreButton';
 import { PromptAnswer } from '../../PromptsManager/PromptsManager';
 import WaveButton from '../../WaveButton/WaveButton';
 import { UserProfileType } from '../UserProfileQuery';
@@ -83,7 +84,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
   return (
     <View>
       <WaveButton />
-
+      <IgnoreButton />
       <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
         <UserProfileHeader name={name} pronouns={pronouns} />
         <UserProfileImage photoUri={photoUri} />
