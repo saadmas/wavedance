@@ -29,8 +29,7 @@ const PromptInput = ({ route, addPrompt, navigation }: PromptInputProps) => {
   };
 
   const goToPromptSelector = () => {
-    setIsSubmitDialogOpen(false);
-
+    closeSubmitConfirmDialog();
     navigation.navigate(Path.PromptSelector);
   };
 
