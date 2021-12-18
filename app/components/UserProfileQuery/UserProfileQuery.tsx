@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
+import { EdmTrainEvent } from '../../edmTrain/types';
 import {
   getUserAdditionalInfoPath,
   getUserBasicInfoPath,
@@ -16,7 +17,7 @@ import UserProfile from './UserProfile/UserProfile';
 
 interface UserProfileQueryProps {
   userId: string;
-  eventId?: number;
+  event: EdmTrainEvent;
   isEditMode?: boolean;
   goToNextProfile: () => void;
 }
@@ -37,7 +38,7 @@ export interface UserProfileType {
   occupation?: string;
 }
 
-const UserProfileQuery = ({ userId, eventId, goToNextProfile }: UserProfileQueryProps) => {
+const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
     id: userId,
@@ -115,12 +116,12 @@ const UserProfileQuery = ({ userId, eventId, goToNextProfile }: UserProfileQuery
     };
 
     const fetchEventPrompts = async () => {
-      if (eventId === undefined) {
+      if (event.id === undefined) {
         return;
       }
 
       try {
-        const path = getUserEventPromptsPath(userId, eventId);
+        const path = getUserEventPromptsPath(userId, event.id);
         const snapshot = await firebase.database().ref(path).get();
         const value = snapshot.val();
         if (value) {
@@ -139,13 +140,13 @@ const UserProfileQuery = ({ userId, eventId, goToNextProfile }: UserProfileQuery
     fetchAdditionalInfo();
     fetchPrompts();
     fetchEventPrompts();
-  }, []);
+  }, [userId]);
 
   if (responseStatus === ResponseStatus.Loading) {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;
   }
 
-  return <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} eventId={eventId} />;
+  return <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />;
 };
 
 export default UserProfileQuery;

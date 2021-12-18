@@ -2,15 +2,16 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
+import { EdmTrainEvent } from '../../../../../../edmTrain/types';
 import { getEventMembersPath, getUserBlocksPath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventCarousel from '../EventCarousel/EventCarousel';
 
 interface EventCarouselQueryProps {
-  eventId: number;
+  event: EdmTrainEvent;
 }
 
-const EventCarouselQuery = ({ eventId }: EventCarouselQueryProps) => {
+const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
   const [eventMemberIds, setEventMemberIds] = React.useState<string[]>([]);
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
 
@@ -35,7 +36,7 @@ const EventCarouselQuery = ({ eventId }: EventCarouselQueryProps) => {
 
     const fetchEventMembers = async () => {
       try {
-        const path = getEventMembersPath(eventId);
+        const path = getEventMembersPath(event.id);
         const snapshot = await firebase.database().ref(path).get();
         const snapshotValue = snapshot.val();
 
@@ -55,12 +56,12 @@ const EventCarouselQuery = ({ eventId }: EventCarouselQueryProps) => {
         setResponseStatus(ResponseStatus.Error);
         console.error('fetchEventMembers failed');
         console.error(e);
-        console.error(`eventId: ${eventId}`);
+        console.error(`eventId: ${event.id}`);
       }
     };
 
     fetchEventMembers();
-  }, [eventId]);
+  }, [event.id]);
 
   if (responseStatus === ResponseStatus.Loading) {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;
@@ -70,7 +71,7 @@ const EventCarouselQuery = ({ eventId }: EventCarouselQueryProps) => {
     return <ErrorDisplay />;
   }
 
-  return <EventCarousel eventMemberIds={eventMemberIds} eventId={eventId} />;
+  return <EventCarousel eventMemberIds={eventMemberIds} event={event} />;
 };
 
 export default EventCarouselQuery;

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 import UserProfileQuery from '../../../../../../components/UserProfileQuery/UserProfileQuery';
+import { EdmTrainEvent } from '../../../../../../edmTrain/types';
 
 interface EventCarouselProps {
-  eventId: number;
+  event: EdmTrainEvent;
   eventMemberIds: string[];
 }
 
-const EventCarousel = ({ eventMemberIds, eventId }: EventCarouselProps) => {
+const EventCarousel = ({ eventMemberIds, event }: EventCarouselProps) => {
   const [currentMemberIndex, setCurrentMemberIndex] = React.useState<number>(0);
 
   const goToNextProfile = () => {
@@ -23,7 +24,7 @@ const EventCarousel = ({ eventMemberIds, eventId }: EventCarouselProps) => {
   }
 
   return (
-    <UserProfileQuery userId={eventMemberIds[currentMemberIndex]} eventId={eventId} goToNextProfile={goToNextProfile} />
+    <UserProfileQuery userId={eventMemberIds[currentMemberIndex]} event={event} goToNextProfile={goToNextProfile} />
   );
 };
 

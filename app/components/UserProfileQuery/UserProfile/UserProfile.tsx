@@ -2,6 +2,7 @@ import { Prompt } from 'expo-auth-session';
 import * as React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { EdmTrainEvent } from '../../../edmTrain/types';
 import { EventPrompt } from '../../../state/enums/eventPrompt';
 import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
@@ -18,13 +19,14 @@ import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
 interface UserProfileProps {
   userProfile: UserProfileType;
   goToNextProfile: () => void;
-  eventId?: number;
+  event: EdmTrainEvent;
 }
 
 type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
-const UserProfile = ({ userProfile, goToNextProfile, eventId }: UserProfileProps) => {
+const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) => {
   const {
+    id,
     photoUri,
     name,
     pronouns,
@@ -92,7 +94,7 @@ const UserProfile = ({ userProfile, goToNextProfile, eventId }: UserProfileProps
 
   return (
     <View>
-      <WaveButton onWave={onWave} eventId={eventId} />
+      <WaveButton onWave={onWave} event={event} waveReceivedByUid={id} />
       <IgnoreButton onIgnore={onIgnore} />
       <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
         <UserProfileHeader name={name} pronouns={pronouns} />

@@ -9,7 +9,7 @@ type EventCarouselScreenProps = NativeStackScreenProps<EventStackParamList, Path
 const EventCarouselScreen = ({ route }: EventCarouselScreenProps) => {
   const { event } = route.params;
 
-  return <EventCarouselQuery eventId={event.id} />;
+  return <EventCarouselQuery event={event} />;
 };
 
 export default EventCarouselScreen;
