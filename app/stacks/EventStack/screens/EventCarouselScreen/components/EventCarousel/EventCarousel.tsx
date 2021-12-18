@@ -22,7 +22,9 @@ const EventCarousel = ({ eventMemberIds, eventId }: EventCarouselProps) => {
   if (hasViewedAllMembers) {
   }
 
-  return <UserProfileQuery userId={eventMemberIds[2]} eventId={eventId} />;
+  return (
+    <UserProfileQuery userId={eventMemberIds[currentMemberIndex]} eventId={eventId} goToNextProfile={goToNextProfile} />
+  );
 };
 
 export default EventCarousel;

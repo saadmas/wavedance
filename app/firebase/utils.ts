@@ -44,3 +44,13 @@ export const getUserBlocksPath = (uid: string) => {
   const path = getFirebasePath(FirebaseNode.UserBlocks, uid);
   return path;
 };
+
+export const getUserWavesSentPath = (sentByUid: string, receivedByUid: string, eventId: number) => {
+  const path = getFirebasePath(FirebaseNode.UserWavesSent, sentByUid, eventId.toString(), receivedByUid);
+  return path;
+};
+
+export const getUserWavesReceivedPath = (receivedByUid: string, sentById: string, eventId: number) => {
+  const path = getFirebasePath(FirebaseNode.UserWavesReceived, receivedByUid, eventId.toString(), sentById);
+  return path;
+};

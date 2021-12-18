@@ -2,7 +2,9 @@ import * as React from 'react';
 import LottieInteractiveAnimation from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
 import * as Haptics from 'expo-haptics';
 
-interface IgnoreButtonProps {}
+interface IgnoreButtonProps {
+  onIgnore: () => void;
+}
 
 const IgnoreButton = ({}: IgnoreButtonProps) => {
   const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);

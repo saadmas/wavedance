@@ -2,7 +2,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
-import { EdmTrainLocation } from '../../edmTrain/types';
+import { EdmTrainEvent, EdmTrainLocation } from '../../edmTrain/types';
 import { Path } from '../../routing/paths';
 import { defaultScreenPadding } from '../../styles/theme';
 import EventCarouselScreen from './screens/EventCarouselScreen/EventCarouselScreen';
@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 export type EventStackParamList = {
   [Path.LocationSelect]: undefined;
   [Path.EventList]: { location?: EdmTrainLocation };
-  [Path.EventCarousel]: { eventId: number };
+  [Path.EventCarousel]: { event: EdmTrainEvent };
   [Path.EventPrompts]: EventPromptsProps;
 };
 

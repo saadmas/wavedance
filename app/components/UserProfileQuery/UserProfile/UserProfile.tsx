@@ -11,18 +11,19 @@ import WaveButton from '../../WaveButton/WaveButton';
 import { UserProfileType } from '../UserProfileQuery';
 import UserBio from './UserBio/UserBio';
 import UserBioPills from './UserBioPills/UserBioPills';
-import UserPassions from './UserBioPills/UserBioPills';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
 import UserProfileImage from './UserProfileImage/UserProfileImage';
 import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
 
 interface UserProfileProps {
   userProfile: UserProfileType;
+  goToNextProfile: () => void;
+  eventId?: number;
 }
 
 type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
-const UserProfile = ({ userProfile }: UserProfileProps) => {
+const UserProfile = ({ userProfile, goToNextProfile, eventId }: UserProfileProps) => {
   const {
     photoUri,
     name,
@@ -81,10 +82,18 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
     return renderPrompts(userPromptsToDisplay, PromptSelectionType.General);
   };
 
+  const onWave = () => {
+    goToNextProfile();
+  };
+
+  const onIgnore = () => {
+    goToNextProfile();
+  };
+
   return (
     <View>
-      <WaveButton />
-      <IgnoreButton />
+      <WaveButton onWave={onWave} eventId={eventId} />
+      <IgnoreButton onIgnore={onIgnore} />
       <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
         <UserProfileHeader name={name} pronouns={pronouns} />
         <UserProfileImage photoUri={photoUri} />

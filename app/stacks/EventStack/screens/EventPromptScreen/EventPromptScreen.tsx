@@ -32,7 +32,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
       return;
     }
 
-    navigation.navigate(Path.EventCarousel, { eventId: event.id });
+    navigation.navigate(Path.EventCarousel, { event });
   };
 
   return (

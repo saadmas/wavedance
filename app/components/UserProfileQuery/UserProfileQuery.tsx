@@ -18,8 +18,7 @@ interface UserProfileQueryProps {
   userId: string;
   eventId?: number;
   isEditMode?: boolean;
-  onWave?: () => void;
-  onIgnore?: () => void;
+  goToNextProfile: () => void;
 }
 
 export interface UserProfileType {
@@ -38,7 +37,7 @@ export interface UserProfileType {
   occupation?: string;
 }
 
-const UserProfileQuery = ({ userId, eventId }: UserProfileQueryProps) => {
+const UserProfileQuery = ({ userId, eventId, goToNextProfile }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
     id: userId,
@@ -146,7 +145,7 @@ const UserProfileQuery = ({ userId, eventId }: UserProfileQueryProps) => {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;
   }
 
-  return <UserProfile userProfile={userProfile} />;
+  return <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} eventId={eventId} />;
 };
 
 export default UserProfileQuery;

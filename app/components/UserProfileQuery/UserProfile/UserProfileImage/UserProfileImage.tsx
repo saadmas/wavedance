@@ -36,7 +36,7 @@ const UserProfileImage = ({ photoUri }: UserProfileImageProps) => {
         onError={onError}
         onLoad={onLoad}
         source={{ uri: photoUri || undefined }}
-        style={{ height, width, backgroundColor: colors.onSurface, borderRadius }}
+        style={{ height, width, backgroundColor: colors.onSurface, borderRadius, marginBottom: 10 }}
         borderRadius={borderRadius}
         resizeMode="cover"
       >
