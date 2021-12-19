@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LottieInteractiveAnimation from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
+import LottieInteractiveAnimation, { FramePosition } from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
 import * as Haptics from 'expo-haptics';
 import firebase from 'firebase';
 import { EdmTrainEvent } from '../../edmTrain/types';
@@ -57,6 +57,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
     <LottieInteractiveAnimation
       animationPlayerFlag={animationPlayerFlag}
       source={require(`../../../assets/animations/hand-wave.json`)}
+      isStaticFramePosition={true}
       onPress={onPress}
       style={{
         width: size,
@@ -67,7 +68,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
         right: 2,
         transform: [{ rotate: '-15deg' }],
       }}
-      speed={2}
+      speed={2.5}
     />
   );
 };

@@ -15,6 +15,7 @@ import UserBioPills from './UserBioPills/UserBioPills';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
 import UserProfileImage from './UserProfileImage/UserProfileImage';
 import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
+import * as Animatable from 'react-native-animatable';
 
 interface UserProfileProps {
   userProfile: UserProfileType;
@@ -40,6 +41,8 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
     prompts,
     genres,
   } = userProfile;
+
+  const viewRef = React.useRef<Animatable.View & View>(null);
 
   const renderPrompts = (promptList: PromptEntry[], promptSelectionType: PromptSelectionType) => {
     if (!promptList?.length) {
@@ -84,36 +87,36 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
     return renderPrompts(userPromptsToDisplay, PromptSelectionType.General);
   };
 
-  const onWave = () => {
+  const onWaveOrIgnore = async () => {
+    await new Promise(r => setTimeout(r, 700)); // To let the wave/ignore animations play out nicely :)
     goToNextProfile();
-  };
-
-  const onIgnore = () => {
-    goToNextProfile();
+    viewRef.current?.fadeInUpBig?.();
   };
 
   return (
-    <View>
-      <WaveButton onWave={onWave} event={event} waveReceivedByUid={id} />
-      <IgnoreButton onIgnore={onIgnore} />
-      <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
-        <UserProfileHeader name={name} pronouns={pronouns} />
-        <UserProfileImage photoUri={photoUri} />
-        {renderFirstEventPrompt()}
-        <UserBio
-          birthday={birthday}
-          currentLocation={currentLocation}
-          hometown={hometown}
-          instagramHandle={instagramHandle}
-          occupation={occupation}
-        />
-        {renderEventPrompts()}
-        <UserBioPills pillTexts={passions} titleText="My Passions" />
-        {renderFirstUserPrompt()}
-        <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
-        {renderUserPrompts()}
-      </ScrollView>
-    </View>
+    <>
+      <Animatable.View ref={viewRef} easing="ease-in-out-back">
+        <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
+          <UserProfileHeader name={name} pronouns={pronouns} />
+          <UserProfileImage photoUri={photoUri} />
+          {renderFirstEventPrompt()}
+          <UserBio
+            birthday={birthday}
+            currentLocation={currentLocation}
+            hometown={hometown}
+            instagramHandle={instagramHandle}
+            occupation={occupation}
+          />
+          {renderEventPrompts()}
+          <UserBioPills pillTexts={passions} titleText="My Passions" />
+          {renderFirstUserPrompt()}
+          <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
+          {renderUserPrompts()}
+        </ScrollView>
+      </Animatable.View>
+      <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} />
+      <IgnoreButton onIgnore={onWaveOrIgnore} />
+    </>
   );
 };
 

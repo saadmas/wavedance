@@ -6,13 +6,14 @@ interface IgnoreButtonProps {
   onIgnore: () => void;
 }
 
-const IgnoreButton = ({}: IgnoreButtonProps) => {
+const IgnoreButton = ({ onIgnore }: IgnoreButtonProps) => {
   const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);
   const size = 55;
 
   const onPress = () => {
     setAnimationPlayerFlag(prev => prev + 1);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    onIgnore();
   };
 
   return (
@@ -20,6 +21,7 @@ const IgnoreButton = ({}: IgnoreButtonProps) => {
       animationPlayerFlag={animationPlayerFlag}
       source={require(`../../../assets/animations/ignore.json`)}
       onPress={onPress}
+      isStaticFramePosition={true}
       style={{
         width: size,
         height: size,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
-import { IconButton, Menu, Text } from 'react-native-paper';
+import { IconButton, Menu, Text, useTheme } from 'react-native-paper';
 import * as WebBrowser from 'expo-web-browser';
 import { useEventImageCache } from '../../../../../../state/events/EventImageCacheProvider';
 import { NavigationContext } from '@react-navigation/native';
@@ -17,6 +17,7 @@ interface EventActionsMenuProps {
 const EventActionsMenu = ({ event, isFavorite }: EventActionsMenuProps) => {
   const [visible, setVisible] = React.useState(false);
   const navigation = React.useContext(NavigationContext);
+  const { colors } = useTheme();
 
   const openMenu = () => setVisible(true);
 
@@ -104,7 +105,12 @@ const EventActionsMenu = ({ event, isFavorite }: EventActionsMenuProps) => {
   const anchor = <IconButton icon="dots-horizontal" onPress={openMenu} />;
 
   return (
-    <Menu visible={visible} onDismiss={closeMenu} anchor={anchor} contentStyle={{ borderWidth: 0 }}>
+    <Menu
+      visible={visible}
+      onDismiss={closeMenu}
+      anchor={anchor}
+      contentStyle={{ borderWidth: 0, backgroundColor: colors.onSurface }}
+    >
       {renderSpotifyAction()}
       {renderEdmTrainAction()}
       {renderEditEventPrompts()}

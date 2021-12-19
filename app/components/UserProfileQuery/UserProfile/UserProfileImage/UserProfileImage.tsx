@@ -4,7 +4,7 @@ import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
 
 interface UserProfileImageProps {
-  photoUri: string;
+  photoUri?: string;
 }
 
 const UserProfileImage = ({ photoUri }: UserProfileImageProps) => {
@@ -33,6 +33,7 @@ const UserProfileImage = ({ photoUri }: UserProfileImageProps) => {
   return (
     <>
       <ImageBackground
+        key={photoUri}
         onError={onError}
         onLoad={onLoad}
         source={{ uri: photoUri || undefined }}
