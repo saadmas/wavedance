@@ -18,7 +18,6 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
   const sendWave = async (waveSentByUid: string) => {
     try {
       const path = getUserWavesSentPath(waveSentByUid, event.id, waveReceivedByUid);
-      console.log('wavePath: ' + path);
       await firebase.database().ref(path).set(true);
     } catch (e) {
       console.error('sendWave failed');

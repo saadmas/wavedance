@@ -46,8 +46,6 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
         const value = snapshot.val();
         if (value) {
           const ignoredUserIds = new Set(Object.keys(value));
-          console.log(ignoredUserIds);
-
           return ignoredUserIds;
         }
       } catch (e) {
@@ -67,7 +65,6 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
         const value = snapshot.val();
         if (value) {
           const userWavedIds = new Set(Object.keys(value));
-          console.log(userWavedIds);
           return userWavedIds;
         }
       } catch (e) {
@@ -98,7 +95,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const filteredEventMembersIds = Object.keys(snapshotValue).filter(
             memberId =>
               !userBlockedIds.has(memberId) &&
-              // !userIgnoredIds.has(memberId) && ///
+              !userIgnoredIds.has(memberId) &&
               !userWavedIds.has(memberId) &&
               memberId !== uid
           );
@@ -125,8 +122,6 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
   if (responseStatus === ResponseStatus.Error) {
     return <ErrorDisplay />;
   }
-
-  console.log(eventMemberIds);
 
   return <EventCarousel eventMemberIds={eventMemberIds} event={event} />;
 };
