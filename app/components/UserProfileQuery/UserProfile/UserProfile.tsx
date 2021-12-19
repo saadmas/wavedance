@@ -15,7 +15,6 @@ import UserBioPills from './UserBioPills/UserBioPills';
 import UserProfileHeader from './UserProfileHeader/UserProfileHeader';
 import UserProfileImage from './UserProfileImage/UserProfileImage';
 import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
-import * as Animatable from 'react-native-animatable';
 
 interface UserProfileProps {
   userProfile: UserProfileType;
@@ -41,8 +40,6 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
     prompts,
     genres,
   } = userProfile;
-
-  const viewRef = React.useRef<Animatable.View & View>(null);
 
   const renderPrompts = (promptList: PromptEntry[], promptSelectionType: PromptSelectionType) => {
     if (!promptList?.length) {
@@ -90,12 +87,11 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
   const onWaveOrIgnore = async () => {
     await new Promise(r => setTimeout(r, 700)); // To let the wave/ignore animations play out nicely :)
     goToNextProfile();
-    viewRef.current?.fadeInUpBig?.();
   };
 
   return (
     <>
-      <Animatable.View ref={viewRef} easing="ease-in-out-circ">
+      <View>
         <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
           <UserProfileHeader name={name} pronouns={pronouns} />
           <UserProfileImage photoUri={photoUri} />
@@ -113,7 +109,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
           <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
           {renderUserPrompts()}
         </ScrollView>
-      </Animatable.View>
+      </View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} />
       <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} />
     </>

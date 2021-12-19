@@ -48,7 +48,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const ignoredUserIds = new Set(Object.keys(value));
           console.log(ignoredUserIds);
 
-          return ignoredUserIds; ///
+          return ignoredUserIds;
         }
       } catch (e) {
         console.error('fetchIgnoredUserIds failed');
@@ -68,7 +68,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
         if (value) {
           const userWavedIds = new Set(Object.keys(value));
           console.log(userWavedIds);
-          return userWavedIds; ///
+          return userWavedIds;
         }
       } catch (e) {
         console.error('fetchUserWavedIds failed');
@@ -98,7 +98,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const filteredEventMembersIds = Object.keys(snapshotValue).filter(
             memberId =>
               !userBlockedIds.has(memberId) &&
-              !userIgnoredIds.has(memberId) &&
+              // !userIgnoredIds.has(memberId) && ///
               !userWavedIds.has(memberId) &&
               memberId !== uid
           );

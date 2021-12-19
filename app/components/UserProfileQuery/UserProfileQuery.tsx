@@ -14,6 +14,7 @@ import { Prompt } from '../../state/enums/prompt';
 import { ResponseStatus } from '../../state/enums/responseStatus';
 import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
+import * as Animatable from 'react-native-animatable';
 
 interface UserProfileQueryProps {
   userId: string;
@@ -158,13 +159,15 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
   }, [userId]);
 
   if (responseStatus === ResponseStatus.Loading) {
-    return <ActivityIndicator style={{ height: '90%' }} size={60} />;
+    return null;
+    //* return <ActivityIndicator style={{ height: '90%' }} size={60} />;
   }
 
-  return;
-  <Animatable.View ref={viewRef} easing="ease-in-out-circ">
-    <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />;
-  </Animatable.View>;
+  return (
+    <Animatable.View animation="fadeInUpBig">
+      <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />
+    </Animatable.View>
+  );
 };
 
 export default UserProfileQuery;
