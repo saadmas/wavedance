@@ -1,16 +1,37 @@
 import * as React from 'react';
 import LottieInteractiveAnimation from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
 import * as Haptics from 'expo-haptics';
+import firebase from 'firebase';
+import { getUserEventIgnoresPath } from '../../firebase/utils';
 
 interface IgnoreButtonProps {
+  userToIgnoreId: string;
+  eventId: number;
   onIgnore: () => void;
 }
 
-const IgnoreButton = ({ onIgnore }: IgnoreButtonProps) => {
+const IgnoreButton = ({ onIgnore, userToIgnoreId, eventId }: IgnoreButtonProps) => {
   const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);
   const size = 55;
 
+  const ignoreUser = async () => {
+    //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    const ignorerId = 'foo';
+    const path = getUserEventIgnoresPath(ignorerId, userToIgnoreId, eventId);
+
+    try {
+      await firebase.database().ref(path).set(true);
+    } catch (e) {
+      console.error('ignoreUser failed');
+      console.error(e);
+      console.error(`userToIgnoreId: ${userToIgnoreId}`);
+      console.error(`ignorerId: ${ignorerId}`);
+      console.error(`eventId: ${eventId}`);
+    }
+  };
+
   const onPress = () => {
+    ignoreUser();
     setAnimationPlayerFlag(prev => prev + 1);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     onIgnore();

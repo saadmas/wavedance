@@ -115,7 +115,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
         </ScrollView>
       </Animatable.View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} />
-      <IgnoreButton onIgnore={onWaveOrIgnore} />
+      <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} />
     </>
   );
 };

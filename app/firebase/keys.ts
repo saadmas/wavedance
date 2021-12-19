@@ -8,6 +8,7 @@ export enum FirebaseNode {
   UserWavesSent = 'userWavesSent',
   UserWavesReceived = 'userWavesReceived',
   UserFavoriteEvents = 'userFavoriteEvents',
+  UserEventIgnores = 'userEventIgnores',
   EventMembers = 'eventMembers',
   EventPhotos = 'eventPhotos',
 }

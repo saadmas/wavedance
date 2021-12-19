@@ -45,7 +45,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
     setAnimationPlayerFlag(prev => prev + 1);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-    // const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
     const waveSentByUid = 'foo';
     receiveWave(waveSentByUid);
     sendWave(waveSentByUid);
