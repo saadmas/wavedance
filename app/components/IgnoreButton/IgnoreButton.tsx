@@ -17,7 +17,7 @@ const IgnoreButton = ({ onIgnore, userToIgnoreId, eventId }: IgnoreButtonProps) 
   const ignoreUser = async () => {
     //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
     const ignorerId = 'foo';
-    const path = getUserEventIgnoresPath(ignorerId, userToIgnoreId, eventId);
+    const path = getUserEventIgnoresPath(ignorerId, eventId, userToIgnoreId);
 
     try {
       await firebase.database().ref(path).set(true);

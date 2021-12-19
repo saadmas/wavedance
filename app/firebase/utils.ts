@@ -45,7 +45,7 @@ export const getUserBlocksPath = (uid: string) => {
   return path;
 };
 
-export const getUserWavesSentPath = (sentByUid: string, receivedByUid: string, eventId: number) => {
+export const getUserWavesSentPath = (sentByUid: string, eventId: number, receivedByUid?: string) => {
   const path = getFirebasePath(FirebaseNode.UserWavesSent, sentByUid, eventId.toString(), receivedByUid);
   return path;
 };
@@ -55,7 +55,7 @@ export const getUserWavesReceivedPath = (receivedByUid: string, sentById: string
   return path;
 };
 
-export const getUserEventIgnoresPath = (ignorerUid: string, ignoredUid: string, eventId: number) => {
+export const getUserEventIgnoresPath = (ignorerUid: string, eventId: number, ignoredUid?: string) => {
   const path = getFirebasePath(FirebaseNode.UserEventIgnores, ignorerUid, eventId.toString(), ignoredUid);
   return path;
 };

@@ -38,20 +38,34 @@ export interface UserProfileType {
   occupation?: string;
 }
 
+const getEmptyUserProfile = (): UserProfileType => ({
+  id: '',
+  name: '',
+  birthday: '',
+  hometown: '',
+  currentLocation: '',
+  photoUri: '',
+  passions: [],
+  pronouns: [],
+  genres: [],
+  prompts: new Map(),
+});
+
 const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
+    ...getEmptyUserProfile(),
     id: userId,
-    name: '',
-    birthday: '',
-    hometown: '',
-    currentLocation: '',
-    photoUri: '',
-    passions: [],
-    pronouns: [],
-    genres: [],
-    prompts: new Map(),
   });
+
+  React.useEffect(() => {
+    setResponseStatus(ResponseStatus.Loading);
+
+    setUserProfile({
+      ...getEmptyUserProfile(),
+      id: userId,
+    });
+  }, [userId]);
 
   React.useEffect(() => {
     const fetchPhotoUri = async () => {
@@ -135,6 +149,7 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
       }
     };
 
+    setResponseStatus(ResponseStatus.Loading);
     fetchPhotoUri();
     fetchBasicInfo();
     fetchAdditionalInfo();
@@ -146,7 +161,10 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;
   }
 
-  return <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />;
+  return;
+  <Animatable.View ref={viewRef} easing="ease-in-out-circ">
+    <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />;
+  </Animatable.View>;
 };
 
 export default UserProfileQuery;

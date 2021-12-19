@@ -3,7 +3,12 @@ import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
-import { getEventMembersPath, getUserBlocksPath } from '../../../../../../firebase/utils';
+import {
+  getEventMembersPath,
+  getUserBlocksPath,
+  getUserEventIgnoresPath,
+  getUserWavesSentPath,
+} from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventCarousel from '../EventCarousel/EventCarousel';
 
@@ -34,6 +39,47 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
       return new Set();
     };
 
+    const fetchUserIgnoredIds = async (uid: string): Promise<Set<string>> => {
+      try {
+        const path = getUserEventIgnoresPath(uid, event.id);
+        const snapshot = await firebase.database().ref(path).get();
+        const value = snapshot.val();
+        if (value) {
+          const ignoredUserIds = new Set(Object.keys(value));
+          console.log(ignoredUserIds);
+
+          return ignoredUserIds; ///
+        }
+      } catch (e) {
+        console.error('fetchIgnoredUserIds failed');
+        console.error(e);
+        console.error(`uid: ${uid}`);
+        console.error(`eventId: ${event.id}`);
+      }
+
+      return new Set();
+    };
+
+    const fetchUserWavedIds = async (uid: string): Promise<Set<string>> => {
+      try {
+        const path = getUserWavesSentPath(uid, event.id);
+        const snapshot = await firebase.database().ref(path).get();
+        const value = snapshot.val();
+        if (value) {
+          const userWavedIds = new Set(Object.keys(value));
+          console.log(userWavedIds);
+          return userWavedIds; ///
+        }
+      } catch (e) {
+        console.error('fetchUserWavedIds failed');
+        console.error(e);
+        console.error(`uid: ${uid}`);
+        console.error(`eventId: ${event.id}`);
+      }
+
+      return new Set();
+    };
+
     const fetchEventMembers = async () => {
       try {
         const path = getEventMembersPath(event.id);
@@ -44,10 +90,19 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           //f remove foo
           // const uid = firebase.auth().currentUser?.uid ?? 'foo';
           const uid = 'foo';
+
           const userBlockedIds = await fetchUserBlockedIds(uid);
+          const userIgnoredIds = await fetchUserIgnoredIds(uid);
+          const userWavedIds = await fetchUserWavedIds(uid);
+
           const filteredEventMembersIds = Object.keys(snapshotValue).filter(
-            memberId => !userBlockedIds.has(memberId) && memberId !== uid
+            memberId =>
+              !userBlockedIds.has(memberId) &&
+              !userIgnoredIds.has(memberId) &&
+              !userWavedIds.has(memberId) &&
+              memberId !== uid
           );
+
           setEventMemberIds(filteredEventMembersIds);
         }
 
@@ -70,6 +125,8 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
   if (responseStatus === ResponseStatus.Error) {
     return <ErrorDisplay />;
   }
+
+  console.log(eventMemberIds);
 
   return <EventCarousel eventMemberIds={eventMemberIds} event={event} />;
 };
