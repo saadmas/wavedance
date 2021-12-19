@@ -53,7 +53,7 @@ const PromptsSelector = ({
       };
 
       return (
-        <Animatable.View key={prompt} animation="fadeInLeft" style={{ marginBottom: 10 }}>
+        <Animatable.View key={prompt} animation="fadeIn" duration={1000} style={{ marginBottom: 10 }}>
           <PromptCard
             question={prompt}
             answer={answer.answer}

@@ -95,7 +95,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
 
   return (
     <>
-      <Animatable.View ref={viewRef} easing="ease-in-out-back">
+      <Animatable.View ref={viewRef} easing="ease-in-out-circ">
         <ScrollView contentInset={{ bottom: 100 }} showsVerticalScrollIndicator={false}>
           <UserProfileHeader name={name} pronouns={pronouns} />
           <UserProfileImage photoUri={photoUri} />
