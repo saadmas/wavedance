@@ -5,18 +5,20 @@ import LottieAnimation from '../LottieAnimation/LottieAnimation';
 
 interface NoDataDisplayProps {
   noDataText: string;
+  source?: string;
+  shouldLoop?: boolean;
 }
 
-const NoDataDisplay = ({ noDataText }: NoDataDisplayProps) => {
+const NoDataDisplay = ({ noDataText, source, shouldLoop = true }: NoDataDisplayProps) => {
   const { fonts } = useTheme();
 
   return (
     <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
       <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>{noDataText}</Text>
       <LottieAnimation
-        source={require(`../../../assets/animations/tumbleweed-rolling.json`)}
+        source={source ?? require(`../../../assets/animations/tumbleweed-rolling.json`)}
         finalFramePosition={1}
-        shouldLoop={true}
+        shouldLoop={shouldLoop}
         style={{
           width: 150,
           height: 150,

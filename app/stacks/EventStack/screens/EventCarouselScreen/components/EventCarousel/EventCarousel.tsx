@@ -2,6 +2,7 @@ import * as React from 'react';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 import UserProfileQuery from '../../../../../../components/UserProfileQuery/UserProfileQuery';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import EventCarouselEnd from '../EventCarouselEnd/EventCarouselEnd';
 
 interface EventCarouselProps {
   event: EdmTrainEvent;
@@ -19,8 +20,9 @@ const EventCarousel = ({ eventMemberIds, event }: EventCarouselProps) => {
     return <ErrorDisplay errorText="No one is interested in this event yet" />;
   }
 
-  const hasViewedAllMembers = eventMemberIds.length === currentMemberIndex;
+  const hasViewedAllMembers = 1 === currentMemberIndex;
   if (hasViewedAllMembers) {
+    return <EventCarouselEnd />;
   }
 
   return (
