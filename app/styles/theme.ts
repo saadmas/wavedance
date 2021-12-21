@@ -16,7 +16,7 @@ const theme = {
     primary: '#864879',
     accent: '#239874',
     text: '#efd9ce',
-    onSurface: '#333333',
+    onSurface: '#1E1E1E',
     background: backgroundColor,
   },
   fonts: configureFonts(fontConfig),

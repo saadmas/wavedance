@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { PromptAnswer } from '../../components/PromptsManager/PromptsManager';
 import { EdmTrainEvent } from '../../edmTrain/types';
 import { FavoriteEvent } from '../../firebase/types';
 import { getEventMembersPath, getUserEventPromptsPath, getUserFavoriteEventsPath } from '../../firebase/utils';
@@ -73,7 +74,11 @@ export const getUserEventPrompts = async (uid: string, eventId: number) => {
   }
 };
 
-export const saveUserEventPrompts = async (uid: string, eventId: number, filledPrompts?: Map<EventPrompt, string>) => {
+export const saveUserEventPrompts = async (
+  uid: string,
+  eventId: number,
+  filledPrompts?: Map<EventPrompt, PromptAnswer>
+) => {
   if (!filledPrompts) {
     return;
   }

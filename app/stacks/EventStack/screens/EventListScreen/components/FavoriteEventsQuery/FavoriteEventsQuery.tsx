@@ -6,8 +6,8 @@ import { useEventQuery } from '../../../../../../hooks/useEventQuery';
 import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventList from '../EventList/EventList';
-import EventListError from '../EventListError/EventListError';
 import EventListLoadingSkeleton from '../EventListLoadingSkeleton/EventListLoadingSkeleton';
+import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 
 interface FavoriteEventsQueryProps {
   searchText: string;
@@ -71,7 +71,7 @@ const FavoriteEventsQuery = ({ searchText, locationId }: FavoriteEventsQueryProp
   }
 
   if (responseStatus === ResponseStatus.Error) {
-    return <EventListError />;
+    return <ErrorDisplay />;
   }
 
   return favoriteEvents ? (

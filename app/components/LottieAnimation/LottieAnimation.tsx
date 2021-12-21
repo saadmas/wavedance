@@ -6,9 +6,10 @@ interface LottieAnimationProps {
   shouldLoop: boolean;
   source: string;
   finalFramePosition: number;
+  speed?: number;
   style?: StyleProp<ViewStyle>;
 }
-const LottieAnimation = ({ source, finalFramePosition, style, shouldLoop }: LottieAnimationProps) => {
+const LottieAnimation = ({ source, finalFramePosition, style, shouldLoop, speed }: LottieAnimationProps) => {
   const [framePosition, setFramePosition] = React.useState<number | undefined>(undefined);
 
   const onAnimationFinish = () => {
@@ -19,6 +20,7 @@ const LottieAnimation = ({ source, finalFramePosition, style, shouldLoop }: Lott
     <LottieView
       source={source}
       autoPlay={true}
+      speed={speed}
       progress={framePosition}
       onAnimationFinish={onAnimationFinish}
       loop={shouldLoop}

@@ -8,4 +8,5 @@ export enum Path {
   LocationSelect = 'LocationSelect',
   EventPrompts = 'EventPrompts',
   EventCarousel = 'EventCarousel',
+  SpotifySearch = 'SpotifySearch',
 }

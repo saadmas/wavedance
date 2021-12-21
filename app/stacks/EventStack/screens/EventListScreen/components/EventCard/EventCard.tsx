@@ -48,7 +48,7 @@ const EventCard = ({ event, locationId, isFavoritesList, eventIndex, removeEvent
   };
 
   const navigateToEventCarousel = () => {
-    navigation?.navigate(Path.EventCarousel, { eventId });
+    navigation?.navigate(Path.EventCarousel, { event });
   };
 
   const onRemoveEventFromFavorites = async () => {

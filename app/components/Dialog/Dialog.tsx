@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Paragraph, Dialog as RnpDialog, Portal, Provider, useTheme } from 'react-native-paper';
+import { Button, Paragraph, Dialog as RnpDialog, Portal, useTheme } from 'react-native-paper';
 
 interface DialogProps {
   isVisible: boolean;
@@ -8,9 +8,18 @@ interface DialogProps {
   description: string;
   onPrimaryAction: () => void;
   onDismiss: () => void;
+  secondaryButtonText?: string;
 }
 
-const Dialog = ({ isVisible, onPrimaryAction, onDismiss, primaryButtonText, title, description }: DialogProps) => {
+const Dialog = ({
+  isVisible,
+  onPrimaryAction,
+  onDismiss,
+  primaryButtonText,
+  title,
+  description,
+  secondaryButtonText,
+}: DialogProps) => {
   const { colors, fonts } = useTheme();
   const fontSize = 10;
   const lineHeight = 0;
@@ -49,7 +58,7 @@ const Dialog = ({ isVisible, onPrimaryAction, onDismiss, primaryButtonText, titl
             theme={{ colors: { primary: '#fff' } }}
             uppercase={false}
           >
-            Cancel
+            {secondaryButtonText ?? 'Cancel'}
           </Button>
         </RnpDialog.Actions>
       </RnpDialog>

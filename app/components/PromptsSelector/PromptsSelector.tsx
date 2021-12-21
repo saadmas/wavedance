@@ -1,21 +1,23 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Button, Card, Divider, IconButton, Paragraph, Text, useTheme } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { Path } from '../../routing/paths';
 import { Prompt } from '../../state/enums/prompt';
 import NextScreenButton from '../NextScreenButton/NextScreenButton';
 import Title from '../Title/Title';
 import * as Animatable from 'react-native-animatable';
 import { EventPrompt } from '../../state/enums/eventPrompt';
-import { PromptDrawerParamList } from '../PromptsManager/PromptsManager';
+import { PromptAnswer, PromptDrawerParamList } from '../PromptsManager/PromptsManager';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
-import { textFontSize } from '../../styles/theme';
+import { defaultScreenPadding, textFontSize } from '../../styles/theme';
+import PromptCard from '../PromptCard/PromptCard';
 
 interface PromptsSelectorProps {
   selectionType: PromptSelectionType;
-  filledPrompts: Map<Prompt | EventPrompt, string>;
+  filledPrompts: Map<Prompt | EventPrompt, PromptAnswer>;
   navigation: DrawerNavigationProp<PromptDrawerParamList, Path.PromptSelector>;
+  scrollViewRef: React.RefObject<ScrollView>;
   onPromptsSubmit: () => void;
   deletePrompt: (prompt: Prompt | EventPrompt) => void;
 }
@@ -26,9 +28,8 @@ const PromptsSelector = ({
   navigation,
   deletePrompt,
   selectionType,
+  scrollViewRef,
 }: PromptsSelectorProps) => {
-  const { fonts } = useTheme();
-  const cardActionIconSize = 15;
   const minPromptCount = selectionType == PromptSelectionType.General ? 1 : 0;
   const maxPromptCount = 3;
   const isDisabled = filledPrompts.size < minPromptCount;
@@ -39,11 +40,11 @@ const PromptsSelector = ({
 
   const renderPromptCards = () => {
     const promptCards = [...filledPrompts.entries()].reverse().map(entry => {
-      const [prompt, value] = entry;
+      const [prompt, answer] = entry;
 
       const onEdit = () => {
         navigation.navigate(Path.PromptInput, {
-          selectedPrompt: { prompt, value },
+          selectedPrompt: { prompt, answer },
         });
       };
 
@@ -52,22 +53,14 @@ const PromptsSelector = ({
       };
 
       return (
-        <Animatable.View key={prompt} animation="fadeInLeft">
-          <Card style={{ width: '100%', marginTop: 20, borderRadius: 5 }}>
-            <Card.Title
-              title={prompt}
-              titleStyle={{ fontFamily: fonts.thin.fontFamily, padding: 5, fontSize: 13 }}
-              titleNumberOfLines={10}
-            />
-            <Divider style={{ marginLeft: 20, marginRight: 20, marginBottom: 10 }} />
-            <Card.Content>
-              <Paragraph style={{ fontSize: 12 }}>{value}</Paragraph>
-            </Card.Content>
-            <Card.Actions>
-              <IconButton icon="pencil-outline" size={cardActionIconSize} onPress={onEdit} />
-              <IconButton icon="trash-can-outline" size={cardActionIconSize} onPress={onDelete} />
-            </Card.Actions>
-          </Card>
+        <Animatable.View key={prompt} animation="fadeIn" duration={1000} style={{ marginBottom: 10 }}>
+          <PromptCard
+            question={prompt}
+            answer={answer.answer}
+            photoUri={answer.photoUri}
+            spotifyUri={answer.spotifyUri}
+            cardActionHandlers={{ onEdit, onDelete }}
+          />
         </Animatable.View>
       );
     });
@@ -96,27 +89,29 @@ const PromptsSelector = ({
   };
 
   return (
-    <>
-      <Title title={getTitleText()} />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
-        <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
-      </View>
-      <ScrollView contentInset={{ bottom: 50 }} showsVerticalScrollIndicator={false}>
-        {renderPromptCards()}
+    <View style={{ padding: defaultScreenPadding, height: '100%' }}>
+      <ScrollView showsVerticalScrollIndicator={false} ref={scrollViewRef}>
+        <Title title={getTitleText()} />
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 5,
+            marginTop: 5,
+          }}
+        >
+          <Text style={{ fontSize: textFontSize }}>{renderCurrentSelectionText()}</Text>
+          <NextScreenButton onPress={onPromptsSubmit} isDisabled={isDisabled} />
+        </View>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
+            marginTop: filledPrompts.size ? 0 : 30,
+            marginBottom: 10,
           }}
         >
           {filledPrompts.size < maxPromptCount && (
@@ -132,8 +127,10 @@ const PromptsSelector = ({
             </Button>
           )}
         </View>
+        {renderPromptCards()}
+        <View style={{ height: 100 }} />
       </ScrollView>
-    </>
+    </View>
   );
 };
 3;

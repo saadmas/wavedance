@@ -1,25 +1,28 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
+import LottieAnimation from '../LottieAnimation/LottieAnimation';
 
-interface EventListErrorProps {}
+interface ErrorDisplayProps {
+  errorText?: string;
+}
 
-const EventListError = ({}: EventListErrorProps) => {
+const ErrorDisplay = ({ errorText }: ErrorDisplayProps) => {
   const { fonts } = useTheme();
+  const defaultErrorText = 'Whoops, something went wrong!';
 
   return (
     <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%' }}>
       <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
-        Oops, something went wrong
+        {errorText ?? defaultErrorText}
       </Text>
       <LottieAnimation
-        source={require(`../../../../../../../assets/animations/broken-branch.json`)}
+        source={require(`../../../assets/animations/sad-heart.json`)}
         finalFramePosition={1}
-        shouldLoop={false}
+        shouldLoop={true}
         style={{
-          width: 100,
-          height: 100,
+          width: 150,
+          height: 150,
           marginTop: 5,
         }}
       />
@@ -27,4 +30,4 @@ const EventListError = ({}: EventListErrorProps) => {
   );
 };
 
-export default EventListError;
+export default ErrorDisplay;

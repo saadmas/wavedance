@@ -1,13 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { Text } from 'react-native-paper';
 import { Path } from '../../../../routing/paths';
 import { EventStackParamList } from '../../EventStack';
+import EventCarouselQuery from './components/EventCarouselQuery/EventCarouselQuery';
 
 type EventCarouselScreenProps = NativeStackScreenProps<EventStackParamList, Path.EventCarousel>;
 
-const EventCarouselScreen = (props: EventCarouselScreenProps) => {
-  return <Text>Event Carousel incoming!</Text>;
+const EventCarouselScreen = ({ route }: EventCarouselScreenProps) => {
+  const { event } = route.params;
+
+  return <EventCarouselQuery event={event} />;
 };
 
 export default EventCarouselScreen;

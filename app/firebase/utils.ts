@@ -20,7 +20,7 @@ export const getUserAdditionalInfoPath = (uid: string) => {
   return path;
 };
 
-export const getUseBasicInfoPath = (uid: string) => {
+export const getUserBasicInfoPath = (uid: string) => {
   const path = getFirebasePath(FirebaseNode.UserBasicInfo, uid);
   return path;
 };
@@ -37,5 +37,25 @@ export const getEventMembersPath = (eventId: number, uid?: string) => {
 
 export const getUserEventPromptsPath = (uid: string, eventId: number) => {
   const path = getFirebasePath(FirebaseNode.UserEventPrompts, uid, eventId.toString());
+  return path;
+};
+
+export const getUserBlocksPath = (uid: string) => {
+  const path = getFirebasePath(FirebaseNode.UserBlocks, uid);
+  return path;
+};
+
+export const getUserWavesSentPath = (sentByUid: string, eventId: number, receivedByUid?: string) => {
+  const path = getFirebasePath(FirebaseNode.UserWavesSent, sentByUid, eventId.toString(), receivedByUid);
+  return path;
+};
+
+export const getUserWavesReceivedPath = (receivedByUid: string, sentById: string, eventId: number) => {
+  const path = getFirebasePath(FirebaseNode.UserWavesReceived, receivedByUid, eventId.toString(), sentById);
+  return path;
+};
+
+export const getUserEventIgnoresPath = (ignorerUid: string, eventId: number, ignoredUid?: string) => {
+  const path = getFirebasePath(FirebaseNode.UserEventIgnores, ignorerUid, eventId.toString(), ignoredUid);
   return path;
 };

@@ -4,8 +4,8 @@ import { useEventQuery } from '../../../../../../hooks/useEventQuery';
 import { getUserFavoriteEventsPath } from '../../../../../../firebase/utils';
 import { useEventFavoritesCacheUpdater } from '../../../../../../state/events/EventFavoritesCacheProvider';
 import EventList from '../EventList/EventList';
-import EventListError from '../EventListError/EventListError';
 import EventListLoadingSkeleton from '../EventListLoadingSkeleton/EventListLoadingSkeleton';
+import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 
 interface EventListQueryProps {
   searchText: string;
@@ -50,7 +50,7 @@ const EventListQuery = ({ searchText, locationId }: EventListQueryProps) => {
   }
 
   if (isError || isFailure) {
-    return <EventListError />;
+    return <ErrorDisplay />;
   }
 
   return (

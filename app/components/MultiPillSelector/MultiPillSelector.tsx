@@ -82,6 +82,7 @@ const MultiPillSelector = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          marginTop: 5,
         }}
       >
         {renderCurrentSelectionText()}
@@ -101,7 +102,7 @@ const MultiPillSelector = ({
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}
-        contentInset={{ bottom: 50 }}
+        contentInset={{ bottom: 150 }}
         showsVerticalScrollIndicator={false}
       >
         {renderPills()}

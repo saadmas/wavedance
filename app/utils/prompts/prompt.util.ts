@@ -1,3 +1,4 @@
+import { PromptAnswer } from '../../components/PromptsManager/PromptsManager';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Prompt } from '../../state/enums/prompt';
 import { PromptSelectionType } from '../../state/enums/promptSelectionType';
@@ -18,10 +19,10 @@ const getPromptInverseMap = (selectionType: PromptSelectionType): Map<Prompt | E
 
 export const getPromptsToStore = (
   selectionType: PromptSelectionType,
-  displayPrompts: Map<Prompt | EventPrompt, string>
-): { [promptKey: string]: string } => {
+  displayPrompts: Map<Prompt | EventPrompt, PromptAnswer>
+): { [promptKey: string]: PromptAnswer } => {
   const promptInverseMap = getPromptInverseMap(selectionType);
-  const promptsToStore: Map<string, string> = new Map();
+  const promptsToStore: Map<string, PromptAnswer> = new Map();
 
   displayPrompts.forEach((answer, prompt) => {
     const promptKey = promptInverseMap.get(prompt) ?? prompt;
@@ -29,4 +30,24 @@ export const getPromptsToStore = (
   });
 
   return Object.fromEntries(promptsToStore);
+};
+
+export const getPromptsToDisplay = (storedPrompts: Object): Map<EventPrompt, PromptAnswer> => {
+  const displayPrompts: Map<EventPrompt, PromptAnswer> = new Map();
+
+  Object.entries(storedPrompts).forEach(([key, answer]) => {
+    const promptfullText = getFullTextFromPromptKey(key, PromptSelectionType.Event);
+    if (promptfullText) {
+      displayPrompts.set(promptfullText as EventPrompt, answer);
+    }
+  });
+
+  return displayPrompts;
+};
+
+export const getFullTextFromPromptKey = (key: string, type?: PromptSelectionType): string => {
+  const promptEntries = type === PromptSelectionType.Event ? Object.entries(EventPrompt) : Object.entries(Prompt);
+  const prompt = promptEntries.find(entry => entry[0] === key);
+  const fullText = prompt?.[1];
+  return fullText ?? key;
 };

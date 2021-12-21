@@ -14605,7 +14605,7 @@
       "instagramHandle": "vote4umi",
       "occupation": "NYC HEALTH!",
       "passions": [
-        "memes"
+        "☕️ Coffee"
       ],
       "pronouns": [
         "she/her"
@@ -14617,16 +14617,16 @@
       "birthday": "1-12-2000",
       "name": "Saad Masood"
     },
-     "anu": {
+    "anu": {
       "birthday": "7-7-1997",
       "name": "Anushe Uzair"
     },
-     "musti": {
+    "musti": {
       "birthday": "10-31-1996",
       "name": "Mustafa Hafeez"
     },
-     "umi": {
-      "birthday": "11-12-1999",
+    "umi": {
+      "birthday": "Wed Nov 01 2000",
       "name": "Umaima Abbasi"
     }
   },
@@ -14634,29 +14634,73 @@
     "foo": {
       "FavoriteArtist": "Lane 8"
     },
-    "anu": {
-      "FavoriteArtist": "Rufus"
+    "umi": {
+      "FavoriteArtist": {
+        "answer": "Rufus Du Sol",
+        "spotifyUri": "https://open.spotify.com/artist/5Pb27ujIyYb33zBqVysBkj",
+        "photoUri": "https://i.scdn.co/image/ab6761610000e5eba5d83556275bb22511f57624"
+      },
+      "FavoriteSong": {
+        "answer": "Yonaguni - Bad Bunny",
+        "spotifyUri": "https://i.scdn.co/image/ab67616d0000b27364afd6879102d03460bd3ad9"
+      }
     },
     "musti": {
-      "FavoriteArtist": "Michael Bibi"
+      "FavoriteArtist": {
+        "answer": "Michael Bibi",
+        "spotifyUri": "https://open.spotify.com/artist/4cvdQRyHmkSQSakUrW2oxv",
+        "photoUri": "https://i.scdn.co/image/ab6761610000e5eb749961fd71fc6d3cd0b487d2"
+      }
+    },
+    "anu": {
+      "FavoriteArtist": {
+        "answer": "Solomun",
+        "spotifyUri": "https://open.spotify.com/artist/5wJK4kQAkVGjqM9x46KQOC",
+        "photoUri": "https://i.scdn.co/image/ab6761610000e5ebe9f2b43b24a3d76ec84c1e93"
+      }
+    }
+  },
+  "userEventPrompts": {
+    "foo": {
+      "FavoriteArtist": "Lane 8"
     },
     "umi": {
-      "FavoriteArtist": "Bad Bunny"
+      "181225": {
+        "FavSongByArtist": {
+          "answer": "Home - Solomun",
+          "spotifyUri": "https://open.spotify.com/track/4Np4NOxEBsYvPNBZ8W0BDu",
+          "photoUri": "https://i.scdn.co/image/ab67616d0000b27304d646b1c1cda87cbef65b8c"
+        },
+        "OneSongLive": {
+          "answer": "Innerbloom - Rufus Du Sol",
+          "spotifyUri": "https://open.spotify.com/track/5GXeNbxOEbd7sKrbsVLVVx",
+          "photoUri": "https://i.scdn.co/image/ab67616d0000b2732b4a6961af25f0ccb808d36f"
+        }
+      }
+    },
+    "musti": {
+      "181225": {
+        "FavSongByArtist": {
+          "answer": "Asura - Charlotte de Witte",
+          "spotifyUri": "https://open.spotify.com/track/0kfCf8GLQDZFZZIhVtHZvk",
+          "photoUri": "https://i.scdn.co/image/ab67616d0000b273e7fc6b339c56729946f97879"
+        }
+      }
     }
   },
   "eventMembers": {
     "181225": {
-    "foo": "true",
-    "umi": "true",
-    "musti": "true",
-    "anu": "true"
+      "foo": "true",
+      "umi": "true",
+      "musti": "true",
+      "anu": "true"
     }
   },
   "userFavoriteEvents": {
     "foo": {
-"181225": {
-  "createdDate": "2021-10-14T15:23:05Z"
-}
+      "181225": {
+        "createdDate": "2021-10-14T15:23:05Z"
+      }
     }
   }
 }

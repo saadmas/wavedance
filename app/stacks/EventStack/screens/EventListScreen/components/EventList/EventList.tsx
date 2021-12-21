@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ListRenderItemInfo, View, VirtualizedList } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import LottieAnimation from '../../../../../../components/LottieAnimation/LottieAnimation';
+import { ListRenderItemInfo, VirtualizedList } from 'react-native';
+import NoDataDisplay from '../../../../../../components/NoDataDisplay/NoDataDisplay';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
 import EventCard from '../EventCard/EventCard';
 
@@ -15,7 +14,6 @@ interface EventListProps {
 }
 
 const EventList = ({ events, searchText, locationId, isFavoritesList }: EventListProps) => {
-  const { fonts } = useTheme();
   const listRef = React.useRef<VirtualizedList<EdmTrainEvent>>(null);
   const [filteredEvents, setFilteredEvents] = React.useState<DisplayEvent[]>(events);
 
@@ -94,23 +92,7 @@ const EventList = ({ events, searchText, locationId, isFavoritesList }: EventLis
   );
 
   const renderNoData = React.useCallback(() => {
-    return (
-      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-        <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 18, letterSpacing: 0.8 }}>
-          Bummer, no events found
-        </Text>
-        <LottieAnimation
-          source={require(`../../../../../../../assets/animations/tumbleweed-rolling.json`)}
-          finalFramePosition={1}
-          shouldLoop={true}
-          style={{
-            width: 150,
-            height: 150,
-            marginTop: 5,
-          }}
-        />
-      </View>
-    );
+    return <NoDataDisplay noDataText="Bummer, no events found" />;
   }, []);
 
   const onScrollToIndexFailed = (info: {

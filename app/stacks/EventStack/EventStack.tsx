@@ -1,7 +1,8 @@
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
-import { EdmTrainLocation } from '../../edmTrain/types';
+import { EdmTrainEvent, EdmTrainLocation } from '../../edmTrain/types';
 import { Path } from '../../routing/paths';
 import { defaultScreenPadding } from '../../styles/theme';
 import EventCarouselScreen from './screens/EventCarouselScreen/EventCarouselScreen';
@@ -14,7 +15,7 @@ const Stack = createNativeStackNavigator();
 export type EventStackParamList = {
   [Path.LocationSelect]: undefined;
   [Path.EventList]: { location?: EdmTrainLocation };
-  [Path.EventCarousel]: { eventId: number };
+  [Path.EventCarousel]: { event: EdmTrainEvent };
   [Path.EventPrompts]: EventPromptsProps;
 };
 
@@ -33,11 +34,15 @@ const EventStack = () => {
     >
       <Stack.Screen name={Path.EventList} component={EventListScreen} />
       <Stack.Screen name={Path.LocationSelect} component={LocationSelectScreen} options={{ headerShown: true }} />
-      <Stack.Screen name={Path.EventCarousel} component={EventCarouselScreen} options={{ headerShown: true }} />
+      <Stack.Screen
+        name={Path.EventCarousel}
+        component={EventCarouselScreen}
+        options={{ headerShown: true, contentStyle: { paddingTop: 45, paddingHorizontal: defaultScreenPadding } }}
+      />
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
-        options={{ headerShown: true, contentStyle: { paddingTop: 50, paddingHorizontal: defaultScreenPadding } }}
+        options={{ contentStyle: { paddingTop: 0, paddingHorizontal: defaultScreenPadding } }}
       />
     </Stack.Navigator>
   );

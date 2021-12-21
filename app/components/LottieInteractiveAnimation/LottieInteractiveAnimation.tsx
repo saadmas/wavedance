@@ -13,6 +13,7 @@ interface LottieInteractiveAnimationProps {
   animationPlayerFlag: number;
   onPress: () => void;
   initialFramePosition?: FramePosition;
+  isStaticFramePosition?: boolean;
   speed?: number;
   style?: StyleProp<ViewStyle>;
 }
@@ -24,6 +25,7 @@ const LottieInteractiveAnimation = ({
   initialFramePosition,
   speed,
   animationPlayerFlag,
+  isStaticFramePosition,
 }: LottieInteractiveAnimationProps) => {
   const animationRef = React.useRef<AnimatedLottieView>(null);
   const [framePosition, setFramePosition] = React.useState<FramePosition>(initialFramePosition ?? FramePosition.Start);
@@ -47,7 +49,11 @@ const LottieInteractiveAnimation = ({
   };
 
   const onAnimationFinish = () => {
-    setFramePosition(prevPosition => (prevPosition === FramePosition.Start ? FramePosition.End : FramePosition.Start));
+    if (!isStaticFramePosition) {
+      setFramePosition(prevPosition =>
+        prevPosition === FramePosition.Start ? FramePosition.End : FramePosition.Start
+      );
+    }
   };
 
   return (

@@ -15,7 +15,7 @@ const Title = ({ title }: TitleProps) => {
         style={{
           fontSize: 22,
           paddingTop: 10,
-          paddingBottom: 10,
+          paddingBottom: 0,
           fontFamily: fonts.thin.fontFamily,
         }}
       >
