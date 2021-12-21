@@ -110,7 +110,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
           {renderUserPrompts()}
         </ScrollView>
       </View>
-      <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} />
+      <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} name={name} />
       <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} />
     </>
   );

@@ -4,15 +4,21 @@ import * as Haptics from 'expo-haptics';
 import firebase from 'firebase';
 import { EdmTrainEvent } from '../../edmTrain/types';
 import { getUserWavesReceivedPath, getUserWavesSentPath } from '../../firebase/utils';
+import LottieAnimation from '../LottieAnimation/LottieAnimation';
+import Dialog from '../Dialog/Dialog';
 
 interface WaveButtonProps {
   waveReceivedByUid: string;
+  name: string;
   event: EdmTrainEvent;
   onWave: () => void;
 }
 
-const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
+const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps) => {
   const [animationPlayerFlag, setAnimationPlayerFlag] = React.useState<number>(0);
+  const [isMatchDialogOpen, setIsMatchDialogOpen] = React.useState<boolean>(false);
+  const [shouldPlayMatchAnimation, setShouldPlayMatchAnimation] = React.useState<boolean>(false);
+
   const size = 55;
 
   const sendWave = async (waveSentByUid: string) => {
@@ -23,6 +29,19 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
       console.error('sendWave failed');
       console.error(e);
       console.error(`waveSentByUid: ${waveSentByUid}`);
+      console.error(`waveReceivedByUid: ${waveReceivedByUid}`);
+      console.error(`event.id: ${event.id}`);
+    }
+  };
+
+  const isMatch = async (currentUserId: string) => {
+    try {
+      const path = getUserWavesReceivedPath(currentUserId, waveReceivedByUid, event.id);
+      const snapshot = await firebase.database().ref(path).get();
+    } catch (e) {
+      console.error('isMatch failed');
+      console.error(e);
+      console.error(`currentUserId: ${currentUserId}`);
       console.error(`waveReceivedByUid: ${waveReceivedByUid}`);
       console.error(`event.id: ${event.id}`);
     }
@@ -41,35 +60,79 @@ const WaveButton = ({ onWave, event, waveReceivedByUid }: WaveButtonProps) => {
     }
   };
 
-  const onPress = () => {
+  const onPress = async () => {
     setAnimationPlayerFlag(prev => prev + 1);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-    //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    // //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
     const waveSentByUid = 'foo';
     receiveWave(waveSentByUid);
     sendWave(waveSentByUid);
 
+    if (isMatch(waveSentByUid)) {
+      setShouldPlayMatchAnimation(true);
+      await new Promise(r => setTimeout(r, 800)); // To let the heart-favorite animation play out nicely :)
+      setIsMatchDialogOpen(true);
+      return;
+    }
+
     onWave();
   };
 
+  const closeDialog = () => {
+    onWave();
+    setIsMatchDialogOpen(false);
+    setShouldPlayMatchAnimation(false);
+  };
+
+  const goToChat = () => {
+    closeDialog();
+    //*
+  };
+
   return (
-    <LottieInteractiveAnimation
-      animationPlayerFlag={animationPlayerFlag}
-      source={require(`../../../assets/animations/hand-wave.json`)}
-      isStaticFramePosition={true}
-      onPress={onPress}
-      style={{
-        width: size,
-        height: size,
-        position: 'absolute',
-        zIndex: 1000,
-        bottom: 20,
-        right: 2,
-        transform: [{ rotate: '-15deg' }],
-      }}
-      speed={2.5}
-    />
+    <>
+      {shouldPlayMatchAnimation && (
+        <LottieAnimation
+          source={require(`../../../assets/animations/confetti.json`)}
+          finalFramePosition={1}
+          shouldLoop={false}
+          speed={2}
+          style={{
+            width: '100%',
+            height: '100%',
+            zIndex: 999999999,
+            position: 'absolute',
+            top: 0,
+          }}
+        />
+      )}
+      <Dialog
+        isVisible={isMatchDialogOpen}
+        title="It's a match!"
+        primaryButtonText="Go to chat"
+        description={`You and ${name.split(' ')[0]} are a chat away from dancin' together`}
+        onPrimaryAction={goToChat}
+        onDismiss={closeDialog}
+        secondaryButtonText="Later"
+      />
+      <LottieInteractiveAnimation
+        animationPlayerFlag={animationPlayerFlag}
+        source={require(`../../../assets/animations/hand-wave.json`)}
+        isStaticFramePosition={true}
+        onPress={onPress}
+        style={{
+          width: size,
+          height: size,
+          position: 'absolute',
+          zIndex: 1000,
+          bottom: 20,
+          right: 2,
+          transform: [{ rotate: '-15deg' }],
+        }}
+        speed={2.5}
+      />
+    </>
   );
 };
 
