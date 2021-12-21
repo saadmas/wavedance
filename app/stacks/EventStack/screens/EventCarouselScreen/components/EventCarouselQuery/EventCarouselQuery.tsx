@@ -16,9 +16,18 @@ interface EventCarouselQueryProps {
   event: EdmTrainEvent;
 }
 
+export interface MembersViewedStatus {
+  hasViewedAllMembers: boolean;
+  isPermanent?: boolean;
+}
+
 const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
   const [eventMemberIds, setEventMemberIds] = React.useState<string[]>([]);
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
+  const [refetchIndicator, setRefetchIndicator] = React.useState<number>(0);
+  const [membersViewedStatus, setMembersViewedStatus] = React.useState<MembersViewedStatus>({
+    hasViewedAllMembers: false,
+  });
 
   React.useEffect(() => {
     const fetchUserBlockedIds = async (uid: string): Promise<Set<string>> => {
@@ -91,16 +100,32 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const userBlockedIds = await fetchUserBlockedIds(uid);
           const userIgnoredIds = await fetchUserIgnoredIds(uid);
           const userWavedIds = await fetchUserWavedIds(uid);
+          const permanentlyHiddenMemberIds = new Set<string>();
+          const memberIds = Object.keys(snapshotValue);
 
-          const filteredEventMembersIds = Object.keys(snapshotValue).filter(
-            memberId =>
-              !userBlockedIds.has(memberId) &&
-              !userIgnoredIds.has(memberId) &&
-              !userWavedIds.has(memberId) &&
-              memberId !== uid
-          );
+          const filteredEventMembersIds = memberIds.filter(memberId => {
+            const isBlocked = userBlockedIds.has(memberId);
+            const isIgnored = userIgnoredIds.has(memberId);
+            const isWaved = userWavedIds.has(memberId);
+            const isCurrentUser = memberId === uid;
+            const isMatch = !isBlocked && !isIgnored && !isWaved && !isCurrentUser;
+
+            if (isWaved || isBlocked) {
+              permanentlyHiddenMemberIds.add(memberId);
+            }
+
+            return isMatch;
+          });
 
           setEventMemberIds(filteredEventMembersIds);
+
+          const hasPermanentlyViewedAllMembers = permanentlyHiddenMemberIds.size === memberIds.length - 1;
+          const hasViewedAllMembers = filteredEventMembersIds.length === 0 && memberIds.length > 1;
+
+          setMembersViewedStatus({
+            hasViewedAllMembers: hasPermanentlyViewedAllMembers || hasViewedAllMembers,
+            isPermanent: hasPermanentlyViewedAllMembers,
+          });
         }
 
         setResponseStatus(ResponseStatus.Success);
@@ -113,7 +138,11 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
     };
 
     fetchEventMembers();
-  }, [event.id]);
+  }, [event.id, refetchIndicator]);
+
+  const refetchMembers = () => {
+    setRefetchIndicator(prev => ++prev);
+  };
 
   if (responseStatus === ResponseStatus.Loading) {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;
@@ -123,7 +152,14 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
     return <ErrorDisplay />;
   }
 
-  return <EventCarousel eventMemberIds={eventMemberIds} event={event} />;
+  return (
+    <EventCarousel
+      eventMemberIds={eventMemberIds}
+      event={event}
+      membersViewedStatus={membersViewedStatus}
+      refetchMembers={refetchMembers}
+    />
+  );
 };
 
 export default EventCarouselQuery;
