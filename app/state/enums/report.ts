@@ -10,9 +10,7 @@ export enum Report {
 
 export enum FakeSpamOrScammer {
   LimitedInformation = 'Limited information',
-  UsingPhotosFromSomeoneIKnow = 'Using photos from someone I know',
-  UsingPhotosFromSomeoneFamous = 'Using photos from someone famous',
-  UsingMyPhotos = 'Using my photos',
+  UsingPhotosFromSomeoneElse = 'Using photos from someone else',
   RoboticReplies = 'Robotic replies',
   FakeLocation = 'Fake location',
   ContactDetailsOnProfile = 'Contact details on profile',
@@ -66,3 +64,11 @@ export enum SomeoneIsInDanger {
   AssaultedSomeone = 'Assaulted someone',
   SelfHarm = 'Self-harm',
 }
+
+export type ReportCategory =
+  | FakeSpamOrScammer
+  | HateSpeech
+  | InappropriateContent
+  | InappropriateBehavior
+  | UnderageOrMinor
+  | SomeoneIsInDanger;
