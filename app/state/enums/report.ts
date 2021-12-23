@@ -6,6 +6,7 @@ export enum Report {
   InappropriateBehavior = 'Inappropriate behavior',
   UnderageOrMinor = 'Underage or minor',
   SomeoneIsInDanger = 'Someone is in danger',
+  Other = 'Other',
 }
 
 export enum FakeSpamOrScammer {
@@ -19,7 +20,6 @@ export enum FakeSpamOrScammer {
   PersonCatfishingOrScamming = 'This person is catfishing or scamming',
   PersonIsSellingSexualServices = 'This person is selling sexual services',
   PromotingSocialMedia = 'Promoting social media',
-  FeelsLikeSpam = 'Feels like spam',
 }
 
 export enum HateSpeech {

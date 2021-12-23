@@ -1,13 +1,17 @@
+import firebase from 'firebase';
 import * as React from 'react';
-import { View } from 'react-native';
+import { Keyboard, ScrollView, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Dialog, IconButton, Portal, Text, useTheme } from 'react-native-paper';
+import { FirebaseNode } from '../../firebase/keys';
+import { SubmittedReport } from '../../firebase/types';
+import { getFirebasePath } from '../../firebase/utils';
 import {
   FakeSpamOrScammer,
   HateSpeech,
   InappropriateBehavior,
   InappropriateContent,
   Report,
-  ReportCategory,
   SomeoneIsInDanger,
   UnderageOrMinor,
 } from '../../state/enums/report';
@@ -20,7 +24,7 @@ interface ReportDialogProps {
   eventId?: number;
 }
 
-const ReportDialog = ({}: ReportDialogProps) => {
+const ReportDialog = ({ eventId, reportedOnId }: ReportDialogProps) => {
   const { colors, fonts } = useTheme();
   const borderRadius = 10;
 
@@ -33,20 +37,46 @@ const ReportDialog = ({}: ReportDialogProps) => {
     if (report === Report.NotInterested) {
       setReportCategory(Report.NotInterested);
     }
+
+    if (report === Report.Other) {
+      setReportCategory(Report.Other);
+    }
   }, [report]);
 
-  const saveReport = async () => {
-    ///
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
+  const onSubmit = async (reportDetails: string) => {
+    const reportToSubmit: SubmittedReport = {
+      reportedUserId: reportedOnId,
+      actionType,
+      report: report ?? '',
+      category: reportCategory ?? '',
+      date: new Date().toString(),
+      details: reportDetails,
+      eventId,
+    };
+
+    //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    const uid = 'foo';
+    const path = getFirebasePath(FirebaseNode.UserReports, uid);
+
+    try {
+      await firebase.database().ref(path).push(reportToSubmit);
+    } catch (e) {
+      console.log('Failed to submit user report');
+      console.error(e);
+      console.error(reportToSubmit);
+    }
   };
 
   const goBack = () => {
     if (reportCategory) {
       setReportCategory(undefined);
-
-      if (reportCategory === Report.NotInterested) {
+      if (reportCategory === report) {
         setReport(undefined);
       }
-
       return;
     }
 
@@ -73,10 +103,6 @@ const ReportDialog = ({}: ReportDialogProps) => {
   };
 
   const getTitle = () => {
-    if (reportCategory) {
-      return reportCategory;
-    }
-
     if (report) {
       return report;
     }
@@ -90,8 +116,8 @@ const ReportDialog = ({}: ReportDialogProps) => {
   };
 
   const getSubTitle = () => {
-    if (reportCategory) {
-      return;
+    if (reportCategory && reportCategory !== report) {
+      return reportCategory;
     }
 
     if (report) {
@@ -125,13 +151,14 @@ const ReportDialog = ({}: ReportDialogProps) => {
 
   const renderUserInput = () => {
     if (reportCategory) {
-      const onSubmit = (foo: string) => {};
       return (
-        <View style={{ padding: 10, minHeight: 300 }}>
-          <InputCard title="" onSubmit={onSubmit} placeholder="Additional information is required" />
-        </View>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 10, paddingRight: 30, paddingLeft: 10, minHeight: 300 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <InputCard title="" onSubmit={onSubmit} placeholder="Tell us what happened" blurOnSubmit={false} />
+        </ScrollView>
       );
-      /// render user input
     }
 
     if (report) {
@@ -154,7 +181,13 @@ const ReportDialog = ({}: ReportDialogProps) => {
         <Dialog
           visible={isDialogOpen}
           onDismiss={closeDialog}
-          style={{ borderRadius, backgroundColor: colors.onSurface }}
+          style={{
+            borderRadius,
+            backgroundColor: colors.onSurface,
+            width: reportCategory ? '100%' : undefined,
+            height: reportCategory ? '100%' : undefined,
+            marginLeft: reportCategory ? 0 : undefined,
+          }}
         >
           <View
             style={{
@@ -164,12 +197,14 @@ const ReportDialog = ({}: ReportDialogProps) => {
             }}
           >
             {report && <IconButton icon="chevron-left" size={20} onPress={goBack} />}
-            <View style={{ padding: 20, paddingTop: report ? 0 : 20 }}>
-              <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 20 }}>{getTitle()}</Text>
-              {subTitle && (
-                <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 12, marginTop: 5 }}>{subTitle}</Text>
-              )}
-            </View>
+            <TouchableWithoutFeedback onPress={closeKeyboard}>
+              <View style={{ padding: 20, paddingTop: report ? 0 : 20 }}>
+                <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 20 }}>{getTitle()}</Text>
+                {subTitle && (
+                  <Text style={{ fontFamily: fonts.thin.fontFamily, fontSize: 12, marginTop: 5 }}>{subTitle}</Text>
+                )}
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           {renderUserInput()}
         </Dialog>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
+import { Report } from '../../../state/enums/report';
 
 interface ReportOptionsProps {
   onOptionSelect: (option: string) => void;
@@ -10,7 +11,9 @@ interface ReportOptionsProps {
 
 const ReportOptions = ({ options, onOptionSelect }: ReportOptionsProps) => {
   const renderOptions = () => {
-    const optionElements = options.map((option, index) => (
+    const optionsWithOther = options.includes(Report.Other) ? options : [...options, Report.Other];
+
+    const optionElements = optionsWithOther.map((option, index) => (
       <TouchableWithoutFeedback
         key={option}
         onPress={() => onOptionSelect(option)}
