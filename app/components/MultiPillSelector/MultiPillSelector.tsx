@@ -74,7 +74,7 @@ const MultiPillSelector = ({
   };
 
   return (
-    <>
+    <ScrollView contentInset={{ bottom: 150 }} showsVerticalScrollIndicator={false}>
       <Title title={titleText} />
       <View
         style={{
@@ -96,18 +96,16 @@ const MultiPillSelector = ({
         inputStyle={{ fontSize: textFontSize }}
       />
 
-      <ScrollView
-        contentContainerStyle={{
+      <View
+        style={{
           display: 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}
-        contentInset={{ bottom: 150 }}
-        showsVerticalScrollIndicator={false}
       >
         {renderPills()}
-      </ScrollView>
-    </>
+      </View>
+    </ScrollView>
   );
 };
 
