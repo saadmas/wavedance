@@ -109,7 +109,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
           {renderFirstUserPrompt()}
           <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
           {renderUserPrompts()}
-          <ReportDialog reportedOnId={id} eventId={event.id} />
+          <ReportDialog reportedOnId={id} eventId={event.id} onReportComplete={onWaveOrIgnore} />
         </ScrollView>
       </View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} name={name} />

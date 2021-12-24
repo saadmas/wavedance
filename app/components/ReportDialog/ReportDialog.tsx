@@ -16,18 +16,21 @@ import {
   UnderageOrMinor,
 } from '../../state/enums/report';
 import InputCard from '../InputCard/InputCard';
+import Snackbar from '../Snackbar/Snackbar';
 import ReportButtonGroup from './ReportButtonGroup/ReportButtonGroup';
 import ReportOptions from './ReportOptions/ReportOptions';
 
 interface ReportDialogProps {
   reportedOnId: string;
   eventId?: number;
+  onReportComplete?: () => void;
 }
 
-const ReportDialog = ({ eventId, reportedOnId }: ReportDialogProps) => {
+const ReportDialog = ({ eventId, reportedOnId, onReportComplete }: ReportDialogProps) => {
   const { colors, fonts } = useTheme();
   const borderRadius = 10;
 
+  const [isSnackbarVisible, setIsSnackbarVisible] = React.useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
   const [actionType, setActionType] = React.useState<'Hide' | 'Report'>('Hide');
   const [report, setReport] = React.useState<string | undefined>(undefined);
@@ -47,7 +50,11 @@ const ReportDialog = ({ eventId, reportedOnId }: ReportDialogProps) => {
     Keyboard.dismiss();
   };
 
-  const onSubmit = async (reportDetails: string) => {
+  const closeSnackbar = () => {
+    setIsSnackbarVisible(false);
+  };
+
+  const reportUser = async (reportDetails: string) => {
     const reportToSubmit: SubmittedReport = {
       reportedUserId: reportedOnId,
       actionType,
@@ -65,10 +72,36 @@ const ReportDialog = ({ eventId, reportedOnId }: ReportDialogProps) => {
     try {
       await firebase.database().ref(path).push(reportToSubmit);
     } catch (e) {
-      console.log('Failed to submit user report');
+      console.log('reportUser failed');
       console.error(e);
       console.error(reportToSubmit);
     }
+  };
+
+  const blockUser = async () => {
+    //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
+    const uid = 'foo';
+    const path = getFirebasePath(FirebaseNode.UserBlocks, uid, reportedOnId);
+
+    try {
+      await firebase.database().ref(path).set(true);
+    } catch (e) {
+      console.log('blockUser failed');
+      console.error(e);
+      console.error(`Blocked by: ${uid}`);
+      console.error(`Attempted to block: ${reportedOnId}`);
+    }
+  };
+
+  const onSubmit = async (reportDetails: string) => {
+    reportUser(reportDetails);
+    blockUser();
+    setIsSnackbarVisible(true);
+
+    await new Promise(r => setTimeout(r, 1000)); // To give the user a chance to see the snackbar before hiding the profile
+
+    closeDialog();
+    onReportComplete?.();
   };
 
   const goBack = () => {
@@ -208,6 +241,13 @@ const ReportDialog = ({ eventId, reportedOnId }: ReportDialogProps) => {
           </View>
           {renderUserInput()}
         </Dialog>
+        <Snackbar
+          isVisible={isSnackbarVisible}
+          text="Report succesfully submitted. We'll get back to you shortly"
+          icon="check-circle"
+          closeSnackbar={closeSnackbar}
+          backgroundColor={'#4BB543'}
+        />
       </Portal>
     </>
   );
