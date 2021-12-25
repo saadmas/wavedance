@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
 import { Path } from '../../routing/paths';
+import WaveListScreen from './screens/WaveListScreen/WaveListScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ const WaveStack = () => {
           canGoBack && <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />,
       })}
     >
-      <Stack.Screen name={Path.WaveList} component={() => null} />
+      <Stack.Screen name={Path.WaveList} component={WaveListScreen} />
     </Stack.Navigator>
   );
 };

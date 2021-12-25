@@ -50,8 +50,8 @@ export const getUserWavesSentPath = (sentByUid: string, eventId: number, receive
   return path;
 };
 
-export const getUserWavesReceivedPath = (receivedByUid: string, sentById: string, eventId: number) => {
-  const path = getFirebasePath(FirebaseNode.UserWavesReceived, receivedByUid, sentById, eventId.toString());
+export const getUserWavesReceivedPath = (receivedByUid: string, sentById?: string, eventId?: number) => {
+  const path = getFirebasePath(FirebaseNode.UserWavesReceived, receivedByUid, sentById, eventId?.toString());
   return path;
 };
 
