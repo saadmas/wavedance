@@ -19,7 +19,7 @@ interface UserProfileQueryProps {
   userId: string;
   event: EdmTrainEvent;
   isEditMode?: boolean;
-  goToNextProfile: () => void;
+  onProfileViewComplete: () => void;
 }
 
 export interface UserProfileType {
@@ -51,7 +51,7 @@ const getEmptyUserProfile = (): UserProfileType => ({
   prompts: new Map(),
 });
 
-const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryProps) => {
+const UserProfileQuery = ({ userId, event, onProfileViewComplete }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
     ...getEmptyUserProfile(),
@@ -149,7 +149,7 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
 
   return (
     <Animatable.View animation="fadeInUpBig">
-      <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />
+      <UserProfile userProfile={userProfile} onProfileViewComplete={onProfileViewComplete} event={event} />
     </Animatable.View>
   );
 };

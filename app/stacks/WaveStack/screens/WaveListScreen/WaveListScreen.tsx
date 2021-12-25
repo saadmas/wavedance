@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import ErrorDisplay from '../../../../components/ErrorDisplay/ErrorDisplay';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
-import { EdmTrainEvent } from '../../../../edmTrain/types';
 import { WaveEvent } from '../../../../firebase/types';
 import { getUserWavesReceivedPath } from '../../../../firebase/utils';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
@@ -33,6 +32,8 @@ const WaveListScreen = () => {
         }
 
         const fetchedWaves: Waves = new Map();
+
+        /// filter by matched users + wave ignore users (create new node for this)
 
         Object.entries(value).forEach(([userId, events]) => {
           fetchedWaves.set(userId, Object.values(events as any));

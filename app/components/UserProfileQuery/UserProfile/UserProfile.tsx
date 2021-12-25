@@ -19,13 +19,13 @@ import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
 
 interface UserProfileProps {
   userProfile: UserProfileType;
-  goToNextProfile: () => void;
+  onProfileViewComplete: () => void;
   event: EdmTrainEvent;
 }
 
 type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
-const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) => {
+const UserProfile = ({ userProfile, onProfileViewComplete, event }: UserProfileProps) => {
   const {
     id,
     photoUri,
@@ -87,7 +87,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
 
   const onWaveOrIgnore = async () => {
     await new Promise(r => setTimeout(r, 700)); // To let the wave/ignore animations play out nicely :)
-    goToNextProfile();
+    onProfileViewComplete();
   };
 
   return (

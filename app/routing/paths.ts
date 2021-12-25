@@ -11,4 +11,5 @@ export enum Path {
   SpotifySearch = 'SpotifySearch',
   Waves = 'Waves',
   WaveList = 'WaveList',
+  WaveFullUserProfile = 'WaveFullUserProfile',
 }

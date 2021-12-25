@@ -33,7 +33,11 @@ const EventCarousel = ({ eventMemberIds, event, membersViewedStatus, refetchMemb
   }
 
   return (
-    <UserProfileQuery userId={eventMemberIds[currentMemberIndex]} event={event} goToNextProfile={goToNextProfile} />
+    <UserProfileQuery
+      userId={eventMemberIds[currentMemberIndex]}
+      event={event}
+      onProfileViewComplete={goToNextProfile}
+    />
   );
 };
 
