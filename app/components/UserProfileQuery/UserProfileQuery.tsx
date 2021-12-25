@@ -13,7 +13,7 @@ import { ResponseStatus } from '../../state/enums/responseStatus';
 import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
 import * as Animatable from 'react-native-animatable';
-import { getPhotoUri } from '../../firebase/queries';
+import { getPhotoUri, getUserBasicInfo } from '../../firebase/queries';
 
 interface UserProfileQueryProps {
   userId: string;
@@ -76,17 +76,9 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
     };
 
     const fetchBasicInfo = async () => {
-      try {
-        const path = getUserBasicInfoPath(userId);
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
-        if (value) {
-          setUserProfile(prevProfile => ({ ...prevProfile, ...value }));
-        }
-      } catch (e) {
-        console.error('fetchBasicInfo failed');
-        console.error(e);
-        console.error(`userId: ${userId}`);
+      const basicInfo = await getUserBasicInfo(userId);
+      if (basicInfo) {
+        setUserProfile(prevProfile => ({ ...prevProfile, ...basicInfo }));
       }
     };
 
