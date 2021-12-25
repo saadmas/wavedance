@@ -103,7 +103,8 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const permanentlyHiddenMemberIds = new Set<string>();
           const memberIds = Object.keys(snapshotValue);
 
-          if (memberIds.length === 1 && memberIds[0] === uid) {
+          const isEmpty = memberIds.length === 0 || (memberIds.length === 1 && memberIds[0] === uid);
+          if (isEmpty) {
             setEventMemberIds([]);
             setResponseStatus(ResponseStatus.Success);
             return;
@@ -123,7 +124,6 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
             return isMatch;
           });
 
-          console.log(userWavedIds);
           setEventMemberIds(filteredEventMembersIds);
 
           const hasPermanentlyViewedAllMembers = permanentlyHiddenMemberIds.size === memberIds.length - 1;

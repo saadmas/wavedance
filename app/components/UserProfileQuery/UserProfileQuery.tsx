@@ -1,12 +1,10 @@
 import firebase from 'firebase';
 import * as React from 'react';
-import { ActivityIndicator } from 'react-native-paper';
 import { EdmTrainEvent } from '../../edmTrain/types';
 import {
   getUserAdditionalInfoPath,
   getUserBasicInfoPath,
   getUserEventPromptsPath,
-  getUserPhotosPath,
   getUserPromptsPath,
 } from '../../firebase/utils';
 import { EventPrompt } from '../../state/enums/eventPrompt';
@@ -15,6 +13,7 @@ import { ResponseStatus } from '../../state/enums/responseStatus';
 import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
 import * as Animatable from 'react-native-animatable';
+import { getPhotoUri } from '../../firebase/queries';
 
 interface UserProfileQueryProps {
   userId: string;
@@ -70,16 +69,9 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
 
   React.useEffect(() => {
     const fetchPhotoUri = async () => {
-      try {
-        const path = getUserPhotosPath(userId);
-        const photoUri = await firebase.storage().ref(`${path}.jpg`).getDownloadURL();
-        if (photoUri) {
-          setUserProfile(prevProfile => ({ ...prevProfile, photoUri }));
-        }
-      } catch (e) {
-        console.error('fetchPhotoUri failed');
-        console.error(e);
-        console.error(`userId: ${userId}`);
+      const photoUri = await getPhotoUri(userId);
+      if (photoUri) {
+        setUserProfile(prevProfile => ({ ...prevProfile, photoUri }));
       }
     };
 
