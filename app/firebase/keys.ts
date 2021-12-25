@@ -1,16 +1,17 @@
 export enum FirebaseNode {
-  UserBasicInfo = 'userBasicInfo',
-  UserAdditionalInfo = 'userAdditionalInfo',
-  UserPrompts = 'userPrompts',
-  UserEventPrompts = 'userEventPrompts',
-  UserBlocks = 'userBlocks',
-  UserPhotos = 'userPhoto',
-  UserWavesSent = 'userWavesSent',
-  UserWavesReceived = 'userWavesReceived',
-  UserFavoriteEvents = 'userFavoriteEvents',
-  UserEventIgnores = 'userEventIgnores',
   EventMembers = 'eventMembers',
   EventPhotos = 'eventPhotos',
+  UserAdditionalInfo = 'userAdditionalInfo',
+  UserBasicInfo = 'userBasicInfo',
+  UserBlocks = 'userBlocks',
+  UserEventIgnores = 'userEventIgnores',
+  UserEventPrompts = 'userEventPrompts',
+  UserFavoriteEvents = 'userFavoriteEvents',
+  UserPhotos = 'userPhoto',
+  UserPrompts = 'userPrompts',
+  UserReports = 'userReports',
+  UserWavesSent = 'userWavesSent',
+  UserWavesReceived = 'userWavesReceived',
 }
 
 export enum UserBasicInfo {

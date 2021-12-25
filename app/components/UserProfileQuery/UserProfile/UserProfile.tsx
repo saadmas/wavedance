@@ -8,6 +8,7 @@ import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
 import IgnoreButton from '../../IgnoreButton/IgnoreButton';
 import { PromptAnswer } from '../../PromptsManager/PromptsManager';
+import ReportDialog from '../../ReportDialog/ReportDialog';
 import WaveButton from '../../WaveButton/WaveButton';
 import { UserProfileType } from '../UserProfileQuery';
 import UserBio from './UserBio/UserBio';
@@ -108,6 +109,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
           {renderFirstUserPrompt()}
           <UserBioPills pillTexts={genres} titleText="My Favorite Genres" />
           {renderUserPrompts()}
+          <ReportDialog reportedOnId={id} eventId={event.id} onReportComplete={onWaveOrIgnore} />
         </ScrollView>
       </View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} name={name} />

@@ -5,4 +5,14 @@ export interface EventImageInfo {
   spotifyArtistId?: string;
 }
 
+export interface SubmittedReport {
+  reportedUserId: string;
+  actionType: string;
+  report: string;
+  category: string;
+  date: string;
+  details: string;
+  eventId?: number;
+}
+
 export type FavoriteEvent = Pick<EdmTrainEvent, 'createdDate'>;
