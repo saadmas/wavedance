@@ -10,4 +10,5 @@ export enum Path {
   EventCarousel = 'EventCarousel',
   SpotifySearch = 'SpotifySearch',
   Waves = 'Waves',
+  WaveList = 'WaveList',
 }

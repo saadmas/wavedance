@@ -38,6 +38,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     try {
       const path = getUserWavesReceivedPath(currentUserId, waveReceivedByUid, event.id);
       const snapshot = await firebase.database().ref(path).get();
+      return !!snapshot.val();
     } catch (e) {
       console.error('isMatch failed');
       console.error(e);
@@ -69,7 +70,8 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     receiveWave(waveSentByUid);
     sendWave(waveSentByUid);
 
-    if (isMatch(waveSentByUid)) {
+    const usersHaveMatched = await isMatch(waveSentByUid);
+    if (usersHaveMatched) {
       setShouldPlayMatchAnimation(true);
       await new Promise(r => setTimeout(r, 800)); // To let the heart-favorite animation play out nicely :)
       setIsMatchDialogOpen(true);
