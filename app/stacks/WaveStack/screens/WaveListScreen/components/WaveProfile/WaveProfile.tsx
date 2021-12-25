@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Card } from 'react-native-paper';
-import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import { WaveEvent } from '../../../../../../firebase/types';
 import WaveProfileEvent from '../WaveProfileEvent/WaveProfileEvent';
 import WaveProfileName from '../WaveProfileName/WaveProfileName';
 import WaveProfilePhoto from '../WaveProfilePhoto/WaveProfilePhoto';
 
 interface WaveProfileProps {
   userId: string;
-  events: EdmTrainEvent[];
+  events: WaveEvent[];
 }
 
 const WaveProfile = ({ userId, events }: WaveProfileProps) => {

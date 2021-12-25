@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import { WaveEvent } from '../../../../../../firebase/types';
 import WaveProfileEventImage from '../WaveProfileEventImage/WaveProfileEventImage';
 
 interface WaveProfileEventProps {
-  event: EdmTrainEvent;
+  event: WaveEvent;
 }
 
 const WaveProfileEvent = ({ event }: WaveProfileEventProps) => {
   return (
     <View>
-      <WaveProfileEventImage eventId={event.id} />
+      <WaveProfileEventImage eventId={event.id} locationId={event.locationId} />
     </View>
   );
 };
