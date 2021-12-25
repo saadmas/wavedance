@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Card } from 'react-native-paper';
+import { Card, Divider } from 'react-native-paper';
 import { WaveEvent } from '../../../../../../firebase/types';
 import WaveProfileEvent from '../WaveProfileEvent/WaveProfileEvent';
 import WaveProfileName from '../WaveProfileName/WaveProfileName';
@@ -13,13 +13,14 @@ interface WaveProfileProps {
 
 const WaveProfile = ({ userId, events }: WaveProfileProps) => {
   return (
-    <Card style={{ padding: 10 }}>
+    <Card style={{ padding: 10, marginVertical: 15 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ marginRight: 10 }}>
           <WaveProfilePhoto userId={userId} />
         </View>
         <WaveProfileName userId={userId} />
       </View>
+      <Divider style={{ marginTop: 10 }} />
       <WaveProfileEvent event={events[0]} />
     </Card>
   );

@@ -6,6 +6,7 @@ import LottieAnimation from '../../../../../../components/LottieAnimation/Lottie
 import { FirebaseNode } from '../../../../../../firebase/keys';
 import { getFirebasePath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
+import { wavePhotoSize } from '../WaveProfilePhoto/WaveProfilePhoto';
 
 interface WaveProfileEventProps {
   eventId: number;
@@ -14,7 +15,6 @@ interface WaveProfileEventProps {
 
 const WaveProfileEventImage = ({ eventId, locationId }: WaveProfileEventProps) => {
   const borderRadius = 10;
-  const size = 80;
 
   const [uri, setUri] = React.useState<string | undefined>(undefined);
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
@@ -31,8 +31,6 @@ const WaveProfileEventImage = ({ eventId, locationId }: WaveProfileEventProps) =
         const path = getFirebasePath(FirebaseNode.EventPhotos, '70', '159624');
         const snapshot = await firebase.database().ref(path).get();
         const value = snapshot.val();
-
-        console.log(value);
 
         if (!value) {
           onError();
@@ -92,13 +90,12 @@ const WaveProfileEventImage = ({ eventId, locationId }: WaveProfileEventProps) =
     <Surface
       style={{
         marginTop: 10,
-        height: size,
-        width: size,
+        height: wavePhotoSize,
+        width: wavePhotoSize,
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 12,
         borderRadius,
-        // backgroundColor: source === undefined ? colors.background : undefined, ///
       }}
     >
       {renderImageContent()}

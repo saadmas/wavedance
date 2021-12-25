@@ -33,4 +33,4 @@ export const getEdmTrainLocationFromUserCurrentLocation = (
 };
 
 export const getArtistsDisplay = (event: EdmTrainEvent): string =>
-  event.artistList.map(artist => artist.name).join(', ');
+  event.artistList?.map(artist => artist.name).join(', ') ?? '';

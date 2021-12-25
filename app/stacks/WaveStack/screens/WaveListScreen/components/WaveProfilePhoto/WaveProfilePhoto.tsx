@@ -6,6 +6,8 @@ interface WaveProfilePhotoProps {
   userId: string;
 }
 
+export const wavePhotoSize = 100;
+
 const WaveProfilePhoto = ({ userId }: WaveProfilePhotoProps) => {
   const [uri, setUri] = React.useState<string | undefined>(undefined);
 
@@ -18,7 +20,7 @@ const WaveProfilePhoto = ({ userId }: WaveProfilePhotoProps) => {
     fetchPhotoUri();
   }, [userId]);
 
-  return <Avatar.Image source={{ uri }} size={80} />;
+  return <Avatar.Image source={{ uri }} size={wavePhotoSize} />;
 };
 
 export default WaveProfilePhoto;
