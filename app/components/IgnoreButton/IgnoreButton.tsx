@@ -48,7 +48,7 @@ const IgnoreButton = ({ onIgnore, userToIgnoreId, eventId }: IgnoreButtonProps) 
         height: size,
         position: 'absolute',
         zIndex: 1000,
-        bottom: 18,
+        bottom: 1,
         left: 5,
       }}
       speed={2}

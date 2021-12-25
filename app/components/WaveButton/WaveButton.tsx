@@ -126,7 +126,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
           height: size,
           position: 'absolute',
           zIndex: 1000,
-          bottom: 20,
+          bottom: 2,
           right: 2,
           transform: [{ rotate: '-15deg' }],
         }}
