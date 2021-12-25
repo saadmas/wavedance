@@ -4,13 +4,13 @@ import { View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import ErrorDisplay from '../../../../components/ErrorDisplay/ErrorDisplay';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
-import NoDataDisplay from '../../../../components/NoDataDisplay/NoDataDisplay';
 import { EdmTrainEvent } from '../../../../edmTrain/types';
 import { getUserWavesReceivedPath } from '../../../../firebase/utils';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
+import WaveList from './components/WaveList/WaveList';
 
 // K = User ID, V = events the user waved during
-type Waves = Map<string, EdmTrainEvent[]>;
+export type Waves = Map<string, EdmTrainEvent[]>;
 
 const WaveListScreen = () => {
   const [waves, setWaves] = React.useState<Waves>(new Map());
@@ -88,7 +88,7 @@ const WaveListScreen = () => {
     );
   }
 
-  return <View></View>;
+  return <WaveList waves={waves} />;
 };
 
 export default WaveListScreen;

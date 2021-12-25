@@ -103,6 +103,12 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           const permanentlyHiddenMemberIds = new Set<string>();
           const memberIds = Object.keys(snapshotValue);
 
+          if (memberIds.length === 1 && memberIds[0] === uid) {
+            setEventMemberIds([]);
+            setResponseStatus(ResponseStatus.Success);
+            return;
+          }
+
           const filteredEventMembersIds = memberIds.filter(memberId => {
             const isBlocked = userBlockedIds.has(memberId);
             const isIgnored = userIgnoredIds.has(memberId);
@@ -117,6 +123,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
             return isMatch;
           });
 
+          console.log(userWavedIds);
           setEventMemberIds(filteredEventMembersIds);
 
           const hasPermanentlyViewedAllMembers = permanentlyHiddenMemberIds.size === memberIds.length - 1;
