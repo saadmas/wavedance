@@ -5,12 +5,12 @@ import * as WebBrowser from 'expo-web-browser';
 import { useEventImageCache } from '../../../../../../state/events/EventImageCacheProvider';
 import { NavigationContext } from '@react-navigation/native';
 import { Path } from '../../../../../../routing/paths';
-import { EdmTrainEvent } from '../../../../../../../functions/src/types';
 import { getUserEventPrompts } from '../../../../utils';
 import firebase from 'firebase';
+import { WaveEvent } from '../../../../../../firebase/types';
 
 interface EventActionsMenuProps {
-  event: EdmTrainEvent;
+  event: WaveEvent;
   isFavorite: boolean;
 }
 

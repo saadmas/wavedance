@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
 import { EdmTrainEvent, EdmTrainLocation } from '../../edmTrain/types';
+import { WaveEvent } from '../../firebase/types';
 import { Path } from '../../routing/paths';
 import { defaultScreenPadding } from '../../styles/theme';
 import EventCarouselScreen from './screens/EventCarouselScreen/EventCarouselScreen';
@@ -14,7 +15,7 @@ const Stack = createNativeStackNavigator();
 export type EventStackParamList = {
   [Path.LocationSelect]: undefined;
   [Path.EventList]: { location?: EdmTrainLocation };
-  [Path.EventCarousel]: { event: EdmTrainEvent };
+  [Path.EventCarousel]: { waveEvent: WaveEvent };
   [Path.EventPrompts]: EventPromptsProps;
 };
 

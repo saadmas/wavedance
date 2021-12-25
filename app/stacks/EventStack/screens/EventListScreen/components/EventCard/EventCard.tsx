@@ -2,6 +2,7 @@ import { NavigationContext } from '@react-navigation/native';
 import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
+import { WaveEvent } from '../../../../../../firebase/types';
 import { Path } from '../../../../../../routing/paths';
 import {
   useEventFavoritesCache,
@@ -30,6 +31,10 @@ interface EventCardProps {
 const EventCard = ({ event, locationId, isFavoritesList, eventIndex, removeEventFromList }: EventCardProps) => {
   const navigation = React.useContext(NavigationContext);
   const eventId = event.id;
+  const waveEvent: WaveEvent = {
+    ...event,
+    locationId,
+  };
 
   const eventFavoritesCacheKey = eventId.toString();
   const eventFavoritesCache = useEventFavoritesCache();
@@ -44,11 +49,11 @@ const EventCard = ({ event, locationId, isFavoritesList, eventIndex, removeEvent
   }, [eventFavoritesCache, eventId, isFavoritesList]);
 
   const navigateToEventPrompts = () => {
-    navigation?.navigate(Path.EventPrompts, { event });
+    navigation?.navigate(Path.EventPrompts, { event: waveEvent });
   };
 
   const navigateToEventCarousel = () => {
-    navigation?.navigate(Path.EventCarousel, { event });
+    navigation?.navigate(Path.EventCarousel, { waveEvent });
   };
 
   const onRemoveEventFromFavorites = async () => {
