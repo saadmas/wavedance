@@ -18,49 +18,51 @@ const WaveListScreen = () => {
   const [waves, setWaves] = React.useState<Waves>(new Map());
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
 
-  useFocusEffect(() => {
-    const fetchWaves = async () => {
-      //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
-      const uid = 'foo';
-      const path = getUserWavesReceivedPath(uid);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchWaves = async () => {
+        //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
+        const uid = 'foo';
+        const path = getUserWavesReceivedPath(uid);
 
-      try {
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
+        try {
+          const snapshot = await firebase.database().ref(path).get();
+          const value = snapshot.val();
 
-        if (!value) {
-          setResponseStatus(ResponseStatus.Success);
-          return;
-        }
-
-        const fetchedWaves: Waves = new Map();
-
-        const allWavedIds = await getAllUserWavedIds(uid);
-        const blockedIds = await getUserBlockedIds(uid);
-        const matchIgnoreIds = await getUserWaveIgnoreIds(uid);
-
-        Object.entries(value).forEach(([userId, events]) => {
-          const isWaved = allWavedIds.has(userId);
-          const isBlocked = blockedIds.has(userId);
-          const isIgnored = matchIgnoreIds.has(userId);
-
-          if (!isWaved && !isBlocked && !isIgnored) {
-            fetchedWaves.set(userId, Object.values(events as any));
+          if (!value) {
+            setResponseStatus(ResponseStatus.Success);
+            return;
           }
-        });
 
-        setWaves(fetchedWaves);
-        setResponseStatus(ResponseStatus.Success);
-      } catch (e) {
-        console.error('fetchWaves failed');
-        console.error(e);
-        console.error(`uid: ${uid}`);
-        setResponseStatus(ResponseStatus.Error);
-      }
-    };
+          const fetchedWaves: Waves = new Map();
 
-    fetchWaves();
-  });
+          const allWavedIds = await getAllUserWavedIds(uid);
+          const blockedIds = await getUserBlockedIds(uid);
+          const matchIgnoreIds = await getUserWaveIgnoreIds(uid);
+
+          Object.entries(value).forEach(([userId, events]) => {
+            const isWaved = allWavedIds.has(userId);
+            const isBlocked = blockedIds.has(userId);
+            const isIgnored = matchIgnoreIds.has(userId);
+
+            if (!isWaved && !isBlocked && !isIgnored) {
+              fetchedWaves.set(userId, Object.values(events as any));
+            }
+          });
+
+          setWaves(fetchedWaves);
+          setResponseStatus(ResponseStatus.Success);
+        } catch (e) {
+          console.error('fetchWaves failed');
+          console.error(e);
+          console.error(`uid: ${uid}`);
+          setResponseStatus(ResponseStatus.Error);
+        }
+      };
+
+      fetchWaves();
+    }, [])
+  );
 
   if (responseStatus === ResponseStatus.Loading) {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;

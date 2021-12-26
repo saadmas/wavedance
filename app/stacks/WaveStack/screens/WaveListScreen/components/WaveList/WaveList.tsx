@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { getPhotoUri } from '../../../../../../firebase/queries';
 import { defaultScreenPadding } from '../../../../../../styles/theme';
 import { Waves } from '../../WaveListScreen';
 import WaveProfile from '../WaveProfile/WaveProfile';
