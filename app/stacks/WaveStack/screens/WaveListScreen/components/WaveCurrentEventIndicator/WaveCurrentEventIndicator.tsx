@@ -41,6 +41,7 @@ const WaveCurrentEventIndicator = ({ eventCount, currentEventIndex }: WaveCurren
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        flexWrap: 'wrap',
       }}
     >
       {renderIndicator()}

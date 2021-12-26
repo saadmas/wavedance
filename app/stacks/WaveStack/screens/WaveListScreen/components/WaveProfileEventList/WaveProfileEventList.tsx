@@ -12,15 +12,21 @@ interface WaveProfileEventListProps {
 }
 
 const WaveProfileEventList = ({ event, goToNextEvent, goToPreviousEvent }: WaveProfileEventListProps) => {
+  const animationDuration = 400;
   const animatableRef = React.useRef<Animatable.View & View>(null);
 
-  const onSwipeLeft = () => {
-    animatableRef.current?.fadeOutRight?.();
+  const onSwipeLeft = async () => {
     goToNextEvent();
+    animatableRef.current?.fadeInRight?.(animationDuration);
+  };
+
+  const onSwipeRight = () => {
+    goToPreviousEvent();
+    animatableRef.current?.fadeInLeft?.(animationDuration);
   };
 
   return (
-    <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={goToPreviousEvent}>
+    <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
       <Animatable.View ref={animatableRef}>
         <WaveProfileEvent event={event} />
       </Animatable.View>

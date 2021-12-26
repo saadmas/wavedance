@@ -1,6 +1,7 @@
 import { NavigationContext } from '@react-navigation/native';
 import * as React from 'react';
 import { View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Card, Divider } from 'react-native-paper';
 import { WaveEvent } from '../../../../../../firebase/types';
 import { Path } from '../../../../../../routing/paths';
@@ -26,25 +27,24 @@ const WaveProfile = ({ userId, events }: WaveProfileProps) => {
   };
 
   const goToNextEvent = () => {
-    console.log('go next..');
-    setEventIndex(prevIndex => (prevIndex + 1 === events.length ? prevIndex : prevIndex + 1));
+    setEventIndex(prevIndex => (prevIndex + 1 === events.length ? 0 : prevIndex + 1));
   };
 
   const goToPreviousEvent = () => {
-    setEventIndex(prevIndex => (prevIndex - 1 === -1 ? prevIndex : prevIndex - 1));
+    setEventIndex(prevIndex => (prevIndex - 1 === -1 ? events.length - 1 : prevIndex - 1));
   };
-
-  ///  onPress={openFullProfile}
 
   return (
     <Card style={{ padding: 10, marginVertical: 15 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ marginRight: 10 }}>
-          <WaveProfilePhoto userId={userId} />
+      <TouchableWithoutFeedback onPress={openFullProfile}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ marginRight: 10 }}>
+            <WaveProfilePhoto userId={userId} />
+          </View>
+          <WaveProfileName userId={userId} />
         </View>
-        <WaveProfileName userId={userId} />
-      </View>
-      <Divider style={{ marginTop: 10 }} />
+        <Divider style={{ marginTop: 10 }} />
+      </TouchableWithoutFeedback>
       <WaveProfileEventList goToNextEvent={goToNextEvent} goToPreviousEvent={goToPreviousEvent} event={event} />
       <WaveCurrentEventIndicator eventCount={events.length} currentEventIndex={eventIndex} />
     </Card>

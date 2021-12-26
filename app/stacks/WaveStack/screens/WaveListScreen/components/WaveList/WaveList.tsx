@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { defaultScreenPadding } from '../../../../../../styles/theme';
 import { Waves } from '../../WaveListScreen';
 import WaveProfile from '../WaveProfile/WaveProfile';
@@ -14,7 +14,11 @@ const WaveList = ({ waves }: WaveListProps) => {
   ));
 
   return (
-    <ScrollView contentContainerStyle={{ padding: defaultScreenPadding }} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{ padding: defaultScreenPadding }}
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+    >
       {userProfiles}
     </ScrollView>
   );
