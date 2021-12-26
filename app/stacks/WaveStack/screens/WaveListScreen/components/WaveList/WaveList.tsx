@@ -14,11 +14,7 @@ const WaveList = ({ waves }: WaveListProps) => {
   ));
 
   return (
-    <ScrollView
-      contentContainerStyle={{ padding: defaultScreenPadding }}
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-    >
+    <ScrollView contentContainerStyle={{ padding: defaultScreenPadding }} showsVerticalScrollIndicator={false}>
       {userProfiles}
     </ScrollView>
   );
