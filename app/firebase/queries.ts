@@ -1,5 +1,7 @@
 import firebase from 'firebase';
+import { FirebaseNode } from './keys';
 import {
+  getFirebasePath,
   getUserBasicInfoPath,
   getUserBlocksPath,
   getUserEventIgnoresPath,
@@ -94,4 +96,34 @@ export const getUserWavedIds = async (uid: string, eventId: number): Promise<Set
   }
 
   return new Set();
+};
+
+export const getAllUserWavedIds = async (uid: string): Promise<Set<string>> => {
+  const allUserWavedIds = new Set<string>();
+
+  try {
+    const path = getFirebasePath(FirebaseNode.UserWavesSent, uid);
+    const snapshot = await firebase.database().ref(path).get();
+    const value = snapshot.val();
+
+    if (!value) {
+      return allUserWavedIds;
+    }
+
+    const wavesByEvent = Object.values(value);
+
+    for (const eventWaves of wavesByEvent) {
+      const eventWavedIds = Object.keys(eventWaves as any);
+
+      eventWavedIds.forEach(wavedId => {
+        allUserWavedIds.add(wavedId);
+      });
+    }
+  } catch (e) {
+    console.error('getAllUserWavedIds failed');
+    console.error(e);
+    console.error(`uid: ${uid}`);
+  }
+
+  return allUserWavedIds;
 };
