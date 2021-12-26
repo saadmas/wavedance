@@ -7,9 +7,9 @@ import EventCarouselQuery from './components/EventCarouselQuery/EventCarouselQue
 type EventCarouselScreenProps = NativeStackScreenProps<EventStackParamList, Path.EventCarousel>;
 
 const EventCarouselScreen = ({ route }: EventCarouselScreenProps) => {
-  const { event } = route.params;
+  const { waveEvent } = route.params;
 
-  return <EventCarouselQuery event={event} />;
+  return <EventCarouselQuery event={waveEvent} />;
 };
 
 export default EventCarouselScreen;

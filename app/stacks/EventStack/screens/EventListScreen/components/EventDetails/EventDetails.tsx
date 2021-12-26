@@ -28,7 +28,7 @@ const EventDetails = ({ event }: EventDetailProps) => {
   };
 
   const renderArtists = (): React.ReactNode => {
-    if (event.artistList.length) {
+    if (event.artistList?.length) {
       const artists = getArtistsDisplay(event);
       return renderEventDetail(artists, 'account-music-outline');
     }

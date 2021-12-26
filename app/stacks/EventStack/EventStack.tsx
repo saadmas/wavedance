@@ -1,10 +1,9 @@
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { IconButton } from 'react-native-paper';
 import { EdmTrainEvent, EdmTrainLocation } from '../../edmTrain/types';
+import { WaveEvent } from '../../firebase/types';
 import { Path } from '../../routing/paths';
-import ReportScreen from '../../screens/ReportScreen/ReportScreen';
 import { defaultScreenPadding } from '../../styles/theme';
 import EventCarouselScreen from './screens/EventCarouselScreen/EventCarouselScreen';
 import EventListScreen from './screens/EventListScreen/EventListScreen';
@@ -16,7 +15,7 @@ const Stack = createNativeStackNavigator();
 export type EventStackParamList = {
   [Path.LocationSelect]: undefined;
   [Path.EventList]: { location?: EdmTrainLocation };
-  [Path.EventCarousel]: { event: EdmTrainEvent };
+  [Path.EventCarousel]: { waveEvent: WaveEvent };
   [Path.EventPrompts]: EventPromptsProps;
 };
 
@@ -43,11 +42,6 @@ const EventStack = () => {
       <Stack.Screen
         name={Path.EventPrompts}
         component={EventPromptScreen}
-        options={{ contentStyle: { paddingTop: 0, paddingHorizontal: defaultScreenPadding } }}
-      />
-      <Stack.Screen
-        name={Path.ReportUser}
-        component={ReportScreen}
         options={{ contentStyle: { paddingTop: 0, paddingHorizontal: defaultScreenPadding } }}
       />
     </Stack.Navigator>

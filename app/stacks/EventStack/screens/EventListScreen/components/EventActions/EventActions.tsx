@@ -28,7 +28,7 @@ const EventActions = ({ event, isFavorite, locationId, onFavoriteToggle }: Event
         eventId={event.id}
         onFavoriteToggle={onFavoriteToggle}
       />
-      <EventActionsMenu event={event} isFavorite={isFavorite} />
+      <EventActionsMenu event={{ ...event, locationId }} isFavorite={isFavorite} />
     </View>
   );
 };

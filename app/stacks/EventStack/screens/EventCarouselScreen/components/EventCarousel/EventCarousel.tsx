@@ -24,16 +24,20 @@ const EventCarousel = ({ eventMemberIds, event, membersViewedStatus, refetchMemb
     setCurrentMemberIndex(prevIndex => ++prevIndex);
   };
 
+  if (eventMemberIds.length === 0 && !hasViewedAllMembers) {
+    return <ErrorDisplay errorText="No one is interested in this event yet" />;
+  }
+
   if (hasViewedAllMembers || eventMemberIds.length === currentMemberIndex) {
     return <EventCarouselEnd refetchMembers={refetchMembers} eventId={event.id} isPermanentEnd={isPermanent} />;
   }
 
-  if (eventMemberIds.length === 0) {
-    return <ErrorDisplay errorText="No one is interested in this event yet" />;
-  }
-
   return (
-    <UserProfileQuery userId={eventMemberIds[currentMemberIndex]} event={event} goToNextProfile={goToNextProfile} />
+    <UserProfileQuery
+      userId={eventMemberIds[currentMemberIndex]}
+      event={event}
+      onProfileViewComplete={goToNextProfile}
+    />
   );
 };
 

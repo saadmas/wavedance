@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import * as React from 'react';
 import PromptsManager, { PromptAnswer } from '../../../../components/PromptsManager/PromptsManager';
 import { EdmTrainEvent } from '../../../../edmTrain/types';
+import { WaveEvent } from '../../../../firebase/types';
 import { Path } from '../../../../routing/paths';
 import { EventPrompt } from '../../../../state/enums/eventPrompt';
 import { Prompt } from '../../../../state/enums/prompt';
@@ -12,7 +13,7 @@ import { EventStackParamList } from '../../EventStack';
 import { saveUserEventPrompts } from '../../utils';
 
 export interface EventPromptsProps {
-  event: EdmTrainEvent;
+  event: WaveEvent;
   isEditMode?: boolean;
   previouslyFilledPrompts?: Object;
 }
@@ -32,7 +33,7 @@ const EventPromptScreen = ({ route, navigation }: EventPromptScreenProps) => {
       return;
     }
 
-    navigation.navigate(Path.EventCarousel, { event });
+    navigation.navigate(Path.EventCarousel, { waveEvent: event });
   };
 
   return (

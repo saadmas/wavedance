@@ -1,12 +1,10 @@
 import firebase from 'firebase';
 import * as React from 'react';
-import { ActivityIndicator } from 'react-native-paper';
 import { EdmTrainEvent } from '../../edmTrain/types';
 import {
   getUserAdditionalInfoPath,
   getUserBasicInfoPath,
   getUserEventPromptsPath,
-  getUserPhotosPath,
   getUserPromptsPath,
 } from '../../firebase/utils';
 import { EventPrompt } from '../../state/enums/eventPrompt';
@@ -15,12 +13,14 @@ import { ResponseStatus } from '../../state/enums/responseStatus';
 import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
 import * as Animatable from 'react-native-animatable';
+import { getPhotoUri, getUserBasicInfo } from '../../firebase/queries';
 
 interface UserProfileQueryProps {
   userId: string;
   event: EdmTrainEvent;
   isEditMode?: boolean;
-  goToNextProfile: () => void;
+  isWaveMode?: boolean;
+  onProfileViewComplete: () => void;
 }
 
 export interface UserProfileType {
@@ -52,7 +52,7 @@ const getEmptyUserProfile = (): UserProfileType => ({
   prompts: new Map(),
 });
 
-const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryProps) => {
+const UserProfileQuery = ({ userId, event, onProfileViewComplete, isWaveMode }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
     ...getEmptyUserProfile(),
@@ -70,31 +70,16 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
 
   React.useEffect(() => {
     const fetchPhotoUri = async () => {
-      try {
-        const path = getUserPhotosPath(userId);
-        const photoUri = await firebase.storage().ref(`${path}.jpg`).getDownloadURL();
-        if (photoUri) {
-          setUserProfile(prevProfile => ({ ...prevProfile, photoUri }));
-        }
-      } catch (e) {
-        console.error('fetchPhotoUri failed');
-        console.error(e);
-        console.error(`userId: ${userId}`);
+      const photoUri = await getPhotoUri(userId);
+      if (photoUri) {
+        setUserProfile(prevProfile => ({ ...prevProfile, photoUri }));
       }
     };
 
     const fetchBasicInfo = async () => {
-      try {
-        const path = getUserBasicInfoPath(userId);
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
-        if (value) {
-          setUserProfile(prevProfile => ({ ...prevProfile, ...value }));
-        }
-      } catch (e) {
-        console.error('fetchBasicInfo failed');
-        console.error(e);
-        console.error(`userId: ${userId}`);
+      const basicInfo = await getUserBasicInfo(userId);
+      if (basicInfo) {
+        setUserProfile(prevProfile => ({ ...prevProfile, ...basicInfo }));
       }
     };
 
@@ -165,7 +150,12 @@ const UserProfileQuery = ({ userId, event, goToNextProfile }: UserProfileQueryPr
 
   return (
     <Animatable.View animation="fadeInUpBig">
-      <UserProfile userProfile={userProfile} goToNextProfile={goToNextProfile} event={event} />
+      <UserProfile
+        userProfile={userProfile}
+        onProfileViewComplete={onProfileViewComplete}
+        event={event}
+        isWaveMode={isWaveMode}
+      />
     </Animatable.View>
   );
 };

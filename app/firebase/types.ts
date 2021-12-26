@@ -15,4 +15,8 @@ export interface SubmittedReport {
   eventId?: number;
 }
 
+export interface WaveEvent extends EdmTrainEvent {
+  locationId: number;
+}
+
 export type FavoriteEvent = Pick<EdmTrainEvent, 'createdDate'>;

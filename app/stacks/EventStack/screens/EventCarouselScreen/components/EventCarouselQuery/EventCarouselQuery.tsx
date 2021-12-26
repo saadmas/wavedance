@@ -3,6 +3,7 @@ import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import { getUserBlockedIds, getUserIgnoredIds, getUserWavedIds } from '../../../../../../firebase/queries';
 import {
   getEventMembersPath,
   getUserBlocksPath,
@@ -30,62 +31,6 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
   });
 
   React.useEffect(() => {
-    const fetchUserBlockedIds = async (uid: string): Promise<Set<string>> => {
-      try {
-        const path = getUserBlocksPath(uid);
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
-        if (value) {
-          const userBlockedIds = new Set(Object.keys(value));
-          return userBlockedIds;
-        }
-      } catch (e) {
-        console.error('fetchUserBlocks failed');
-        console.error(e);
-        console.error(`uid: ${uid}`);
-      }
-
-      return new Set();
-    };
-
-    const fetchUserIgnoredIds = async (uid: string): Promise<Set<string>> => {
-      try {
-        const path = getUserEventIgnoresPath(uid, event.id);
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
-        if (value) {
-          const ignoredUserIds = new Set(Object.keys(value));
-          return ignoredUserIds;
-        }
-      } catch (e) {
-        console.error('fetchIgnoredUserIds failed');
-        console.error(e);
-        console.error(`uid: ${uid}`);
-        console.error(`eventId: ${event.id}`);
-      }
-
-      return new Set();
-    };
-
-    const fetchUserWavedIds = async (uid: string): Promise<Set<string>> => {
-      try {
-        const path = getUserWavesSentPath(uid, event.id);
-        const snapshot = await firebase.database().ref(path).get();
-        const value = snapshot.val();
-        if (value) {
-          const userWavedIds = new Set(Object.keys(value));
-          return userWavedIds;
-        }
-      } catch (e) {
-        console.error('fetchUserWavedIds failed');
-        console.error(e);
-        console.error(`uid: ${uid}`);
-        console.error(`eventId: ${event.id}`);
-      }
-
-      return new Set();
-    };
-
     const fetchEventMembers = async () => {
       try {
         const path = getEventMembersPath(event.id);
@@ -97,11 +42,18 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
           // const uid = firebase.auth().currentUser?.uid ?? 'foo';
           const uid = 'foo';
 
-          const userBlockedIds = await fetchUserBlockedIds(uid);
-          const userIgnoredIds = await fetchUserIgnoredIds(uid);
-          const userWavedIds = await fetchUserWavedIds(uid);
+          const userBlockedIds = await getUserBlockedIds(uid);
+          const userIgnoredIds = await getUserIgnoredIds(uid, event.id);
+          const userWavedIds = await getUserWavedIds(uid, event.id);
           const permanentlyHiddenMemberIds = new Set<string>();
           const memberIds = Object.keys(snapshotValue);
+
+          const isEmpty = memberIds.length === 0 || (memberIds.length === 1 && memberIds[0] === uid);
+          if (isEmpty) {
+            setEventMemberIds([]);
+            setResponseStatus(ResponseStatus.Success);
+            return;
+          }
 
           const filteredEventMembersIds = memberIds.filter(memberId => {
             const isBlocked = userBlockedIds.has(memberId);

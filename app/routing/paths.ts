@@ -9,5 +9,7 @@ export enum Path {
   EventPrompts = 'EventPrompts',
   EventCarousel = 'EventCarousel',
   SpotifySearch = 'SpotifySearch',
-  ReportUser = 'ReportUser',
+  Waves = 'Waves',
+  WaveList = 'WaveList',
+  WaveFullUserProfile = 'WaveFullUserProfile',
 }

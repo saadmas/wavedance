@@ -72,7 +72,7 @@ const ReportDialog = ({ eventId, reportedOnId, onReportComplete }: ReportDialogP
     try {
       await firebase.database().ref(path).push(reportToSubmit);
     } catch (e) {
-      console.log('reportUser failed');
+      console.error('reportUser failed');
       console.error(e);
       console.error(reportToSubmit);
     }
@@ -86,7 +86,7 @@ const ReportDialog = ({ eventId, reportedOnId, onReportComplete }: ReportDialogP
     try {
       await firebase.database().ref(path).set(true);
     } catch (e) {
-      console.log('blockUser failed');
+      console.error('blockUser failed');
       console.error(e);
       console.error(`Blocked by: ${uid}`);
       console.error(`Attempted to block: ${reportedOnId}`);

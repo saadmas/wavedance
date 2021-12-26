@@ -19,13 +19,14 @@ import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
 
 interface UserProfileProps {
   userProfile: UserProfileType;
-  goToNextProfile: () => void;
+  onProfileViewComplete: () => void;
   event: EdmTrainEvent;
+  isWaveMode?: boolean;
 }
 
 type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
-const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) => {
+const UserProfile = ({ userProfile, onProfileViewComplete, event, isWaveMode }: UserProfileProps) => {
   const {
     id,
     photoUri,
@@ -87,7 +88,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
 
   const onWaveOrIgnore = async () => {
     await new Promise(r => setTimeout(r, 700)); // To let the wave/ignore animations play out nicely :)
-    goToNextProfile();
+    onProfileViewComplete();
   };
 
   return (
@@ -113,7 +114,7 @@ const UserProfile = ({ userProfile, goToNextProfile, event }: UserProfileProps) 
         </ScrollView>
       </View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} name={name} />
-      <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} />
+      <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} isWaveMode={isWaveMode} />
     </>
   );
 };
