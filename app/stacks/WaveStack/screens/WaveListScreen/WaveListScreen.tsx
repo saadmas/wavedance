@@ -1,10 +1,11 @@
+import { useFocusEffect } from '@react-navigation/core';
 import firebase from 'firebase';
 import * as React from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import ErrorDisplay from '../../../../components/ErrorDisplay/ErrorDisplay';
 import LottieAnimation from '../../../../components/LottieAnimation/LottieAnimation';
-import { getAllUserWavedIds } from '../../../../firebase/queries';
+import { getAllUserWavedIds, getUserBlockedIds, getUserWaveIgnoreIds } from '../../../../firebase/queries';
 import { WaveEvent } from '../../../../firebase/types';
 import { getUserWavesReceivedPath } from '../../../../firebase/utils';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
@@ -17,7 +18,7 @@ const WaveListScreen = () => {
   const [waves, setWaves] = React.useState<Waves>(new Map());
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
 
-  React.useEffect(() => {
+  useFocusEffect(() => {
     const fetchWaves = async () => {
       //f const uid = firebase.auth().currentUser?.uid ?? 'foo';
       const uid = 'foo';
@@ -34,12 +35,16 @@ const WaveListScreen = () => {
 
         const fetchedWaves: Waves = new Map();
 
-        /// filter by waved users + blocked users + wave ignore users (create new node for this)
         const allWavedIds = await getAllUserWavedIds(uid);
+        const blockedIds = await getUserBlockedIds(uid);
+        const matchIgnoreIds = await getUserWaveIgnoreIds(uid);
 
         Object.entries(value).forEach(([userId, events]) => {
           const isWaved = allWavedIds.has(userId);
-          if (!isWaved) {
+          const isBlocked = blockedIds.has(userId);
+          const isIgnored = matchIgnoreIds.has(userId);
+
+          if (!isWaved && !isBlocked && !isIgnored) {
             fetchedWaves.set(userId, Object.values(events as any));
           }
         });
@@ -55,7 +60,7 @@ const WaveListScreen = () => {
     };
 
     fetchWaves();
-  }, []);
+  });
 
   if (responseStatus === ResponseStatus.Loading) {
     return <ActivityIndicator style={{ height: '90%' }} size={60} />;

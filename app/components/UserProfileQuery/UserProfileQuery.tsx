@@ -19,6 +19,7 @@ interface UserProfileQueryProps {
   userId: string;
   event: EdmTrainEvent;
   isEditMode?: boolean;
+  isWaveMode?: boolean;
   onProfileViewComplete: () => void;
 }
 
@@ -51,7 +52,7 @@ const getEmptyUserProfile = (): UserProfileType => ({
   prompts: new Map(),
 });
 
-const UserProfileQuery = ({ userId, event, onProfileViewComplete }: UserProfileQueryProps) => {
+const UserProfileQuery = ({ userId, event, onProfileViewComplete, isWaveMode }: UserProfileQueryProps) => {
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
   const [userProfile, setUserProfile] = React.useState<UserProfileType>({
     ...getEmptyUserProfile(),
@@ -149,7 +150,12 @@ const UserProfileQuery = ({ userId, event, onProfileViewComplete }: UserProfileQ
 
   return (
     <Animatable.View animation="fadeInUpBig">
-      <UserProfile userProfile={userProfile} onProfileViewComplete={onProfileViewComplete} event={event} />
+      <UserProfile
+        userProfile={userProfile}
+        onProfileViewComplete={onProfileViewComplete}
+        event={event}
+        isWaveMode={isWaveMode}
+      />
     </Animatable.View>
   );
 };

@@ -5,6 +5,7 @@ import {
   getUserBasicInfoPath,
   getUserBlocksPath,
   getUserEventIgnoresPath,
+  getUserWaveIgnoresPath,
   getUserPhotosPath,
   getUserWavesSentPath,
 } from './utils';
@@ -126,4 +127,22 @@ export const getAllUserWavedIds = async (uid: string): Promise<Set<string>> => {
   }
 
   return allUserWavedIds;
+};
+
+export const getUserWaveIgnoreIds = async (uid: string): Promise<Set<string>> => {
+  try {
+    const path = getUserWaveIgnoresPath(uid);
+    const snapshot = await firebase.database().ref(path).get();
+    const value = snapshot.val();
+    if (value) {
+      const userMatchIgnoresIds = new Set(Object.keys(value));
+      return userMatchIgnoresIds;
+    }
+  } catch (e) {
+    console.error('getUserWaveIgnoreIds failed');
+    console.error(e);
+    console.error(`uid: ${uid}`);
+  }
+
+  return new Set();
 };

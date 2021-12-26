@@ -21,11 +21,12 @@ interface UserProfileProps {
   userProfile: UserProfileType;
   onProfileViewComplete: () => void;
   event: EdmTrainEvent;
+  isWaveMode?: boolean;
 }
 
 type PromptEntry = [Prompt | EventPrompt, PromptAnswer];
 
-const UserProfile = ({ userProfile, onProfileViewComplete, event }: UserProfileProps) => {
+const UserProfile = ({ userProfile, onProfileViewComplete, event, isWaveMode }: UserProfileProps) => {
   const {
     id,
     photoUri,
@@ -113,7 +114,7 @@ const UserProfile = ({ userProfile, onProfileViewComplete, event }: UserProfileP
         </ScrollView>
       </View>
       <WaveButton onWave={onWaveOrIgnore} event={event} waveReceivedByUid={id} name={name} />
-      <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} />
+      <IgnoreButton onIgnore={onWaveOrIgnore} eventId={event.id} userToIgnoreId={id} isWaveMode={isWaveMode} />
     </>
   );
 };

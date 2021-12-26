@@ -15,7 +15,9 @@ const WaveFullUserProfileScreen = ({ route, navigation }: WaveFullUserProfileScr
     navigation.goBack();
   };
 
-  return <UserProfileQuery userId={userId} event={event} onProfileViewComplete={onProfileViewComplete} />;
+  return (
+    <UserProfileQuery userId={userId} event={event} onProfileViewComplete={onProfileViewComplete} isWaveMode={true} />
+  );
 };
 
 export default WaveFullUserProfileScreen;
