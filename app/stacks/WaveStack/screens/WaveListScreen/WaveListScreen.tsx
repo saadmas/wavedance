@@ -26,7 +26,7 @@ const WaveListScreen = () => {
         const path = getUserWavesReceivedPath(uid);
 
         try {
-          const snapshot = await firebase.database().ref(path).get();
+          const snapshot = await firebase.database().ref(path).once('value');
           const value = snapshot.val();
 
           if (!value) {

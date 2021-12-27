@@ -63,7 +63,7 @@ export const getUserEventPrompts = async (uid: string, eventId: number) => {
   const path = getUserEventPromptsPath(uid, eventId);
 
   try {
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const prompts = snapshot.val() ?? undefined;
     return prompts;
   } catch (e) {

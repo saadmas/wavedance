@@ -29,7 +29,7 @@ const WaveProfileEventImage = ({ eventId, locationId }: WaveProfileEventProps) =
         // const path = getFirebasePath(FirebaseNode.EventPhotos, locationId.toString(), eventId.toString());
         //* undo once all images fetched via cloud fns
         const path = getFirebasePath(FirebaseNode.EventPhotos, '70', '159624');
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const value = snapshot.val();
 
         if (!value) {

@@ -45,7 +45,12 @@ const WaveProfile = ({ userId, events }: WaveProfileProps) => {
         </View>
         <Divider style={{ marginTop: 10 }} />
       </TouchableWithoutFeedback>
-      <WaveProfileEventList goToNextEvent={goToNextEvent} goToPreviousEvent={goToPreviousEvent} event={event} />
+      <WaveProfileEventList
+        goToNextEvent={goToNextEvent}
+        goToPreviousEvent={goToPreviousEvent}
+        event={event}
+        eventCount={events.length}
+      />
       <WaveCurrentEventIndicator eventCount={events.length} currentEventIndex={eventIndex} />
     </Card>
   );

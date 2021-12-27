@@ -7,22 +7,29 @@ import { View } from 'react-native';
 
 interface WaveProfileEventListProps {
   event: WaveEvent;
+  eventCount: number;
   goToPreviousEvent: () => void;
   goToNextEvent: () => void;
 }
 
-const WaveProfileEventList = ({ event, goToNextEvent, goToPreviousEvent }: WaveProfileEventListProps) => {
+const WaveProfileEventList = ({ event, goToNextEvent, goToPreviousEvent, eventCount }: WaveProfileEventListProps) => {
   const animationDuration = 400;
   const animatableRef = React.useRef<Animatable.View & View>(null);
 
   const onSwipeLeft = async () => {
     goToNextEvent();
-    animatableRef.current?.fadeInRight?.(animationDuration);
+
+    if (eventCount > 1) {
+      animatableRef.current?.fadeInRight?.(animationDuration);
+    }
   };
 
   const onSwipeRight = () => {
     goToPreviousEvent();
-    animatableRef.current?.fadeInLeft?.(animationDuration);
+
+    if (eventCount > 1) {
+      animatableRef.current?.fadeInLeft?.(animationDuration);
+    }
   };
 
   return (

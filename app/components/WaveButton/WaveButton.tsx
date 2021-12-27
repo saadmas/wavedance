@@ -37,7 +37,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
   const isMatch = async (currentUserId: string) => {
     try {
       const path = getUserWavesReceivedPath(currentUserId, waveReceivedByUid, event.id);
-      const snapshot = await firebase.database().ref(path).get();
+      const snapshot = await firebase.database().ref(path).once('value');
       return !!snapshot.val();
     } catch (e) {
       console.error('isMatch failed');
