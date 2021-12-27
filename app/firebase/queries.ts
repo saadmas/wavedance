@@ -31,7 +31,7 @@ export const getPhotoUri = async (userId: string): Promise<string | undefined> =
 export const getUserBasicInfo = async (userId: string) => {
   try {
     const path = getUserBasicInfoPath(userId);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
       return value;
@@ -46,7 +46,7 @@ export const getUserBasicInfo = async (userId: string) => {
 export const getUserBlockedIds = async (uid: string): Promise<Set<string>> => {
   try {
     const path = getUserBlocksPath(uid);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
       const userBlockedIds = new Set(Object.keys(value));
@@ -64,7 +64,7 @@ export const getUserBlockedIds = async (uid: string): Promise<Set<string>> => {
 export const getUserIgnoredIds = async (uid: string, eventId: number): Promise<Set<string>> => {
   try {
     const path = getUserEventIgnoresPath(uid, eventId);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
       const ignoredUserIds = new Set(Object.keys(value));
@@ -83,7 +83,7 @@ export const getUserIgnoredIds = async (uid: string, eventId: number): Promise<S
 export const getUserWavedIds = async (uid: string, eventId: number): Promise<Set<string>> => {
   try {
     const path = getUserWavesSentPath(uid, eventId);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
       const userWavedIds = new Set(Object.keys(value));
@@ -104,7 +104,7 @@ export const getAllUserWavedIds = async (uid: string): Promise<Set<string>> => {
 
   try {
     const path = getFirebasePath(FirebaseNode.UserWavesSent, uid);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
 
     if (!value) {
@@ -132,7 +132,7 @@ export const getAllUserWavedIds = async (uid: string): Promise<Set<string>> => {
 export const getUserWaveIgnoreIds = async (uid: string): Promise<Set<string>> => {
   try {
     const path = getUserWaveIgnoresPath(uid);
-    const snapshot = await firebase.database().ref(path).get();
+    const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
       const userMatchIgnoresIds = new Set(Object.keys(value));

@@ -34,7 +34,7 @@ const EventCarouselQuery = ({ event }: EventCarouselQueryProps) => {
     const fetchEventMembers = async () => {
       try {
         const path = getEventMembersPath(event.id);
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const snapshotValue = snapshot.val();
 
         if (snapshotValue) {

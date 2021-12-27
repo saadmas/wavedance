@@ -41,7 +41,7 @@ const FavoriteEventsQuery = ({ searchText, locationId }: FavoriteEventsQueryProp
       const path = getUserFavoriteEventsPath(uid);
 
       try {
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const snapshotValue = snapshot.val();
 
         if (!snapshotValue) {

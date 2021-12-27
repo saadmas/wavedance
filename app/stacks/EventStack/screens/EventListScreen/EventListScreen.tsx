@@ -62,7 +62,7 @@ const EventListScreen = ({ navigation, route }: EventListScreenProps) => {
           UserAdditionalInfo.CurrentLocation
         );
 
-        const userCurrentLocationSnapshot = await firebase.database().ref(userCurrentLocationPath).get();
+        const userCurrentLocationSnapshot = await firebase.database().ref(userCurrentLocationPath).once('value');
         const userCurrentLocation = userCurrentLocationSnapshot.val();
         if (!userCurrentLocation) {
           throw Error(`Failed to run getUserLocationFromFirebase, userCurrentLocation: ${userCurrentLocation}`);
