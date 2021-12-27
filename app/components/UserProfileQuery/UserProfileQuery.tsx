@@ -86,7 +86,7 @@ const UserProfileQuery = ({ userId, event, onProfileViewComplete, isWaveMode }: 
     const fetchAdditionalInfo = async () => {
       try {
         const path = getUserAdditionalInfoPath(userId);
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const value = snapshot.val();
         if (value) {
           setUserProfile(prevProfile => ({ ...prevProfile, ...value }));
@@ -101,7 +101,7 @@ const UserProfileQuery = ({ userId, event, onProfileViewComplete, isWaveMode }: 
     const fetchPrompts = async () => {
       try {
         const path = getUserPromptsPath(userId);
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const value = snapshot.val();
         if (value) {
           const prompts = new Map(Object.entries(value)) as Map<Prompt, PromptAnswer>;
@@ -122,7 +122,7 @@ const UserProfileQuery = ({ userId, event, onProfileViewComplete, isWaveMode }: 
 
       try {
         const path = getUserEventPromptsPath(userId, event.id);
-        const snapshot = await firebase.database().ref(path).get();
+        const snapshot = await firebase.database().ref(path).once('value');
         const value = snapshot.val();
         if (value) {
           const eventPrompts = new Map(Object.entries(value)) as Map<EventPrompt, PromptAnswer>;
