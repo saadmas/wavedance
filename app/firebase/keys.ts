@@ -13,6 +13,7 @@ export enum FirebaseNode {
   UserReports = 'userReports',
   UserWavesSent = 'userWavesSent',
   UserWavesReceived = 'userWavesReceived',
+  UserChats = 'userChats',
 }
 
 export enum UserBasicInfo {

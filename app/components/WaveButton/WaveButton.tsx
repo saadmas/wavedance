@@ -1,11 +1,12 @@
 import * as React from 'react';
-import LottieInteractiveAnimation, { FramePosition } from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
+import LottieInteractiveAnimation from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
 import * as Haptics from 'expo-haptics';
 import firebase from 'firebase';
 import { EdmTrainEvent } from '../../edmTrain/types';
-import { getUserWavesReceivedPath, getUserWavesSentPath } from '../../firebase/utils';
+import { getChatId, getUserWavesReceivedPath, getUserWavesSentPath } from '../../firebase/utils';
 import LottieAnimation from '../LottieAnimation/LottieAnimation';
 import Dialog from '../Dialog/Dialog';
+import { createChat } from '../../firebase/mutations';
 
 interface WaveButtonProps {
   waveReceivedByUid: string;
@@ -71,14 +72,18 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     sendWave(waveSentByUid);
 
     const usersHaveMatched = await isMatch(waveSentByUid);
-    if (usersHaveMatched) {
-      setShouldPlayMatchAnimation(true);
-      await new Promise(r => setTimeout(r, 800)); // To let the heart-favorite animation play out nicely :)
-      setIsMatchDialogOpen(true);
+    if (!usersHaveMatched) {
+      onWave();
       return;
     }
 
-    onWave();
+    const chatId = getChatId(waveSentByUid, waveReceivedByUid);
+    await createChat(waveSentByUid, chatId);
+    //* should we add to last message sent node ??? depends on how it would look (check after building chat list)
+
+    setShouldPlayMatchAnimation(true);
+    await new Promise(r => setTimeout(r, 800)); // To let the heart-favorite animation play out nicely :)
+    setIsMatchDialogOpen(true);
   };
 
   const closeDialog = () => {
@@ -89,7 +94,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
 
   const goToChat = () => {
     closeDialog();
-    //*
+    ///
   };
 
   return (

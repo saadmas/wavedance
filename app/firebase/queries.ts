@@ -8,6 +8,7 @@ import {
   getUserWaveIgnoresPath,
   getUserPhotosPath,
   getUserWavesSentPath,
+  getUserChatsPath,
 } from './utils';
 
 export const getPhotoUri = async (userId: string): Promise<string | undefined> => {
@@ -145,4 +146,24 @@ export const getUserWaveIgnoreIds = async (uid: string): Promise<Set<string>> =>
   }
 
   return new Set();
+};
+
+export const doesChatAlreadyExist = async (uid: string, chatId: string): Promise<boolean> => {
+  const path = getUserChatsPath(uid, chatId);
+  let chatExists = false;
+
+  try {
+    const snapshot = await firebase.database().ref(path).get();
+    const value = snapshot.val();
+    if (value) {
+      chatExists = true;
+    }
+  } catch (e) {
+    console.error('doesChatAlreadyExist failed');
+    console.error(e);
+    console.error(`uid: ${uid}`);
+    console.error(`chatId: ${chatId}`);
+  }
+
+  return chatExists;
 };

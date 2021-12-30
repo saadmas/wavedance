@@ -1,5 +1,14 @@
 import { FirebaseNode, UserPhotos } from './keys';
 
+export const chatIdSeparator = '___';
+
+export const getChatId = (userIdA: string, userIdB: string) => {
+  if (userIdA < userIdB) {
+    return `${userIdA}${chatIdSeparator}${userIdB}`;
+  }
+  return `${userIdB}${chatIdSeparator}${userIdA}`;
+};
+
 export const getFirebasePath = (...args: (string | undefined)[]): string => {
   const validArgs = args.filter(arg => !!arg);
   return validArgs.join('/');
@@ -57,6 +66,11 @@ export const getUserWavesSentPath = (sentByUid: string, eventId: number, receive
 
 export const getUserWavesReceivedPath = (receivedByUid: string, sentById?: string, eventId?: number) => {
   const path = getFirebasePath(FirebaseNode.UserWavesReceived, receivedByUid, sentById, eventId?.toString());
+  return path;
+};
+
+export const getUserChatsPath = (uid: string, chatId?: string) => {
+  const path = getFirebasePath(FirebaseNode.UserChats, uid, chatId);
   return path;
 };
 
