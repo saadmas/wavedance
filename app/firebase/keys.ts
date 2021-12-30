@@ -1,6 +1,7 @@
 export enum FirebaseNode {
   EventMembers = 'eventMembers',
   EventPhotos = 'eventPhotos',
+  ChatMessages = 'chatMessages',
   UserAdditionalInfo = 'userAdditionalInfo',
   UserBasicInfo = 'userBasicInfo',
   UserBlocks = 'userBlocks',

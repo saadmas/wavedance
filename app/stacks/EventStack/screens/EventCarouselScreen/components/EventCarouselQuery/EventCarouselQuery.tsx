@@ -2,19 +2,14 @@ import firebase from 'firebase';
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
-import { EdmTrainEvent } from '../../../../../../edmTrain/types';
 import { getUserBlockedIds, getUserIgnoredIds, getUserWavedIds } from '../../../../../../firebase/queries';
-import {
-  getEventMembersPath,
-  getUserBlocksPath,
-  getUserEventIgnoresPath,
-  getUserWavesSentPath,
-} from '../../../../../../firebase/utils';
+import { WaveEvent } from '../../../../../../firebase/types';
+import { getEventMembersPath } from '../../../../../../firebase/utils';
 import { ResponseStatus } from '../../../../../../state/enums/responseStatus';
 import EventCarousel from '../EventCarousel/EventCarousel';
 
 interface EventCarouselQueryProps {
-  event: EdmTrainEvent;
+  event: WaveEvent;
 }
 
 export interface MembersViewedStatus {

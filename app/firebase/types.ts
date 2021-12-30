@@ -1,5 +1,13 @@
 import { EdmTrainEvent } from '../edmTrain/types';
 
+export interface ChatMessage {
+  sentBy: string;
+  timestamp: string;
+  message: string;
+  photoUrl?: string;
+  event?: WaveEvent;
+}
+
 export interface EventImageInfo {
   imageUrl?: string;
   spotifyArtistId?: string;

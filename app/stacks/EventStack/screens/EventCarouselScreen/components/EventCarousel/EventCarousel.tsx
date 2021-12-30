@@ -1,12 +1,12 @@
 import * as React from 'react';
 import ErrorDisplay from '../../../../../../components/ErrorDisplay/ErrorDisplay';
 import UserProfileQuery from '../../../../../../components/UserProfileQuery/UserProfileQuery';
-import { EdmTrainEvent } from '../../../../../../edmTrain/types';
+import { WaveEvent } from '../../../../../../firebase/types';
 import EventCarouselEnd from '../EventCarouselEnd/EventCarouselEnd';
 import { MembersViewedStatus } from '../EventCarouselQuery/EventCarouselQuery';
 
 interface EventCarouselProps {
-  event: EdmTrainEvent;
+  event: WaveEvent;
   eventMemberIds: string[];
   membersViewedStatus: MembersViewedStatus;
   refetchMembers: () => void;

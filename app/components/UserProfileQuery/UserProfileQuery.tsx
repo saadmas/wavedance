@@ -1,12 +1,6 @@
 import firebase from 'firebase';
 import * as React from 'react';
-import { EdmTrainEvent } from '../../edmTrain/types';
-import {
-  getUserAdditionalInfoPath,
-  getUserBasicInfoPath,
-  getUserEventPromptsPath,
-  getUserPromptsPath,
-} from '../../firebase/utils';
+import { getUserAdditionalInfoPath, getUserEventPromptsPath, getUserPromptsPath } from '../../firebase/utils';
 import { EventPrompt } from '../../state/enums/eventPrompt';
 import { Prompt } from '../../state/enums/prompt';
 import { ResponseStatus } from '../../state/enums/responseStatus';
@@ -14,10 +8,11 @@ import { PromptAnswer } from '../PromptsManager/PromptsManager';
 import UserProfile from './UserProfile/UserProfile';
 import * as Animatable from 'react-native-animatable';
 import { getPhotoUri, getUserBasicInfo } from '../../firebase/queries';
+import { WaveEvent } from '../../firebase/types';
 
 interface UserProfileQueryProps {
   userId: string;
-  event: EdmTrainEvent;
+  event: WaveEvent;
   isEditMode?: boolean;
   isWaveMode?: boolean;
   onProfileViewComplete: () => void;

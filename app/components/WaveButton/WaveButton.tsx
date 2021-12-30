@@ -2,16 +2,16 @@ import * as React from 'react';
 import LottieInteractiveAnimation from '../LottieInteractiveAnimation/LottieInteractiveAnimation';
 import * as Haptics from 'expo-haptics';
 import firebase from 'firebase';
-import { EdmTrainEvent } from '../../edmTrain/types';
-import { getChatId, getUserWavesReceivedPath, getUserWavesSentPath } from '../../firebase/utils';
+import { getChatId, getUserWavesReceivedPath, getUserWavesSentPath, SYSTEM_USER_ID } from '../../firebase/utils';
 import LottieAnimation from '../LottieAnimation/LottieAnimation';
 import Dialog from '../Dialog/Dialog';
-import { createChat } from '../../firebase/mutations';
+import { addChatMessage, createChat } from '../../firebase/mutations';
+import { ChatMessage, WaveEvent } from '../../firebase/types';
 
 interface WaveButtonProps {
   waveReceivedByUid: string;
   name: string;
-  event: EdmTrainEvent;
+  event: WaveEvent;
   onWave: () => void;
 }
 
@@ -79,6 +79,16 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
 
     const chatId = getChatId(waveSentByUid, waveReceivedByUid);
     await createChat(waveSentByUid, chatId);
+
+    const systemMatchMessage: ChatMessage = {
+      sentBy: SYSTEM_USER_ID,
+      timestamp: new Date().toUTCString(),
+      message: "It's a match!",
+      event,
+    };
+
+    await addChatMessage(chatId, systemMatchMessage);
+
     //* should we add to last message sent node ??? depends on how it would look (check after building chat list)
 
     setShouldPlayMatchAnimation(true);

@@ -2,7 +2,7 @@ import { Prompt } from 'expo-auth-session';
 import * as React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { EdmTrainEvent } from '../../../edmTrain/types';
+import { WaveEvent } from '../../../firebase/types';
 import { EventPrompt } from '../../../state/enums/eventPrompt';
 import { PromptSelectionType } from '../../../state/enums/promptSelectionType';
 import { getFullTextFromPromptKey } from '../../../utils/prompts/prompt.util';
@@ -20,7 +20,7 @@ import UserProfilePrompt from './UserProfilePrompt/UserProfilePrompt';
 interface UserProfileProps {
   userProfile: UserProfileType;
   onProfileViewComplete: () => void;
-  event: EdmTrainEvent;
+  event: WaveEvent;
   isWaveMode?: boolean;
 }
 

@@ -1,6 +1,7 @@
 import { FirebaseNode, UserPhotos } from './keys';
 
 export const chatIdSeparator = '___';
+export const SYSTEM_USER_ID = 'WAVEDANCE_SYSTEM_USER';
 
 export const getChatId = (userIdA: string, userIdB: string) => {
   if (userIdA < userIdB) {
@@ -71,6 +72,11 @@ export const getUserWavesReceivedPath = (receivedByUid: string, sentById?: strin
 
 export const getUserChatsPath = (uid: string, chatId?: string) => {
   const path = getFirebasePath(FirebaseNode.UserChats, uid, chatId);
+  return path;
+};
+
+export const getChatMessagesPath = (chatId: string) => {
+  const path = getFirebasePath(FirebaseNode.ChatMessages, chatId);
   return path;
 };
 
