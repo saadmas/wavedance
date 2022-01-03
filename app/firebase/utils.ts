@@ -10,6 +10,12 @@ export const getChatId = (userIdA: string, userIdB: string) => {
   return `${userIdB}${chatIdSeparator}${userIdA}`;
 };
 
+export const getMatchedUserId = (chatId: string, uid: string) => {
+  const userIds = chatId.split(chatIdSeparator);
+  const matchedUserId = userIds.find(id => id !== uid);
+  return matchedUserId;
+};
+
 export const getFirebasePath = (...args: (string | undefined)[]): string => {
   const validArgs = args.filter(arg => !!arg);
   return validArgs.join('/');

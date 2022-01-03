@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { FirebaseNode } from './keys';
+import { ChatMessage } from './types';
 import {
   getFirebasePath,
   getUserBasicInfoPath,
@@ -166,4 +167,19 @@ export const doesChatAlreadyExist = async (uid: string, chatId: string): Promise
   }
 
   return chatExists;
+};
+
+export const getLastMessageSent = async (chatId: string): Promise<ChatMessage | undefined> => {
+  try {
+    const path = getFirebasePath(FirebaseNode.LastMessageSent, chatId);
+    const snapshot = await firebase.database().ref(path).once('value');
+    const value = snapshot.val();
+    if (value) {
+      return value;
+    }
+  } catch (e) {
+    console.error('getLastMessageSent failed');
+    console.error(e);
+    console.error(`chatId: ${chatId}`);
+  }
 };

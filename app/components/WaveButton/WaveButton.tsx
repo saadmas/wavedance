@@ -104,7 +104,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
 
   const goToChat = () => {
     closeDialog();
-    ///
+    //* navigate to chat on match
   };
 
   return (

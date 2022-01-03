@@ -4,6 +4,8 @@ export enum Path {
   Events = 'Events',
   EventList = 'EventList',
   Matches = 'Matches',
+  MatchList = 'MatchList',
+  MatchChat = 'MatchChat',
   Profile = 'Profile',
   LocationSelect = 'LocationSelect',
   EventPrompts = 'EventPrompts',
