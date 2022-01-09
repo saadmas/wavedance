@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 import * as React from 'react';
+import { ActivityIndicator } from 'react-native-paper';
+import ErrorDisplay from '../../../../components/ErrorDisplay/ErrorDisplay';
 import { FirebaseNode } from '../../../../firebase/keys';
 import { getLastMessageSent, getPhotoUri, getUserBasicInfo } from '../../../../firebase/queries';
 import { ChatMessage } from '../../../../firebase/types';
@@ -19,6 +21,20 @@ const MatchListScreen = () => {
 
   const [matchListItems, setMatchListItems] = React.useState<MatchListItem[]>([]);
   const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading); ///
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (responseStatus === ResponseStatus.Loading) {
+        setResponseStatus(ResponseStatus.Error);
+      }
+    }, 1000 * 60);
+
+    const cleanup = () => {
+      clearTimeout(timeout);
+    };
+
+    return cleanup;
+  }, []);
 
   React.useEffect(() => {
     const getMatchChats = async () => {
@@ -60,6 +76,7 @@ const MatchListScreen = () => {
         }
 
         setMatchListItems(listItems);
+        setResponseStatus(ResponseStatus.Success);
       });
     };
 
@@ -70,6 +87,14 @@ const MatchListScreen = () => {
     getMatchChats();
     return disconnectRef;
   }, []);
+
+  if (responseStatus === ResponseStatus.Loading) {
+    return <ActivityIndicator style={{ height: '90%' }} size={60} />;
+  }
+
+  if (responseStatus === ResponseStatus.Error) {
+    return <ErrorDisplay />;
+  }
 
   return <MatchList listItems={matchListItems} />;
 };
