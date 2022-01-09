@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { getChatId, getUserWavesReceivedPath, getUserWavesSentPath, SYSTEM_USER_ID } from '../../firebase/utils';
 import LottieAnimation from '../LottieAnimation/LottieAnimation';
 import Dialog from '../Dialog/Dialog';
-import { addChatMessage, createChat } from '../../firebase/mutations';
+import { addChatMessage, createChat, updateLastMessageSent } from '../../firebase/mutations';
 import { ChatMessage, WaveEvent } from '../../firebase/types';
 
 interface WaveButtonProps {
@@ -88,6 +88,7 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     };
 
     await addChatMessage(chatId, systemMatchMessage);
+    await updateLastMessageSent(chatId, systemMatchMessage);
 
     //* should we add to last message sent node ??? depends on how it would look (check after building chat list)
 

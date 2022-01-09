@@ -86,6 +86,11 @@ export const getChatMessagesPath = (chatId: string) => {
   return path;
 };
 
+export const getLastMessageSentPath = (chatId: string) => {
+  const path = getFirebasePath(FirebaseNode.LastMessageSent, chatId);
+  return path;
+};
+
 export const getUserEventIgnoresPath = (ignorerUid: string, eventId: number, ignoredUid?: string) => {
   const path = getFirebasePath(FirebaseNode.UserEventIgnores, ignorerUid, eventId.toString(), ignoredUid);
   return path;

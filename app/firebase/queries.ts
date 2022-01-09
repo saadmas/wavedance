@@ -10,6 +10,7 @@ import {
   getUserPhotosPath,
   getUserWavesSentPath,
   getUserChatsPath,
+  getLastMessageSentPath,
 } from './utils';
 
 export const getPhotoUri = async (userId: string): Promise<string | undefined> => {
@@ -171,7 +172,7 @@ export const doesChatAlreadyExist = async (uid: string, chatId: string): Promise
 
 export const getLastMessageSent = async (chatId: string): Promise<ChatMessage | undefined> => {
   try {
-    const path = getFirebasePath(FirebaseNode.LastMessageSent, chatId);
+    const path = getLastMessageSentPath(chatId);
     const snapshot = await firebase.database().ref(path).once('value');
     const value = snapshot.val();
     if (value) {
