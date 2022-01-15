@@ -10,7 +10,7 @@ interface MatchListProps {
 const MatchList = ({ listItems }: MatchListProps) => {
   const renderItem = React.useCallback(
     ({ item }: ListRenderItemInfo<MatchListItem>): JSX.Element => (
-      <MatchListRow lastMessageSent={item.lastMessageSent?.message} photoUri={item.photoUri} name={item.name} />
+      <MatchListRow lastMessageSent={item.lastMessageSent} photoUri={item.photoUri} name={item.name} />
     ),
     []
   );
@@ -25,7 +25,15 @@ const MatchList = ({ listItems }: MatchListProps) => {
     const mockedData = [];
 
     for (let i = 0; i < 10; i++) {
-      mockedData.push(listItems[0]);
+      const listItem = listItems[0];
+      mockedData.push({
+        ...listItem,
+        chatId: listItem.chatId + i,
+        lastMessageSent: {
+          ...listItem.lastMessageSent,
+          isRead: i % 2 === 0,
+        },
+      });
     }
 
     return mockedData;

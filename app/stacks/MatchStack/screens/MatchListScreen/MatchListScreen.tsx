@@ -4,7 +4,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import ErrorDisplay from '../../../../components/ErrorDisplay/ErrorDisplay';
 import { FirebaseNode } from '../../../../firebase/keys';
 import { getLastMessageSent, getPhotoUri, getUserBasicInfo } from '../../../../firebase/queries';
-import { ChatMessage } from '../../../../firebase/types';
+import { LastMessageSent } from '../../../../firebase/types';
 import { getFirebasePath, getMatchedUserId } from '../../../../firebase/utils';
 import { ResponseStatus } from '../../../../state/enums/responseStatus';
 import MatchList from './components/MatchList/MatchList';
@@ -13,7 +13,7 @@ export interface MatchListItem {
   chatId: string;
   name: string;
   photoUri?: string;
-  lastMessageSent?: ChatMessage;
+  lastMessageSent?: LastMessageSent;
 }
 
 const MatchListScreen = () => {
