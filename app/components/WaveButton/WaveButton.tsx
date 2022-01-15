@@ -6,7 +6,7 @@ import { getChatId, getUserWavesReceivedPath, getUserWavesSentPath, SYSTEM_USER_
 import LottieAnimation from '../LottieAnimation/LottieAnimation';
 import Dialog from '../Dialog/Dialog';
 import { addChatMessage, createChat, updateLastMessageSent } from '../../firebase/mutations';
-import { ChatMessage, WaveEvent } from '../../firebase/types';
+import { ChatMessage, LastMessageSent, WaveEvent } from '../../firebase/types';
 
 interface WaveButtonProps {
   waveReceivedByUid: string;
@@ -80,11 +80,12 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     const chatId = getChatId(waveSentByUid, waveReceivedByUid);
     await createChat(waveSentByUid, chatId);
 
-    const systemMatchMessage: ChatMessage = {
+    const systemMatchMessage: LastMessageSent = {
       sentBy: SYSTEM_USER_ID,
       timestamp: new Date().toUTCString(),
       message: "It's a match!",
       event,
+      isRead: false,
     };
 
     await addChatMessage(chatId, systemMatchMessage);

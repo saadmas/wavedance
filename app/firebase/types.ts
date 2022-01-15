@@ -8,6 +8,10 @@ export interface ChatMessage {
   event?: WaveEvent;
 }
 
+export interface LastMessageSent extends ChatMessage {
+  isRead: boolean;
+}
+
 export interface EventImageInfo {
   imageUrl?: string;
   spotifyArtistId?: string;

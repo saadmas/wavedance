@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ListRenderItemInfo, View, VirtualizedList } from 'react-native';
-import { Avatar, Text } from 'react-native-paper';
+import { ListRenderItemInfo, VirtualizedList } from 'react-native';
 import { MatchListItem } from '../../MatchListScreen';
+import MatchListRow from '../MatchListRow/MatchListRow';
 
 interface MatchListProps {
   listItems: MatchListItem[];
@@ -10,13 +10,7 @@ interface MatchListProps {
 const MatchList = ({ listItems }: MatchListProps) => {
   const renderItem = React.useCallback(
     ({ item }: ListRenderItemInfo<MatchListItem>): JSX.Element => (
-      <View>
-        <Avatar.Image source={{ uri: item.photoUri }} size={20} />
-        <View>
-          <Text>{item.name}</Text>
-          <Text>{item.lastMessageSent?.message}</Text>
-        </View>
-      </View>
+      <MatchListRow lastMessageSent={item.lastMessageSent?.message} photoUri={item.photoUri} name={item.name} />
     ),
     []
   );
@@ -44,7 +38,7 @@ const MatchList = ({ listItems }: MatchListProps) => {
       keyExtractor={getItemKey}
       getItemCount={getItemCount}
       getItem={getItem}
-      contentContainerStyle={{ paddingBottom: 150 }}
+      contentContainerStyle={{ paddingBottom: 100, padding: 20 }}
       // ListEmptyComponent={renderNoData} ///
       removeClippedSubviews={true}
       initialNumToRender={10} //* double check 1 is ok for all screen sizes
