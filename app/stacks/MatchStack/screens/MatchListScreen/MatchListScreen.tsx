@@ -20,21 +20,7 @@ const MatchListScreen = () => {
   let matchListRef: firebase.database.Reference | undefined;
 
   const [matchListItems, setMatchListItems] = React.useState<MatchListItem[]>([]);
-  const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading); ///
-
-  React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (responseStatus === ResponseStatus.Loading) {
-        setResponseStatus(ResponseStatus.Error);
-      }
-    }, 1000 * 60);
-
-    const cleanup = () => {
-      clearTimeout(timeout);
-    };
-
-    return cleanup;
-  }, []);
+  const [responseStatus, setResponseStatus] = React.useState<ResponseStatus>(ResponseStatus.Loading);
 
   React.useEffect(() => {
     const getMatchChats = async () => {
@@ -47,15 +33,12 @@ const MatchListScreen = () => {
       matchListRef.on('value', async snapshot => {
         const value = snapshot.val();
 
-        console.log(value);
-
         if (!value) {
           setResponseStatus(ResponseStatus.Success);
           return;
         }
 
         const chatIds = new Set(Object.keys(value));
-        console.log(chatIds); ///
         const listItems: MatchListItem[] = [];
 
         for (const chatId of chatIds) {

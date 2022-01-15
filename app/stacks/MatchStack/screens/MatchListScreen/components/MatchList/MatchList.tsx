@@ -27,9 +27,19 @@ const MatchList = ({ listItems }: MatchListProps) => {
 
   const getItem = (listItems: MatchListItem[], index: number): MatchListItem => listItems[index];
 
+  const getMockedData = () => {
+    const mockedData = [];
+
+    for (let i = 0; i < 10; i++) {
+      mockedData.push(listItems[0]);
+    }
+
+    return mockedData;
+  };
+
   return (
     <VirtualizedList
-      data={listItems}
+      data={getMockedData()} ///
       renderItem={renderItem}
       keyExtractor={getItemKey}
       getItemCount={getItemCount}
@@ -37,7 +47,7 @@ const MatchList = ({ listItems }: MatchListProps) => {
       contentContainerStyle={{ paddingBottom: 150 }}
       // ListEmptyComponent={renderNoData} ///
       removeClippedSubviews={true}
-      initialNumToRender={1} //* double check 1 is ok for all screen sizes
+      initialNumToRender={10} //* double check 1 is ok for all screen sizes
       windowSize={5}
     />
   );

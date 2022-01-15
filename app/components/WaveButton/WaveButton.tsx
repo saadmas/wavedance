@@ -90,8 +90,6 @@ const WaveButton = ({ onWave, event, waveReceivedByUid, name }: WaveButtonProps)
     await addChatMessage(chatId, systemMatchMessage);
     await updateLastMessageSent(chatId, systemMatchMessage);
 
-    //* should we add to last message sent node ??? depends on how it would look (check after building chat list)
-
     setShouldPlayMatchAnimation(true);
     await new Promise(r => setTimeout(r, 800)); // To let the heart-favorite animation play out nicely :)
     setIsMatchDialogOpen(true);
